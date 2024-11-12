@@ -6,15 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-    <Folder Include="Dtos\" />
-    <Folder Include="Enums\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Repos\" />
-    <Folder Include="Security\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+  
 
 
 	<ItemGroup>
