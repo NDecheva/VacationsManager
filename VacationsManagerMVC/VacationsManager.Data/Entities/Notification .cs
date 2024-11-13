@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VacationsManager.Data
+namespace VacationsManager.Data.Entities
 {
     public class Notification : BaseEntity
     {
 
         public Notification()
         {
-            DateSent = DateTime.UtcNow; 
-            IsRead = false; 
-            Message = string.Empty; 
+            DateSent = DateTime.UtcNow;
+            IsRead = false;
+            Message = string.Empty;
         }
 
         public User Recipient { get; set; }
@@ -25,9 +25,9 @@ namespace VacationsManager.Data
             : base()
         {
             Recipient = recipient;
-            Message = message ?? string.Empty; 
+            Message = message ?? string.Empty;
             DateSent = DateTime.UtcNow;
-            IsRead = false; 
+            IsRead = false;
         }
 
     }

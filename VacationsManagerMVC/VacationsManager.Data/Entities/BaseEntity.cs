@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VacationsManager.Data
+namespace VacationsManager.Data.Entities
 {
     public abstract class BaseEntity
     {

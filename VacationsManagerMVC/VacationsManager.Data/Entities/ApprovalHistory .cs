@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VacationsManager.Data
+namespace VacationsManager.Data.Entities
 {
     public class ApprovalHistory : BaseEntity
     {
         public ApprovalHistory()
         {
-            ApprovalDate = DateTime.UtcNow; 
+            ApprovalDate = DateTime.UtcNow;
             IsApproved = false;
-            Comments = string.Empty; 
+            Comments = string.Empty;
         }
 
         public VacationRequest VacationRequest { get; set; }

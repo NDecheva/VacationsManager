@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VacationsManager.Data
+namespace VacationsManager.Data.Entities
 {
     public class User : BaseEntity
     {
         public User()
         {
-            this.VacationRequests = new List<VacationRequest>(); 
+            VacationRequests = new List<VacationRequest>();
         }
 
         public string Username { get; set; }
@@ -24,9 +24,9 @@ namespace VacationsManager.Data
         public virtual Team Team { get; set; }
         public virtual ICollection<VacationRequest> VacationRequests { get; set; }
 
-       
+
         public User(string username, string password, string firstName, string lastName, Role role = null, Team team = null)
-            : base() 
+            : base()
         {
             Username = username;
             Password = password;

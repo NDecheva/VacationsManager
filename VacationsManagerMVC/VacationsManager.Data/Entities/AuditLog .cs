@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VacationsManager.Data
+namespace VacationsManager.Data.Entities
 {
     public class AuditLog : BaseEntity
     {
         public AuditLog()
         {
             ActionDate = DateTime.UtcNow;
-            Details = string.Empty; 
+            Details = string.Empty;
         }
 
         public string Action { get; set; } //"Create User" или "Approve Vacation"
@@ -19,13 +19,14 @@ namespace VacationsManager.Data
         public DateTime ActionDate { get; set; }
         public string Details { get; set; }
 
-       
+
         public AuditLog(string action, User performedBy, string details = "")
             : base()
         {
             Action = action;
             PerformedBy = performedBy;
             ActionDate = DateTime.UtcNow;
-            Details = details ?? string.Empty; 
+            Details = details ?? string.Empty;
+        }
     }
 }
