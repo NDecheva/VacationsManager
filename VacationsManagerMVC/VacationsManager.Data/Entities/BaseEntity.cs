@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VacationsManager.Data.Entities
 {
-    public abstract class BaseEntity
+    public class BaseEntity : IBaseEntity
     {
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }

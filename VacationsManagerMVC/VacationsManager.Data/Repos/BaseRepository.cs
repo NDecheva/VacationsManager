@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VacationsManager.Data.Entities;
+using VacationsManager.Shared.Dtos;
 using YourNamespace.Shared.Repos.Contracts;
 
 namespace YourNamespace.Data.Repos
 {
     public abstract class BaseRepository<T, TModel> : IBaseRepository<TModel>, IDisposable
-        where T : BaseEntity 
-        where TModel : class
+        where T : class, IBaseEntity
+        where TModel : BaseModel
     {
         protected readonly DbContext _context;
         protected readonly DbSet<T> _dbSet;
