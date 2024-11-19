@@ -9,33 +9,15 @@ namespace VacationsManager.Data.Entities
 {
     public class VacationRequest : BaseEntity
     {
-        public VacationRequest()
-        {
-            CreationDate = DateTime.UtcNow;
-            IsApproved = false;
-            Attachment = string.Empty;
-        }
-
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public DateTime CreationDate { get; set; }
         public bool IsHalfDay { get; set; }
-        public bool IsApproved { get; set; }
-        public User Requester { get; set; }
-        public string Attachment { get; set; }
+        public bool IsApproved { get; set; } = false;
+        public int RequesterId { get; set; }
+        public virtual User Requester { get; set; }
+        public string Attachment { get; set; } = string.Empty;
         public VacationType VacationType { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
-
-        public VacationRequest(DateTime startDate, DateTime endDate, User requester, bool isHalfDay, bool isSickLeave, string attachment = null)
-            : base()
-        {
-            StartDate = startDate;
-            EndDate = endDate;
-            CreationDate = DateTime.UtcNow;
-            Requester = requester;
-            IsHalfDay = isHalfDay;
-            IsApproved = false;
-            Attachment = attachment ?? string.Empty;
-        }
     }
 }

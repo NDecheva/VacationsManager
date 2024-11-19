@@ -14,16 +14,9 @@ namespace VacationsManager.Data.Entities
             Users = new List<User>();
         }
 
-        public string Name { get; set; } 
+        public string Name { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public RoleType RoleType { get; set; }
 
-
-        public Role(string name)
-            : base()
-        {
-            Name = name;
-            Users = new List<User>();
-        }
     }
 }

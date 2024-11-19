@@ -9,26 +9,11 @@ namespace VacationsManager.Data.Entities
     public class Notification : BaseEntity
     {
 
-        public Notification()
-        {
-            DateSent = DateTime.UtcNow;
-            IsRead = false;
-            Message = string.Empty;
-        }
-
-        public User Recipient { get; set; }
-        public string Message { get; set; }
-        public DateTime DateSent { get; set; }
-        public bool IsRead { get; set; }
-
-        public Notification(User recipient, string message)
-            : base()
-        {
-            Recipient = recipient;
-            Message = message ?? string.Empty;
-            DateSent = DateTime.UtcNow;
-            IsRead = false;
-        }
+        public int RecipientId { get; set; }
+        public virtual User Recipient { get; set; }
+        public string Message { get; set; } = string.Empty;
+        public DateTime DateSent { get; set; } = DateTime.UtcNow;
+        public bool IsRead { get; set; } = false;
 
     }
 }
