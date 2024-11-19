@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VacationsManager.Shared.Enums;
 
 namespace VacationsManager.Data.Entities
 {
@@ -13,8 +14,9 @@ namespace VacationsManager.Data.Entities
             Users = new List<User>();
         }
 
-        public string Name { get; set; } // CEO, Developer, Team Lead, Unassigned
+        public string Name { get; set; } 
         public virtual ICollection<User> Users { get; set; }
+        public RoleType RoleType { get; set; }
 
 
         public Role(string name)

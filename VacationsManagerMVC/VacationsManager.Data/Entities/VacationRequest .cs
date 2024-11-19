@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VacationsManager.Shared.Enums;
 
 namespace VacationsManager.Data.Entities
 {
@@ -12,7 +13,6 @@ namespace VacationsManager.Data.Entities
         {
             CreationDate = DateTime.UtcNow;
             IsApproved = false;
-            IsSickLeave = false;
             Attachment = string.Empty;
         }
 
@@ -22,8 +22,8 @@ namespace VacationsManager.Data.Entities
         public bool IsHalfDay { get; set; }
         public bool IsApproved { get; set; }
         public User Requester { get; set; }
-        public bool IsSickLeave { get; set; }
         public string Attachment { get; set; }
+        public VacationType VacationType { get; set; }
 
 
         public VacationRequest(DateTime startDate, DateTime endDate, User requester, bool isHalfDay, bool isSickLeave, string attachment = null)
@@ -34,7 +34,6 @@ namespace VacationsManager.Data.Entities
             CreationDate = DateTime.UtcNow;
             Requester = requester;
             IsHalfDay = isHalfDay;
-            IsSickLeave = isSickLeave;
             IsApproved = false;
             Attachment = attachment ?? string.Empty;
         }
