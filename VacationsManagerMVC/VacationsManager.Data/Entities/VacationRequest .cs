@@ -17,7 +17,6 @@ namespace VacationsManager.Data.Entities
         public virtual User Requester { get; set; }
         public string Attachment { get; set; } = string.Empty;
         public VacationType VacationType { get; set; }
-        public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
     }
 }
