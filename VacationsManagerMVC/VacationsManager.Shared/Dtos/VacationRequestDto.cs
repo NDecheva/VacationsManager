@@ -16,6 +16,6 @@ namespace VacationsManager.Shared.Dtos
         public UserDto Requester { get; set; }
         public string Attachment { get; set; }
         public VacationType VacationType { get; set; }
-        public DateTime CreationDate { get; set; }
+        
     }
 }

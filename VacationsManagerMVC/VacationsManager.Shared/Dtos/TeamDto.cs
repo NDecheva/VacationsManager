@@ -14,6 +14,8 @@ namespace VacationsManager.Shared.Dtos
         }
 
         public string Name { get; set; }
+        public int ProjectId { get; set; }
+        public int TeamLeaderId { get; set; }
         public ProjectDto Project { get; set; }
         public UserDto TeamLeader { get; set; }
         public List<UserDto> Developers { get; set; }
