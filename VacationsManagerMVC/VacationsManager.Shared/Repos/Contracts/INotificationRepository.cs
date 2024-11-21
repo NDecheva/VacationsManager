@@ -8,8 +8,7 @@ using YourNamespace.Shared.Repos.Contracts;
 
 namespace VacationsManager.Shared.Repos.Contracts
 {
-    public interface IRoleRepository : IBaseRepository<RoleDto>
+    public interface INotificationRepository : IBaseRepository<NotificationDto>
     {
-        Task<RoleDto?> GetByNameIfExistsAsync(string name);
     }
 }

@@ -8,8 +8,9 @@ using YourNamespace.Shared.Repos.Contracts;
 
 namespace VacationsManager.Shared.Repos.Contracts
 {
-    public interface IRoleRepository : IBaseRepository<RoleDto>
+    public interface IUserRepository : IBaseRepository<UserDto>
     {
-        Task<RoleDto?> GetByNameIfExistsAsync(string name);
+        Task<bool> CanUserLoginAsync(string username, string password);
+        Task<UserDto> GetByUsernameAsync(string username);
     }
 }
