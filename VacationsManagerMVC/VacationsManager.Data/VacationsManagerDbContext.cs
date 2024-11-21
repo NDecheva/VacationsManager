@@ -51,6 +51,12 @@ namespace VacationsManager.Data
                 .HasForeignKey(u => u.TeamId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Role)
+                .WithMany(r => r.Users)
+                .HasForeignKey(u => u.RoleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Team>()
                 .HasOne(t => t.TeamLeader)
                 .WithMany()
