@@ -52,10 +52,10 @@ namespace VacationsManager.Data
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<User>()
-                .HasOne(u => u.Role)
-                .WithMany(r => r.Users)
-                .HasForeignKey(u => u.RoleId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(u => u.Team)
+                .WithMany(t => t.Developers)
+                .HasForeignKey(u => u.TeamId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Team>()
                 .HasOne(t => t.TeamLeader)
