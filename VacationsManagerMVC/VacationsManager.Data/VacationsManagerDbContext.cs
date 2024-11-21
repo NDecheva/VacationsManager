@@ -57,27 +57,11 @@ namespace VacationsManager.Data
                 .HasForeignKey(t => t.TeamLeaderId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Team)
-                .WithMany(t => t.Developers)
-                .HasForeignKey(u => u.TeamId)
-                .OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Role)
-                .WithMany(r => r.Users)
-                .HasForeignKey(u => u.RoleId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<VacationRequest>()
                 .HasOne(vr => vr.Requester)
                 .WithMany(u => u.VacationRequests)
                 .HasForeignKey(vr => vr.RequesterId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<VacationRequest>()
-                .Property(vr => vr.VacationType)
-                .HasConversion<int>();
 
             foreach (var role in Enum.GetValues(typeof(RoleType)).Cast<RoleType>())
             {
@@ -94,5 +78,6 @@ namespace VacationsManager.Data
                 RoleId = (int)RoleType.CEO
             });
         }
+
     }
 }
