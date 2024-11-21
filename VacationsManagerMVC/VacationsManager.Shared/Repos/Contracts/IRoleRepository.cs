@@ -10,6 +10,6 @@ namespace VacationsManager.Shared.Repos.Contracts
 {
     public interface IRoleRepository : IBaseRepository<RoleDto>
     {
-        Task<RoleDto?> GetByNameIfExistsAsync(string name);
+        Task<RoleDto> GetByNameIfExistsAsync(string name);
     }
 }
