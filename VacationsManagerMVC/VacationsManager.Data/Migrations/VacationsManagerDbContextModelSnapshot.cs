@@ -17,7 +17,7 @@ namespace VacationsManager.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -115,34 +115,34 @@ namespace VacationsManager.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 11, 21, 20, 26, 29, 390, DateTimeKind.Utc).AddTicks(3072),
+                            CreatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4942),
                             Name = "CEO",
                             RoleType = 1,
-                            UpdatedAt = new DateTime(2024, 11, 21, 20, 26, 29, 390, DateTimeKind.Utc).AddTicks(3271)
+                            UpdatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4944)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 11, 21, 20, 26, 29, 390, DateTimeKind.Utc).AddTicks(8741),
+                            CreatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4999),
                             Name = "Developer",
                             RoleType = 2,
-                            UpdatedAt = new DateTime(2024, 11, 21, 20, 26, 29, 390, DateTimeKind.Utc).AddTicks(8742)
+                            UpdatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4999)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 11, 21, 20, 26, 29, 390, DateTimeKind.Utc).AddTicks(8853),
+                            CreatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5015),
                             Name = "TeamLead",
                             RoleType = 3,
-                            UpdatedAt = new DateTime(2024, 11, 21, 20, 26, 29, 390, DateTimeKind.Utc).AddTicks(8853)
+                            UpdatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5016)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 11, 21, 20, 26, 29, 390, DateTimeKind.Utc).AddTicks(8871),
+                            CreatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5031),
                             Name = "Unassigned",
                             RoleType = 4,
-                            UpdatedAt = new DateTime(2024, 11, 21, 20, 26, 29, 390, DateTimeKind.Utc).AddTicks(8871)
+                            UpdatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5032)
                         });
                 });
 
@@ -227,12 +227,12 @@ namespace VacationsManager.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 11, 21, 20, 26, 29, 390, DateTimeKind.Utc).AddTicks(9500),
+                            CreatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5106),
                             FirstName = "Admin",
                             LastName = "User",
-                            Password = "hashedpassword",
+                            Password = "pTDoIwVg8mxcdTjKNblSgFzO4H3GvZKY+jVZ+M0VtFU20mkeRPahTVdNtPBze0MX",
                             RoleId = 1,
-                            UpdatedAt = new DateTime(2024, 11, 21, 20, 26, 29, 390, DateTimeKind.Utc).AddTicks(9500),
+                            UpdatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5107),
                             Username = "admin"
                         });
                 });
