@@ -4,18 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VacationsManager.Data.Entities
+namespace VacationsManager.Shared.Dtos
 {
-    public class Project : BaseEntity
+    public class ProjectDto : BaseModel
     {
-        public Project()
+        public ProjectDto()
         {
-            Teams = new List<Team>();
+            Teams = new List<TeamDto>();
         }
 
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<Team> Teams { get; set; }
-
+        public List<TeamDto> Teams { get; set; }
     }
 }

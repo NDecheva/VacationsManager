@@ -5,18 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using VacationsManager.Shared.Enums;
 
-namespace VacationsManager.Data.Entities
+namespace VacationsManager.Shared.Dtos
 {
-    public class Role : BaseEntity
+    public class RoleDto : BaseModel
     {
-        public Role()
+        public RoleDto()
         {
-            Users = new List<User>();
+            Users = new List<UserDto>();
         }
 
         public string Name { get; set; }
-        public virtual ICollection<User> Users { get; set; }
         public RoleType RoleType { get; set; }
-
+        public List<UserDto> Users { get; set; }
     }
 }

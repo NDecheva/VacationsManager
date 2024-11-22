@@ -15,18 +15,12 @@ namespace VacationsManager.Data.Entities
         }
 
         public string Name { get; set; }
+        public int ProjectId { get; set; }
+        public int TeamLeaderId { get; set; }
         public virtual Project Project { get; set; }
+
         public virtual User TeamLeader { get; set; }
         public virtual ICollection<User> Developers { get; set; }
 
-
-        public Team(string name, Project project, User teamLeader)
-            : base()
-        {
-            Name = name;
-            Project = project;
-            TeamLeader = teamLeader;
-            Developers = new List<User>();
-        }
     }
 }
