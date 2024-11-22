@@ -8,6 +8,9 @@ namespace VacationsManager.Shared.Enums
 {
     public enum RoleType
     {
-        CEO, Developer, TeamLead, Unassigned
+        CEO = 1,
+        Developer = 2,
+        TeamLead = 3,
+        Unassigned = 4
     }
 }
