@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VacationsManager.Data.Entities;
 using VacationsManager.Shared.Enums;
+using VacationsManager.Shared.Security;
 
 namespace VacationsManager.Data
 {
@@ -80,7 +81,7 @@ namespace VacationsManager.Data
                 Username = "admin",
                 FirstName = "Admin",
                 LastName = "User",
-                Password = "hashedpassword",
+                Password = PasswordHasher.HashPassword("string"),
                 RoleId = (int)RoleType.CEO
             });
         }
