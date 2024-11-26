@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacationsManagerMVC", "VacationsManagerMVC\VacationsManagerMVC.csproj", "{13FB56C9-8DD4-4D94-9DBE-CDAA294ABFED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VacationsManagerMVC", "VacationsManagerMVC\VacationsManagerMVC.csproj", "{13FB56C9-8DD4-4D94-9DBE-CDAA294ABFED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacationsManager.Data", "VacationsManager.Data\VacationsManager.Data.csproj", "{5DF95584-39D9-416B-9455-A6F31D808FCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VacationsManager.Data", "VacationsManager.Data\VacationsManager.Data.csproj", "{5DF95584-39D9-416B-9455-A6F31D808FCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacationsManager.Services", "VacationsManager.Services\VacationsManager.Services.csproj", "{D4E6969A-6744-445E-89EC-EDFFF640F33E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VacationsManager.Services", "VacationsManager.Services\VacationsManager.Services.csproj", "{D4E6969A-6744-445E-89EC-EDFFF640F33E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacationsManager.Shared", "VacationsManager.Shared\VacationsManager.Shared.csproj", "{68DB1C77-7384-4D11-ADAC-D1CD64BBDAC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VacationsManager.Shared", "VacationsManager.Shared\VacationsManager.Shared.csproj", "{68DB1C77-7384-4D11-ADAC-D1CD64BBDAC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacationManager.Tests", "VacationManager.Tests\VacationManager.Tests.csproj", "{C44AB832-344C-4672-AF37-8ABF6CDC4070}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{68DB1C77-7384-4D11-ADAC-D1CD64BBDAC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68DB1C77-7384-4D11-ADAC-D1CD64BBDAC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68DB1C77-7384-4D11-ADAC-D1CD64BBDAC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C44AB832-344C-4672-AF37-8ABF6CDC4070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C44AB832-344C-4672-AF37-8ABF6CDC4070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C44AB832-344C-4672-AF37-8ABF6CDC4070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C44AB832-344C-4672-AF37-8ABF6CDC4070}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
