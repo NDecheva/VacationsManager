@@ -11,6 +11,6 @@ namespace VacationsManager.Shared.Services.Contracts
     public interface IRoleCrudService : IBaseCrudService<RoleDto, IRoleRepository>
 
     {
-        Task<RoleDto?> GetByNameIfExistsAsync(string v);
+        Task<RoleDto> GetByNameIfExistsAsync(string name);
     }
 }
