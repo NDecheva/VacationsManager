@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace VacationsManagerMVC.ViewModels
 {
-    public class ProjectEditVM
+    public class ProjectEditVM : BaseVM
     {
         [DisplayName("Project Name")]
         [Required(ErrorMessage = "Project name is required.")]
