@@ -21,7 +21,7 @@ namespace VacationsManagerMVC.ViewModels
         public string TeamLeader { get; set; }
 
         [DisplayName("Developers")]
-        public IEnumerable<int> SelectedDeveloperIds { get; set; }
+        public List<UserDetailsVM> SelectedDevelopers { get; set; }
 
         public IEnumerable<UserDetailsVM> AllDevelopers { get; set; }
 
@@ -29,7 +29,7 @@ namespace VacationsManagerMVC.ViewModels
 
         public TeamEditVM()
         {
-            SelectedDeveloperIds = new List<int>();
+            SelectedDevelopers = new List<UserDetailsVM>();
             AllDevelopers = new List<UserDetailsVM>();
             Projects = new List<SelectListItem>();
         }
