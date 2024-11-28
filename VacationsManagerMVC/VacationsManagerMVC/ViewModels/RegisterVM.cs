@@ -2,7 +2,7 @@
 
 namespace VacationsManagerMVC.ViewModels
 {
-    public class RegisterVM
+    public class RegisterVM : BaseVM
     {
         [Required(ErrorMessage = "Username is required")]
         public string Username { get; set; }

@@ -2,7 +2,7 @@
 
 namespace VacationsManagerMVC.ViewModels
 {
-    public class TeamDetailsVM
+    public class TeamDetailsVM : BaseVM
     {
         public int TeamId { get; set; }
 
@@ -10,17 +10,17 @@ namespace VacationsManagerMVC.ViewModels
         public string Name { get; set; }
 
         [DisplayName("Project Name")]
-        public string ProjectName { get; set; }
+        public ProjectDetailsVM ProjectName { get; set; }
 
         [DisplayName("Team Leader")]
         public string TeamLeader { get; set; }
 
         [DisplayName("Developers")]
-        public List<string> Developers { get; set; } 
+        public virtual List<string> Developers { get; set; } 
 
         public TeamDetailsVM()
         {
-            Developers = new List<string>();
+            this.Developers = new List<string>();
         }
     }
 }
