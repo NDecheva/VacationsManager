@@ -17,7 +17,7 @@ namespace VacationsManager.Services
         {
 
         }
-        public Task<RoleDto?> GetByNameIfExistsAsync(string name)
+        public Task<RoleDto> GetByNameIfExistsAsync(string name)
         {
             return _repository.GetByNameIfExistsAsync(name);
 
