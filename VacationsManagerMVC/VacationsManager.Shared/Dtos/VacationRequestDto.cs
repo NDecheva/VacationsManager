@@ -13,6 +13,7 @@ namespace VacationsManager.Shared.Dtos
         public DateTime EndDate { get; set; }
         public bool IsHalfDay { get; set; }
         public bool IsApproved { get; set; }
+        public int RequesterId { get; set; }
         public UserDto Requester { get; set; }
         public string Attachment { get; set; }
         public VacationType VacationType { get; set; }
