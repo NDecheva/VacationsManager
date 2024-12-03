@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace VacationsManagerMVC.ViewModels
 {
@@ -16,7 +17,7 @@ namespace VacationsManagerMVC.ViewModels
         public string Description { get; set; }
 
         [DisplayName("Teams")]
-        public IEnumerable<TeamDetailsVM> Teams { get; set; }
+        public IEnumerable<SelectListItem> Teams { get; set; }
 
     }
 }
