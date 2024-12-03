@@ -25,6 +25,6 @@ namespace VacationsManagerMVC.ViewModels
         public bool IsCompleted { get; set; }
 
         // Списък с екипите в проекта
-        public List<TeamDetailsVM> Teams { get; set; }
+        public IEnumerable<TeamDetailsVM> Teams { get; set; }
     }
 }
