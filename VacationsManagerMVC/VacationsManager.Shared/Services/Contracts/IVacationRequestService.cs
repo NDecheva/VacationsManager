@@ -8,7 +8,7 @@ using VacationsManager.Shared.Repos.Contracts;
 
 namespace VacationsManager.Shared.Services.Contracts
 {
-    public interface IProjectCrudService : IBaseCrudService<ProjectDto, IProjectRepository>
+    public interface IVacationRequestService : IBaseCrudService<VacationRequestDto, IVacationRequestRepository>
 
     {
     }
