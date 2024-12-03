@@ -17,18 +17,12 @@ namespace VacationsManager.Services
         {
 
         }
-<<<<<<< HEAD
 
         public Task<RoleDto> GetByNameIfExistsAsync(string name)
         {
             return _repository.GetByNameIfExistsAsync(name);
-=======
-        public Task<RoleDto?> GetByNameIfExistsAsync(string name)
-        {
-            return _repository.GetByNameIfExistsAsync(name);
-
->>>>>>> 8e7359d (VM-33 Created services)
         }
+
 
     }
 }
