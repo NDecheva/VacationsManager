@@ -16,8 +16,9 @@ namespace VacationsManagerMVC.ViewModels
         [StringLength(1000, ErrorMessage = "Description cannot exceed 1000 characters.")]
         public string Description { get; set; }
 
-        [DisplayName("Teams")]
-        public IEnumerable<SelectListItem> Teams { get; set; }
-
+        [DisplayName("Team")]
+        [Required(ErrorMessage = "Team is required.")]
+        public int TeamId { get; set; }
+        public IEnumerable<SelectListItem> AllTeams { get; set; }
     }
 }
