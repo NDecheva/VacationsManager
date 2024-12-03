@@ -59,6 +59,32 @@ namespace VacationManager.Tests.Repos
             //Assert
             Assert.That(result, Is.EqualTo((T)entity.Object));
         }
+        [Test]
+        public void MapToEnumerableOfModel_ValidEntities_ReturnsMappedModel()
+        {
+            //Arrange
+            var entities = new List<T> { new Mock<T>().Object };
+            var model = new List<TModel> { new Mock<TModel>().Object };
+            mockMapper.Setup(m => m.Map<IEnumerable<TModel>>(entities)).Returns(model);
+
+            //Act
+            var result = repository.MapToEnumerableOfModel(entities);
+
+            //Assert
+            Assert.That(result, Is.EqualTo(model));
+        }
+        [Test]
+        public void Dispose_DisposesContext()
+        {
+
+
+            //Act
+            repository.Dispose();
+
+            //Assert
+            mockContext.Verify(m => m.Dispose(), Times.Once);
+        }
+
     }
 }
 
