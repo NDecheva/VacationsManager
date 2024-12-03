@@ -15,13 +15,6 @@ namespace VacationsManagerMVC.ViewModels
         [StringLength(1000, ErrorMessage = "Description cannot exceed 1000 characters.")]
         public string Description { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayName("End Date")]
-        public DateTime? EndDate { get; set; }
-
-        [DisplayName("Is Completed")]
-        public bool IsCompleted { get; set; }
-
         [DisplayName("Teams")]
         public IEnumerable<TeamDetailsVM> Teams { get; set; }
 
