@@ -8,7 +8,9 @@ using VacationsManager.Shared.Repos.Contracts;
 
 namespace VacationsManager.Shared.Services.Contracts
 {
-    public interface INotificationCrudService : IBaseCrudService<NotificationDto, INotificationRepository> 
+    public interface IRoleService : IBaseCrudService<RoleDto, IRoleRepository>
+
     {
+        Task<RoleDto> GetByNameIfExistsAsync(string name);
     }
 }
