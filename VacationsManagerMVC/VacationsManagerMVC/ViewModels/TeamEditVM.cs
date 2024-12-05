@@ -24,16 +24,11 @@ namespace VacationsManagerMVC.ViewModels
 
         public IEnumerable<SelectListItem> AllTeamLeaders { get; set; }
 
-        [DisplayName("Developers")]
-        public IEnumerable<int> SelectedDeveloperIds { get; set; }  
-
-        public IEnumerable<SelectListItem> AllDevelopers { get; set; }  
 
         public TeamEditVM()
         {
             Projects = new List<SelectListItem>();
             AllTeamLeaders = new List<SelectListItem>();
-            AllDevelopers = new List<SelectListItem>();
         }
     }
 }
