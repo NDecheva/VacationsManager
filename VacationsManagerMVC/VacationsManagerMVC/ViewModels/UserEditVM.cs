@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace VacationsManagerMVC.ViewModels
 {
@@ -22,13 +22,23 @@ namespace VacationsManagerMVC.ViewModels
         public string LastName { get; set; }
 
         [DisplayName("Role")]
-        [Required(ErrorMessage = "Role is required.")]
-        public int RoleId { get; set; } 
+        public RoleDetailsVM Role { get; set; }
+
         public IEnumerable<SelectListItem> AllRoles { get; set; }
 
         [DisplayName("Team")]
-        [Required(ErrorMessage = "Team is required.")]
-        public int TeamId { get; set; } 
+        public TeamDetailsVM Team { get; set; }
+
         public IEnumerable<SelectListItem> AllTeams { get; set; }
+
+        [DisplayName("Vacation Requests")]
+        public virtual List<VacationRequestDetailsVM> VacationRequests { get; set; }
+
+        public UserEditVM()
+        {
+            AllRoles = new List<SelectListItem>();
+            AllTeams = new List<SelectListItem>();
+            VacationRequests = new List<VacationRequestDetailsVM>();
+        }
     }
 }

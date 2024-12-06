@@ -24,10 +24,8 @@ namespace VacationsManagerMVC.ViewModels
         public bool IsApproved { get; set; }
 
         [DisplayName("Requester")]
-        [Required(ErrorMessage = "Requester is required.")]
-        public int RequesterId { get; set; }  
-
-        public IEnumerable<SelectListItem> Requesters { get; set; }  
+        public UserDetailsVM Requester { get; set; }
+        public IEnumerable<SelectListItem> Requesters { get; set; }
 
         [DisplayName("Attachment")]
         public string Attachment { get; set; }
@@ -35,8 +33,7 @@ namespace VacationsManagerMVC.ViewModels
         [DisplayName("Vacation Type")]
         [Required(ErrorMessage = "Vacation type is required.")]
         public VacationType SelectedVacationType { get; set; }
-
-        public IEnumerable<SelectListItem> VacationTypes { get; set; }  // Списък с типове отпуски
+        public IEnumerable<SelectListItem> VacationTypes { get; set; }
 
         public VacationRequestEditVM()
         {

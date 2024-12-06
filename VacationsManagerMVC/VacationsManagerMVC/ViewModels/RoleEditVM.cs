@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using VacationsManager.Data.Entities;
 using VacationsManager.Shared.Enums;
 
 namespace VacationsManagerMVC.ViewModels
@@ -14,9 +15,13 @@ namespace VacationsManagerMVC.ViewModels
 
         [DisplayName("Role Type")]
         [Required(ErrorMessage = "Role type is required.")]
-        public RoleType RoleType { get; set; } 
+        public RoleType RoleType { get; set; }
 
-        public IEnumerable<SelectListItem> RoleTypeOptions { get; set; } 
-        
+        [DisplayName("Assigned Users")]
+        public IEnumerable<int> SelectedUserIds { get; set; } = new List<int>();
+
+        public IEnumerable<UserDetailsVM> AllUsers { get; set; }
+
+        public IEnumerable<SelectListItem> RoleTypes { get; set; }
     }
 }
