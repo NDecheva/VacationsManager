@@ -7,24 +7,13 @@ namespace VacationsManagerMVC.ViewModels
     {
         [DisplayName("Project Name")]
         [Required(ErrorMessage = "Project name is required.")]
+        [StringLength(1000, ErrorMessage = "Project name cannot exceed 1000 characters.")]
         public string Name { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayName("Start Date")]
-        public DateTime? StartDate { get; set; }
 
         [DisplayName("Description")]
         [Required(ErrorMessage = "Description is required.")]
+        [StringLength(1000, ErrorMessage = "Description cannot exceed 1000 characters.")]
         public string Description { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayName("End Date")]
-        public DateTime? EndDate { get; set; }
-
-        [DisplayName("Is Completed")]
-        public bool IsCompleted { get; set; }
-
-        // Списък с екипите в проекта
-        public IEnumerable<TeamDetailsVM> Teams { get; set; }
     }
 }
