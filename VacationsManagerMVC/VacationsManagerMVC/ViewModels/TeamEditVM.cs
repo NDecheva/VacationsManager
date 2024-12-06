@@ -24,7 +24,6 @@ namespace VacationsManagerMVC.ViewModels
 
         public IEnumerable<SelectListItem> AllTeamLeaders { get; set; }
 
-
         public TeamEditVM()
         {
             Projects = new List<SelectListItem>();

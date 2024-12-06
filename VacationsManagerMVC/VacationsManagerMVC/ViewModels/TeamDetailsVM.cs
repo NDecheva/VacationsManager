@@ -4,7 +4,6 @@ namespace VacationsManagerMVC.ViewModels
 {
     public class TeamDetailsVM : BaseVM
     {
-
         [DisplayName("Team Name")]
         public string Name { get; set; }
 
