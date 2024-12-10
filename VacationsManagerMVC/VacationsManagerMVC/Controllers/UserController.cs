@@ -16,8 +16,8 @@ namespace VacationsManagerMVC.Controllers
         protected readonly IRoleService _roleService;
         protected readonly ITeamService _teamService;
 
-        public UserController(IUserService service, IMapper mapper, IRoleService roleService, ITeamService teamService)
-            : base(service, mapper)
+        public UserController(IUserService userService, IMapper mapper, IRoleService roleService, ITeamService teamService)
+            : base(userService, mapper)
         {
             this._roleService = roleService;
             this._teamService = teamService;
