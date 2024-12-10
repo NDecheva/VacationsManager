@@ -10,7 +10,7 @@ using VacationsManagerMVC.ViewModels;
 namespace VacationsManagerMVC.Controllers
 {
 
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin, Employee, User")]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "CEO")]
     public class RoleController : BaseCrudController<RoleDto, IRoleRepository, IRoleService, RoleEditVM, RoleDetailsVM>
     {
         protected readonly IRoleService _roleService;

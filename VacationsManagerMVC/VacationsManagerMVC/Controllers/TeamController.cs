@@ -10,7 +10,7 @@ using VacationsManagerMVC.ViewModels;
 namespace VacationsManagerMVC.Controllers
 {
 
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin, Employee, User")]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "CEO, TeamLead")]
     public class TeamController : BaseCrudController<TeamDto, ITeamRepository, ITeamService, TeamEditVM, TeamDetailsVM>
     {
         protected readonly IUserService _userService;

@@ -9,7 +9,7 @@ using VacationsManagerMVC.ViewModels;
 
 namespace VacationsManagerMVC.Controllers
 {
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin, Employee, User")]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "CEO, Developer, TeamLead")]
     public class NotificationController : BaseCrudController<NotificationDto, INotificationRepository, INotificationService, NotificationEditVM, NotificationDetailsVM>
     {
         protected readonly IUserService _userService;
