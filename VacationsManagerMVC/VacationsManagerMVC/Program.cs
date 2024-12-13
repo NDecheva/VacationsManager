@@ -7,6 +7,7 @@ using VacationsManager.Services;
 using VacationsManager.Shared.Extensions;
 using VacationsManager.Shared.Repos.Contracts;
 using VacationsManager.Shared.Services.Contracts;
+using VacationsManagerMVC;
 
 var builder = WebApplication.CreateBuilder(args);
 
