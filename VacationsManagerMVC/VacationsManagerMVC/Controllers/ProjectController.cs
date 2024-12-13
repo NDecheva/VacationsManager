@@ -8,7 +8,6 @@ using VacationsManagerMVC.ViewModels;
 
 namespace VacationsManagerMVC.Controllers
 {
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "CEO, TeamLead")]
     public class ProjectController : BaseCrudController<ProjectDto, IProjectRepository, IProjectService, ProjectEditVM, ProjectDetailsVM>
     {
         private readonly IProjectService _projectService;
