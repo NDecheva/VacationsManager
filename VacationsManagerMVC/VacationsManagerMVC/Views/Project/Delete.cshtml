@@ -50,12 +50,12 @@
                         </dl>
                         <hr />
                         <div class="text-center">
-                            @using (Html.BeginForm("Delete", "Projects", FormMethod.Post))
+                            @using (Html.BeginForm("Delete", "Project", FormMethod.Post))
                             {
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@Model.Id" />
                                 <button type="submit" class="btn btn-danger">Delete</button>
-                                <a href="@Url.Action("Index", "Projects")" class="btn btn-secondary">Cancel</a>
+                                <a href="@Url.Action("List", "Project")" class="btn btn-secondary">Cancel</a>
                             }
                         </div>
                     </div>
