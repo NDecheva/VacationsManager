@@ -42,30 +42,21 @@ namespace VacationsManager.Data.Repos
 
         public async Task<IEnumerable<UserDto>> GetFreeTeamLeadersAsync()
         {
-            var query = @"
-        SELECT u.Id, u.FirstName, u.LastName
-        FROM dbo.Users u
-        WHERE u.Id NOT IN (
-            SELECT DISTINCT t.TeamLeaderId 
-            FROM dbo.Teams t
-        )
-        AND u.RoleId = @TeamLeaderRoleId
-    ";
+            const int teamLeaderRoleId = 3;
 
-            // Execute the query using FromSqlRaw, ensuring it's recognized as part of the Users DbSet.
-            var teamLeaders = await _context.Set<User>()
-                .FromSqlRaw(query, new SqlParameter("@TeamLeaderRoleId", 3)) // Assuming RoleId = 3 is for Team Leaders
+            var teamLeaders = await _dbSet
+                .Where(u => u.RoleId == teamLeaderRoleId &&
+                            !_context.Set<Team>().Any(t => t.TeamLeaderId == u.Id))
+                .Select(u => new UserDto
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName
+                })
                 .ToListAsync();
 
-            // Map the result to DTO
-            var teamLeaderDtos = teamLeaders.Select(u => new UserDto
-            {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName
-            }).ToList();
-
-            return teamLeaderDtos;
+            return teamLeaders;
         }
+
     }
 }
