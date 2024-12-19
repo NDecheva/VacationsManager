@@ -42,11 +42,18 @@ namespace VacationsManager.Data.Repos
 
         public async Task<IEnumerable<UserDto>> GetFreeTeamLeadersAsync()
         {
-            const int teamLeaderRoleId = 3;
+            var teamLeaderRoleId = await _context.Set<Role>()
+                .Where(r => r.Name == "TeamLeader")
+                .Select(r => r.Id)
+                .FirstOrDefaultAsync();
+
+            var assignedTeamLeaderIds = await _context.Set<Team>()
+                .Select(t => t.TeamLeaderId)
+                .ToListAsync();
 
             var teamLeaders = await _dbSet
                 .Where(u => u.RoleId == teamLeaderRoleId &&
-                            !_context.Set<Team>().Any(t => t.TeamLeaderId == u.Id))
+                            !assignedTeamLeaderIds.Contains(u.Id))
                 .Select(u => new UserDto
                 {
                     Id = u.Id,
@@ -57,6 +64,5 @@ namespace VacationsManager.Data.Repos
 
             return teamLeaders;
         }
-
     }
 }
