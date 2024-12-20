@@ -28,5 +28,12 @@ namespace VacationsManager.Services
             return _repository.GetByUsernameAsync(username);
         }
 
+        public async Task<IEnumerable<UserDto>> GetAllActiveAsync()
+        {
+            var AllTeamLeaders = await _repository.GetFreeTeamLeadersAsync();
+
+            return AllTeamLeaders;
+        }
+
     }
 }
