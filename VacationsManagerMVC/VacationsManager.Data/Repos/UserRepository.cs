@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using VacationsManager.Data.Entities;
 using VacationsManager.Shared.Attributes;
 using VacationsManager.Shared.Dtos;
+using VacationsManager.Shared.Enums;
 using VacationsManager.Shared.Repos.Contracts;
 using VacationsManager.Shared.Security;
 using YourNamespace.Data.Repos;
@@ -43,7 +44,7 @@ namespace VacationsManager.Data.Repos
         public async Task<IEnumerable<UserDto>> GetFreeTeamLeadersAsync()
         {
             var teamLeaderRoleId = await _context.Set<Role>()
-                .Where(r => r.Name == "TeamLeader")
+                .Where(r => r.Name == RoleType.TeamLead.ToString())
                 .Select(r => r.Id)
                 .FirstOrDefaultAsync();
 
@@ -64,5 +65,6 @@ namespace VacationsManager.Data.Repos
 
             return teamLeaders;
         }
+
     }
 }
