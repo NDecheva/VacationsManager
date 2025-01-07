@@ -16,7 +16,9 @@ namespace VacationsManager.Shared.Dtos
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public int RoleId { get; set; }
         public RoleDto Role { get; set; }
+        public int? TeamId { get; set; }
         public TeamDto Team { get; set; }
         public List<VacationRequestDto> VacationRequests { get; set; }
     }
