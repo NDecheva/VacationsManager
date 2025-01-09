@@ -21,14 +21,17 @@ namespace VacationsManagerMVC.ViewModels
         [StringLength(100, ErrorMessage = "Last Name cannot exceed 100 characters.")]
         public string LastName { get; set; }
 
+        [Required(ErrorMessage = "Password is required")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
         [DisplayName("Role")]
         [Required(ErrorMessage = "Role is required.")]
         public int RoleId { get; set; } 
         public IEnumerable<SelectListItem> AllRoles { get; set; }
 
         [DisplayName("Team")]
-        [Required(ErrorMessage = "Team is required.")]
-        public int TeamId { get; set; } 
+        public int? TeamId { get; set; } 
         public IEnumerable<SelectListItem> AllTeams { get; set; }
     }
 }

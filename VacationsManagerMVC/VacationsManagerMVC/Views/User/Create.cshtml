@@ -46,23 +46,38 @@
                             </div>
 
                             <div class="mb-3">
+                                @Html.LabelFor(model => model.Password, new { @class = "form-label" })
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter the password" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="mb-3">
                                 @Html.LabelFor(model => model.RoleId, new { @class = "form-label" })
                                 @Html.DropDownListFor(
                                          model => model.RoleId,
                                          new SelectList(Model.AllRoles, "Value", "Text", Model.RoleId),
-                                         "Select Role",
-                                         new { @class = "form-control" })
+                                         "Select Role", // Placeholder for empty value
+                                         new { @class = "form-control" }
+                                         )
                                 @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
                             </div>
 
-
                             <div class="mb-3">
                                 @Html.LabelFor(model => model.TeamId, new { @class = "form-label" })
-                                @Html.DropDownListFor(
-                                         model => model.TeamId,
-                                         new SelectList(Model.AllTeams, "Value", "Text", Model.TeamId),
-                                         "Select Team",
-                                         new { @class = "form-control" })
+                                <select id="TeamId" name="TeamId" class="form-control">
+                                    <option value="">Select a Team</option>
+                                    @foreach (var item in Model.AllTeams)
+                                    {
+                                        if (Model.TeamId.HasValue && Model.TeamId.ToString() == item.Value)
+                                        {
+                                            <option value="@item.Value" selected>@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                </select>
                                 @Html.ValidationMessageFor(model => model.TeamId, "", new { @class = "text-danger" })
                             </div>
 

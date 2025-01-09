@@ -6,6 +6,7 @@ using VacationsManager.Shared.Dtos;
 using VacationsManager.Shared.Services.Contracts;
 using VacationsManagerMVC.ViewModels;
 using YourNamespace.Shared.Repos.Contracts;
+using VacationsManager.Shared.Security;
 
 namespace VacationsManagerMVC.Controllers
 {
@@ -78,9 +79,17 @@ namespace VacationsManagerMVC.Controllers
             public virtual async Task<IActionResult> Create(TEditVM editVM)
             {
                 var errors = await Validate(editVM);
+
                 if (errors != null)
                 {
                     return View(editVM);
+                }
+
+
+
+                if (editVM is UserEditVM userEditVM && !string.IsNullOrEmpty(userEditVM.Password))
+                {
+                    userEditVM.Password = PasswordHasher.HashPassword(userEditVM.Password);
                 }
                 var model = this._mapper.Map<TModel>(editVM);
                 await this._service.SaveAsync(model);
@@ -145,4 +154,4 @@ namespace VacationsManagerMVC.Controllers
             }
 
         }
-    }
+}
