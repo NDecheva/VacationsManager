@@ -70,37 +70,6 @@ namespace VacationsManagerMVC.Controllers
                 principle);
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Register([FromForm] RegisterVM userCreateModel)
-        {
-            string loggedUsername = User.FindFirst(ClaimTypes.Name)?.Value;
-
-            if (loggedUsername != null)
-            {
-                return Forbid();
-            }
-
-            if (await this.usersService.GetByUsernameAsync(userCreateModel.Username) != default)
-            {
-                return BadRequest(Constants.UserAlreadyExists);
-            }
-
-            var hashedPassword = PasswordHasher.HashPassword(userCreateModel.Password);
-            userCreateModel.Password = hashedPassword;
-
-            var userDto = this.mapper.Map<UserDto>(userCreateModel);
-            userDto.RoleId = (await rolesService.GetByNameIfExistsAsync(RoleType.Unassigned.ToString())).Id;
-            await this.usersService.SaveAsync(userDto);
-            await LoginUser(userDto.Username);
-
-            return RedirectToAction(nameof(HomeController.Index), "Home");
-        }
 
         [HttpGet]
         public async Task<IActionResult> Logout()
