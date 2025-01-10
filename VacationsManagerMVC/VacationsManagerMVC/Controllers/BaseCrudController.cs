@@ -6,6 +6,7 @@ using VacationsManager.Shared.Dtos;
 using VacationsManager.Shared.Services.Contracts;
 using VacationsManagerMVC.ViewModels;
 using YourNamespace.Shared.Repos.Contracts;
+using VacationsManager.Shared.Security;
 
 namespace VacationsManagerMVC.Controllers
 {
@@ -78,10 +79,12 @@ namespace VacationsManagerMVC.Controllers
             public virtual async Task<IActionResult> Create(TEditVM editVM)
             {
                 var errors = await Validate(editVM);
+
                 if (errors != null)
                 {
                     return View(editVM);
                 }
+
                 var model = this._mapper.Map<TModel>(editVM);
                 await this._service.SaveAsync(model);
                 return await List();
@@ -145,4 +148,4 @@ namespace VacationsManagerMVC.Controllers
             }
 
         }
-    }
+}
