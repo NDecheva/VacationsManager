@@ -7,6 +7,7 @@ using VacationsManagerMVC.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc;
 
 namespace VacationsManagerMVC.Controllers
 {
@@ -15,6 +16,7 @@ namespace VacationsManagerMVC.Controllers
     {
         protected readonly IRoleService _roleService;
         protected readonly ITeamService _teamService;
+        protected readonly IProjectService _projectService;
 
         public UserController(IUserService userService, IMapper mapper, IRoleService roleService, ITeamService teamService)
             : base(userService, mapper)
@@ -33,5 +35,8 @@ namespace VacationsManagerMVC.Controllers
 
             return editVM;
         }
+       
+
+
     }
 }
