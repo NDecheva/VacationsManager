@@ -27,10 +27,6 @@ namespace VacationsManagerMVC.Controllers
 
         protected override async Task<UserEditVM> PrePopulateVMAsync(UserEditVM editVM)
         {
-            if (editVM.TeamId == 0)
-            {
-                editVM.TeamId = null;
-            }
 
             editVM.AllRoles = (await _roleService.GetAllAsync())
                 .Select(x => new SelectListItem($"{x.Name}", x.Id.ToString()));
@@ -44,21 +40,12 @@ namespace VacationsManagerMVC.Controllers
         [HttpPost]
         public override async Task<IActionResult> Create(UserEditVM editVM)
         {
-            var errors = await Validate(editVM);
-
-            if (errors != null)
-            {
-                return View(editVM);
-            }
-
             if (!string.IsNullOrEmpty(editVM.Password))
             {
                 editVM.Password = PasswordHasher.HashPassword(editVM.Password);
             }
 
-            var model = this._mapper.Map<UserDto>(editVM);
-            await this._service.SaveAsync(model);
-            return await List();
+            return await base.Create(editVM);
         }
 
     }
