@@ -25,6 +25,11 @@ namespace VacationsManagerMVC.Controllers
 
         protected override async Task<UserEditVM> PrePopulateVMAsync(UserEditVM editVM)
         {
+            if (editVM.TeamId == 0)
+            {
+                editVM.TeamId = null;
+            }
+
             editVM.AllRoles = (await _roleService.GetAllAsync())
                 .Select(x => new SelectListItem($"{x.Name}", x.Id.ToString()));
 

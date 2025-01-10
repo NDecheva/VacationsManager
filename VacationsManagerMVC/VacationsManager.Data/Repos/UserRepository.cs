@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using VacationsManager.Data.Entities;
 using VacationsManager.Shared.Attributes;
 using VacationsManager.Shared.Dtos;
+using VacationsManager.Shared.Enums;
 using VacationsManager.Shared.Repos.Contracts;
 using VacationsManager.Shared.Security;
 using YourNamespace.Data.Repos;
@@ -38,5 +40,31 @@ namespace VacationsManager.Data.Repos
         {
             return MapToModel(await _dbSet.FirstOrDefaultAsync(u => u.Username == username));
         }
+
+        public async Task<IEnumerable<UserDto>> GetFreeTeamLeadersAsync()
+        {
+            var teamLeaderRoleId = await _context.Set<Role>()
+                .Where(r => r.Name == RoleType.TeamLead.ToString())
+                .Select(r => r.Id)
+                .FirstOrDefaultAsync();
+
+            var assignedTeamLeaderIds = await _context.Set<Team>()
+                .Select(t => t.TeamLeaderId)
+                .ToListAsync();
+
+            var teamLeaders = await _dbSet
+                .Where(u => u.RoleId == teamLeaderRoleId &&
+                            !assignedTeamLeaderIds.Contains(u.Id))
+                .Select(u => new UserDto
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName
+                })
+                .ToListAsync();
+
+            return teamLeaders;
+        }
+
     }
 }
