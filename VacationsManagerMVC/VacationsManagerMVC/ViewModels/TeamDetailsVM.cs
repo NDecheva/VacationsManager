@@ -8,7 +8,7 @@ namespace VacationsManagerMVC.ViewModels
         public string Name { get; set; }
 
         [DisplayName("Project Name")]
-        public ProjectDetailsVM ProjectName { get; set; }
+        public ProjectDetailsVM Project { get; set; }
 
         [DisplayName("Team Leader")]
         public UserDetailsVM TeamLeader { get; set; } 

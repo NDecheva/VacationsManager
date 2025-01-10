@@ -12,7 +12,7 @@ using VacationsManagerMVC.ViewModels;
 namespace VacationsManagerMVC.Controllers
 {
 
-    //[Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "CEO, TeamLead")]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "CEO, TeamLead")]
     public class TeamController : BaseCrudController<TeamDto, ITeamRepository, ITeamService, TeamEditVM, TeamDetailsVM>
     {
         protected readonly IUserService _userService;
@@ -49,31 +49,27 @@ namespace VacationsManagerMVC.Controllers
         {
             ViewBag.SearchTerm = searchTerm;
 
-            // Ако не е подаден searchTerm, пренасочваме към списъка с всички проекти
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
                 return RedirectToAction(nameof(List));
             }
 
-            // Получаваме всички проекти и екипи
             var projects = await _projectService.GetAllAsync();
             var teams = await _teamService.GetAllAsync();
 
-            // Филтрираме проектите и екипите на базата на търсенето
-            projects = projects.Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
-            teams = teams.Where(t => t.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+            teams = teams.Where(t =>
+                t.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                t.Project?.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) == true 
+            ).ToList();
 
-            // Мапваме проектите и екипите към ViewModel
-            var projectVMs = _mapper.Map<IEnumerable<ProjectDetailsVM>>(projects);
             var teamVMs = _mapper.Map<IEnumerable<TeamDetailsVM>>(teams);
 
-            // Записваме в ViewBag или ViewData
-            ViewBag.ProjectVMs = projectVMs;
             ViewBag.TeamVMs = teamVMs;
-           
-            // Връщаме изгледа с филтрираните данни
-            return View("List");
+
+            return View("List", teamVMs); 
         }
+
+
 
 
     }
