@@ -85,12 +85,6 @@ namespace VacationsManagerMVC.Controllers
                     return View(editVM);
                 }
 
-
-
-                if (editVM is UserEditVM userEditVM && !string.IsNullOrEmpty(userEditVM.Password))
-                {
-                    userEditVM.Password = PasswordHasher.HashPassword(userEditVM.Password);
-                }
                 var model = this._mapper.Map<TModel>(editVM);
                 await this._service.SaveAsync(model);
                 return await List();

@@ -7,6 +7,8 @@ using VacationsManagerMVC.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc;
+using VacationsManager.Shared.Security;
 
 namespace VacationsManagerMVC.Controllers
 {
@@ -38,5 +40,26 @@ namespace VacationsManagerMVC.Controllers
 
             return editVM;
         }
+
+        [HttpPost]
+        public override async Task<IActionResult> Create(UserEditVM editVM)
+        {
+            var errors = await Validate(editVM);
+
+            if (errors != null)
+            {
+                return View(editVM);
+            }
+
+            if (!string.IsNullOrEmpty(editVM.Password))
+            {
+                editVM.Password = PasswordHasher.HashPassword(editVM.Password);
+            }
+
+            var model = this._mapper.Map<UserDto>(editVM);
+            await this._service.SaveAsync(model);
+            return await List();
+        }
+
     }
 }
