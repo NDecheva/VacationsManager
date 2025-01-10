@@ -13,60 +13,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/VactionRequestCss/custom.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-info text-white">
-                        <h2>Vacation Requests List</h2>
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0">Vacation Requests</h2>
+                            <a href="@Url.Action("Create", "VacationRequest")" class="btn btn-light btn-sm">+ Create Request</a>
+                        </div>
                     </div>
                     <div class="card-body">
+                        <!-- Filter Form -->
+                        <form method="get" action="@Url.Action("FilterByDate", "VacationRequest")" class="mb-4">
+                            <div class="row g-2 align-items-center">
+                                <div class="col-md-4">
+                                    <input type="date" name="startDate" class="form-control" value="@ViewBag.FilterDate" />
+                                </div>
+                                <div class="col-md-auto">
+                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                    <a href="@Url.Action("List", "VacationRequest")" class="btn btn-secondary">Clear</a>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Requests Table -->
                         @if (Model != null && Model.Any())
                         {
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>@Html.DisplayNameFor(model => model.StartDate)</th>
-                                        <th>@Html.DisplayNameFor(model => model.EndDate)</th>
-                                        <th>@Html.DisplayNameFor(model => model.IsHalfDay)</th>
-                                        <th>@Html.DisplayNameFor(model => model.IsApproved)</th>
-                                        <th>@Html.DisplayNameFor(model => model.Requester)</th>
-                                        <th>@Html.DisplayNameFor(model => model.VacationType)</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var request in Model)
-                                    {
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-dark">
                                         <tr>
-                                            <td>@request.StartDate.ToString("yyyy-MM-dd")</td>
-                                            <td>@request.EndDate.ToString("yyyy-MM-dd")</td>
-                                            <td>@(request.IsHalfDay ? "Yes" : "No")</td>
-                                            <td>@(request.IsApproved ? "Yes" : "No")</td>
-                                            <td>@request.Requester?.Username</td>
-                                            <td>@request.VacationType.ToString()</td>
-                                            <td>
-                                                <a href="@Url.Action("Details", "VacationRequest", new { id = request.Id })" class="btn btn-info btn-sm">Details</a>
-                                                <a href="@Url.Action("Edit", "VacationRequest", new { id = request.Id })" class="btn btn-warning btn-sm">Edit</a>
-                                                <a href="@Url.Action("Delete", "VacationRequest", new { id = request.Id })" class="btn btn-danger btn-sm">Delete</a>
-                                            </td>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Half Day</th>
+                                            <th>Approved</th>
+                                            <th>Requester</th>
+                                            <th>Vacation Type</th>
+                                            <th class="text-center">Actions</th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var request in Model)
+                                        {
+                                            <tr>
+                                                <td>@request.StartDate.ToString("yyyy-MM-dd")</td>
+                                                <td>@request.EndDate.ToString("yyyy-MM-dd")</td>
+                                                <td>@(request.IsHalfDay ? "Yes" : "No")</td>
+                                                <td>@(request.IsApproved ? "Yes" : "No")</td>
+                                                <td>@request.Requester?.Username</td>
+                                                <td>@request.VacationType.ToString()</td>
+                                                <td class="text-center">
+                                                    <div class="btn-group" role="group">
+                                                        <a href="@Url.Action("Details", "VacationRequest", new { id = request.Id })" class="btn btn-sm btn-outline-info">Details</a>
+                                                        <a href="@Url.Action("Edit", "VacationRequest", new { id = request.Id })" class="btn btn-sm btn-outline-warning">Edit</a>
+                                                        <a href="@Url.Action("Delete", "VacationRequest", new { id = request.Id })" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         }
                         else
                         {
-                            <div class="alert alert-warning" role="alert">
+                            <div class="alert alert-warning text-center">
                                 No vacation requests available.
                             </div>
                         }
-                    </div>
-                    <div class="card-footer text-center">
-                        <a href="@Url.Action("Create", "VacationRequest")" class="btn btn-success">Create New Request</a>
                     </div>
                 </div>
             </div>

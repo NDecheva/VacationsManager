@@ -20,11 +20,11 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-info text-white">
+                    <div class="card-header bg-warning text-white">
                         <h2>Edit Vacation Request</h2>
                     </div>
                     <div class="card-body">
-                        @using (Html.BeginForm())
+                        @using (Html.BeginForm("Edit", "VacationRequest", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             @Html.AntiForgeryToken()
                             @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
@@ -32,14 +32,26 @@
                             <!-- Start Date -->
                             <div class="mb-3">
                                 @Html.LabelFor(model => model.StartDate, new { @class = "form-label" })
-                                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                @Html.TextBoxFor(model => model.StartDate, new
+                                    {
+                                        @class = "form-control",
+                                        @type = "date",
+                                        @value = Model.StartDate.ToString("yyyy-MM-dd"),
+                                        @min = DateTime.Now.ToString("yyyy-MM-dd")
+                                    })
                                 @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                             </div>
 
                             <!-- End Date -->
                             <div class="mb-3">
                                 @Html.LabelFor(model => model.EndDate, new { @class = "form-label" })
-                                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                @Html.TextBoxFor(model => model.EndDate, new
+                                    {
+                                        @class = "form-control",
+                                        @type = "date",
+                                        @value = Model.EndDate.ToString("yyyy-MM-dd"),
+                                        @min = DateTime.Now.ToString("yyyy-MM-dd")
+                                    })
                                 @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                             </div>
 
@@ -60,14 +72,16 @@
                             <!-- Requester -->
                             <div class="mb-3">
                                 @Html.LabelFor(model => model.RequesterId, new { @class = "form-label" })
-                                @Html.DropDownListFor(model => model.RequesterId, Model.Requesters, "Select Requester", new { @class = "form-control" })
+                                <input type="text" class="form-control" value="@Model.Requesters.FirstOrDefault(r => r.Value == Model.RequesterId.ToString())?.Text" readonly />
+                                @Html.HiddenFor(model => model.RequesterId)
                                 @Html.ValidationMessageFor(model => model.RequesterId, "", new { @class = "text-danger" })
                             </div>
 
                             <!-- Attachment -->
                             <div class="mb-3">
                                 @Html.LabelFor(model => model.Attachment, new { @class = "form-label" })
-                                @Html.TextBoxFor(model => model.Attachment, new { @class = "form-control", @placeholder = "Enter attachment name" })
+                                <input type="file" name="AttachmentFile" class="form-control" />
+                                <small class="text-muted">Current file: @Model.Attachment</small>
                                 @Html.ValidationMessageFor(model => model.Attachment, "", new { @class = "text-danger" })
                             </div>
 
@@ -79,7 +93,7 @@
                             </div>
 
                             <div class="text-center">
-                                <button type="submit" class="btn btn-success">Save</button>
+                                <button type="submit" class="btn btn-warning">Update</button>
                                 <a href="@Url.Action("List", "VacationRequest")" class="btn btn-secondary">Cancel</a>
                             </div>
                         }
