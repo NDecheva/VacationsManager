@@ -17,6 +17,7 @@ namespace VacationsManagerMVC.Controllers
     {
         protected readonly IRoleService _roleService;
         protected readonly ITeamService _teamService;
+        protected readonly IProjectService _projectService;
 
         public UserController(IUserService userService, IMapper mapper, IRoleService roleService, ITeamService teamService)
             : base(userService, mapper)
@@ -47,6 +48,5 @@ namespace VacationsManagerMVC.Controllers
 
             return await base.Create(editVM);
         }
-
     }
 }
