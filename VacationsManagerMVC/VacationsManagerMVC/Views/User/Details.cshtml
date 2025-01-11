@@ -36,8 +36,16 @@
                             <dd class="col-sm-9">@Model.Role.Name</dd>
 
                             <dt class="col-sm-3">Team:</dt>
-                            <dd class="col-sm-9">@Model.Team?.Name No team assigned</dd>
-
+                            <dd class="col-sm-9">
+                                @if (Model.Team != null)
+                                {
+                                    @Model.Team.Name
+                                }
+                                else
+                                {
+                                    <span class="text-muted">No team assigned</span>
+                                }
+                            </dd>
 
                             <dt class="col-sm-3">Vacation Requests:</dt>
                             <dd class="col-sm-9">
@@ -46,13 +54,15 @@
                                     <ul>
                                         @foreach (var request in Model.VacationRequests)
                                         {
-                                            <li>@request.StartDate.ToString("yyyy-MM-dd") - @request.EndDate.ToString("yyyy-MM-dd")</li>
+                                            <li>
+                                                @request.StartDate.ToString("yyyy-MM-dd") - @request.EndDate.ToString("yyyy-MM-dd")
+                                            </li>
                                         }
                                     </ul>
                                 }
                                 else
                                 {
-                                    <span>No vacation requests</span>
+                                    <span class="text-muted">No vacation requests</span>
                                 }
                             </dd>
                         </dl>

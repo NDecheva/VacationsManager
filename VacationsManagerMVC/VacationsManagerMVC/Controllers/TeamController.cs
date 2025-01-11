@@ -70,6 +70,75 @@ namespace VacationsManagerMVC.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<IActionResult> AddDeveloper(int teamId, int userId)
+        {
+            try
+            {
+                await _teamService.AddDeveloperToTeamAsync(teamId, userId);
+                return RedirectToAction("Details", new { id = teamId });
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message); // Ако няма намерен Team или User
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message); // Ако потребителят вече е част от екипа
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding developer: {ex.Message}");
+                return StatusCode(500, "An error occurred while adding the developer.");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveDeveloper(int teamId, int userId)
+        {
+            try
+            {
+                await _teamService.RemoveDeveloperFromTeamAsync(teamId, userId);
+
+                // Проверете броя на разработчиците
+                var team = await _teamService.GetByIdIfExistsAsync(teamId);
+                Console.WriteLine($"Developers Count after removal: {team.Developers?.Count ?? 0}");
+
+                return RedirectToAction("Details", new { id = teamId });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error removing developer: {ex.Message}");
+                return StatusCode(500, "An error occurred while removing the developer.");
+            }
+        }
+
+
+
+
+        [Route("Team/Details")] 
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var team = await _teamService.GetByIdIfExistsAsync(id);
+            if (team == null)
+            {
+                return NotFound("Team not found.");
+            }
+
+            var teamDevelopersIds = team.Developers?.Select(d => d.Id).ToList() ?? new List<int>();
+            var availableUsers = await _userService.GetAllActiveAsync();
+            var nonTeamUsers = availableUsers.Where(u => !teamDevelopersIds.Contains(u.Id));
+
+            ViewBag.Users = nonTeamUsers.Select(u => new
+            {
+                u.Id,
+                u.FirstName
+            });
+
+            var teamDetailsVM = _mapper.Map<TeamDetailsVM>(team);
+            return View(teamDetailsVM);
+        }
 
 
     }

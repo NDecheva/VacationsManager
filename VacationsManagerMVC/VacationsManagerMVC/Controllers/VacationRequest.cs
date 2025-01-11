@@ -35,8 +35,8 @@ namespace VacationsManagerMVC.Controllers
                 .Cast<VacationType>()
                 .Select(vacationType => new SelectListItem
                 {
-                    Value = ((int)vacationType).ToString(), // Индекси на енума (0, 1, 2)
-                    Text = vacationType.ToString()         // Четлив текст (PaidLeave, UnpaidLeave, SickLeave)
+                    Value = ((int)vacationType).ToString(), 
+                    Text = vacationType.ToString()         
                 })
                 .ToList();
 
@@ -121,6 +121,7 @@ namespace VacationsManagerMVC.Controllers
             return View("List", vacationRequestVMs);
         }
 
+
         [HttpPost]
         public async Task<IActionResult> CreateWithAttachment(VacationRequestEditVM editVM, IFormFile attachmentFile)
         {
@@ -158,23 +159,96 @@ namespace VacationsManagerMVC.Controllers
             return RedirectToAction(nameof(List));
         }
 
+
+        [HttpPost("VacationRequest/Edit/{id}")]
+        public async Task<IActionResult> Edit(int id, VacationRequestEditVM editVM, IFormFile AttachmentFile)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("Invalid ID.");
+            }
+
+            var existingRequest = await _service.GetByIdIfExistsAsync(id);
+            if (existingRequest == null)
+            {
+                return NotFound("Vacation request not found.");
+            }
+
+            try
+            {
+                if (AttachmentFile != null && AttachmentFile.Length > 0)
+                {
+                    var uploadsPath = Path.Combine("wwwroot/uploads");
+                    Directory.CreateDirectory(uploadsPath);
+
+                    var filePath = Path.Combine(uploadsPath, AttachmentFile.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await AttachmentFile.CopyToAsync(stream);
+                    }
+
+                    if (!string.IsNullOrEmpty(existingRequest.Attachment))
+                    {
+                        var oldFilePath = Path.Combine(uploadsPath, existingRequest.Attachment);
+                        if (System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath);
+                        }
+                    }
+
+                    editVM.Attachment = AttachmentFile.FileName;
+                }
+                else
+                {
+                    editVM.Attachment = existingRequest.Attachment;
+                }
+
+                var vacationRequestDto = _mapper.Map<VacationRequestDto>(editVM);
+                await _service.SaveAsync(vacationRequestDto);
+
+                return RedirectToAction(nameof(List));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                ModelState.AddModelError("", "An error occurred while updating the vacation request.");
+                editVM = await PrePopulateVMAsync(editVM);
+                return View(editVM);
+            }
+        }
+
+
+
         [HttpGet]
         public IActionResult DownloadAttachment(string fileName)
         {
-            if (string.IsNullOrEmpty(fileName))
+            try
             {
-                return BadRequest("File name is required.");
+                var fileBytes = _vacationRequestService.DownloadAttachment(fileName);
+                return File(fileBytes, "application/octet-stream", fileName);
             }
-
-            var filePath = Path.Combine("wwwroot/uploads", fileName);
-            if (!System.IO.File.Exists(filePath))
+            catch (Exception ex)
             {
-                return NotFound("File not found.");
+                Console.WriteLine($"Error: {ex.Message}");
+                return NotFound(ex.Message);
             }
+        }
 
-            var fileBytes = System.IO.File.ReadAllBytes(filePath);
-            var contentType = "application/octet-stream";
-            return File(fileBytes, contentType, fileName);
+
+        [HttpPost]
+        [Authorize(Roles = "TeamLead,CEO")]
+        public async Task<IActionResult> Approve(int id)
+        {
+            try
+            {
+                await _vacationRequestService.ApproveRequestAsync(id);
+                return RedirectToAction(nameof(List));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

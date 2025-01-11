@@ -22,8 +22,7 @@
                         <h2>Edit User</h2>
                     </div>
                     <div class="card-body">
-                        @using (Html.BeginForm())
-                        {
+                        <form asp-action="Edit" asp-controller="User" method="post">
                             @Html.AntiForgeryToken()
                             @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
@@ -40,6 +39,10 @@
                                 @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @placeholder = "Enter first name" })
                                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                             </div>
+                            
+                            <!-- Hidden Password Field -->
+                            <input type="hidden" asp-for="Password" />
+
 
                             <!-- Last Name Field -->
                             <div class="mb-3">
@@ -53,7 +56,7 @@
                                 @Html.LabelFor(model => model.RoleId, new { @class = "form-label" })
                                 @Html.DropDownListFor(
                                          model => model.RoleId,
-                                         new SelectList(Model.AllRoles, "Value", "Text", Model.RoleId),
+                                         Model.AllRoles,
                                          "Select Role",
                                          new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
@@ -64,7 +67,7 @@
                                 @Html.LabelFor(model => model.TeamId, new { @class = "form-label" })
                                 @Html.DropDownListFor(
                                          model => model.TeamId,
-                                         new SelectList(Model.AllTeams, "Value", "Text", Model.TeamId),
+                                         Model.AllTeams,
                                          "Select Team",
                                          new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.TeamId, "", new { @class = "text-danger" })
@@ -74,7 +77,7 @@
                                 <button type="submit" class="btn btn-success">Save Changes</button>
                                 <a href="@Url.Action("List", "User")" class="btn btn-secondary">Cancel</a>
                             </div>
-                        }
+                        </form>
                     </div>
                 </div>
             </div>

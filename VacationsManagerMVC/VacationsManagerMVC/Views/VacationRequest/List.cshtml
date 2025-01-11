@@ -72,8 +72,22 @@
                                                         <a href="@Url.Action("Details", "VacationRequest", new { id = request.Id })" class="btn btn-sm btn-outline-info">Details</a>
                                                         <a href="@Url.Action("Edit", "VacationRequest", new { id = request.Id })" class="btn btn-sm btn-outline-warning">Edit</a>
                                                         <a href="@Url.Action("Delete", "VacationRequest", new { id = request.Id })" class="btn btn-sm btn-outline-danger">Delete</a>
+
+                                                        <!-- Approve Button -->
+                                                        @if ((User.IsInRole("TeamLead") || User.IsInRole("CEO")) && !request.IsApproved)
+                                                        {
+                                                            <form asp-action="Approve" asp-controller="VacationRequest" method="post" class="d-inline">
+                                                                <input type="hidden" name="id" value="@request.Id" />
+                                                                <button type="submit" class="btn btn-sm btn-outline-success">Approve</button>
+                                                            </form>
+                                                        }
+                                                        else if (request.IsApproved)
+                                                        {
+                                                            <span class="text-muted">Approved</span>
+                                                        }
                                                     </div>
                                                 </td>
+
                                             </tr>
                                         }
                                     </tbody>

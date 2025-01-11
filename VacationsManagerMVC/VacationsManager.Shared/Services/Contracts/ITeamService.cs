@@ -11,5 +11,7 @@ namespace VacationsManager.Shared.Services.Contracts
     public interface ITeamService : IBaseCrudService<TeamDto, ITeamRepository>
 
     {
+        public Task AddDeveloperToTeamAsync(int teamId, int userId);
+        public Task RemoveDeveloperFromTeamAsync(int teamId, int userId);
     }
 }
