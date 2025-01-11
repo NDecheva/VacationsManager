@@ -1,10 +1,7 @@
-﻿﻿@using VacationsManagerMVC.Controllers
+﻿﻿﻿@using VacationsManagerMVC.Controllers
 @using VacationsManager.Shared.Extensions
 @model IEnumerable<VacationsManagerMVC.ViewModels.ProjectDetailsVM>
 
-@{
-    ViewBag.Title = "Project List";
-}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,61 +14,65 @@
 </head>
 <body>
     <div class="container mt-5">
-        <div class="row">
-            <div class="col">
-                <h2 class="text-center mb-4">Project List</h2>
-                <a href="@Url.Action("Create", "Project")" class="btn btn-primary mb-3">Add New Project</a>
-                @if (Model.Any())
-                {
-                    <table class="table table-striped table-bordered">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col">Project Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Teams Involved</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var project in Model)
-                            {
-                                <tr>
-                                    <td>@project.Name</td>
-                                    <td>@project.Description</td>
-                                    <td>
-                                        @if (project.Teams.Any())
-                                        {
-                                            <ul>
-                                                @foreach (var team in project.Teams)
-                                                {
-                                                    <li>@team.Name</li>
-                                                }
-                                            </ul>
-                                        }
-                                        else
-                                        {
-                                            <span>No Teams Assigned</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        <a href="@Url.Action("Edit", "Project", new { id = project.Id })" class="btn btn-warning btn-sm">Edit</a>
-                                        <a href="@Url.Action("Details", "Project", new { id = project.Id })" class="btn btn-info btn-sm">Details</a>
-                                        <a href="@Url.Action("Delete", "Project", new { id = project.Id })" class="btn btn-danger btn-sm">Delete</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    <div class="alert alert-warning" role="alert">
-                        No projects available.
-                    </div>
-                }
+        <h2 class="text-center mb-4">Project List</h2>
+
+        <!-- Търсачка -->
+        <form method="get" action="@Url.Action("Search", "Project")" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="searchTerm" class="form-control" placeholder="Search by name or description" value="@ViewBag.SearchTerm" />
+                <button class="btn btn-primary" type="submit">Search</button>
             </div>
-        </div>
+        </form>
+
+        <!-- Показване на резултати -->
+        @if (Model.Any())
+        {
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Description</th>
+                        <th>Teams Involved</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var project in Model)
+                    {
+                        <tr>
+                            <td>@project.Name</td>
+                            <td>@project.Description</td>
+                            <td>
+                                @if (project.Teams.Any())
+                                {
+                                    <ul>
+                                        @foreach (var team in project.Teams)
+                                        {
+                                            <li>@team.Name</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <span>No teams assigned</span>
+                                }
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Project", new { id = project.Id })" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="@Url.Action("Details", "Project", new { id = project.Id })" class="btn btn-info btn-sm">Details</a>
+                                <a href="@Url.Action("Delete", "Project", new { id = project.Id })" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                No projects found.
+            </div>
+        }
     </div>
 </body>
 </html>
-

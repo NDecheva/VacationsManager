@@ -7,6 +7,8 @@ using VacationsManagerMVC.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc;
+using VacationsManager.Shared.Security;
 
 namespace VacationsManagerMVC.Controllers
 {
@@ -15,6 +17,7 @@ namespace VacationsManagerMVC.Controllers
     {
         protected readonly IRoleService _roleService;
         protected readonly ITeamService _teamService;
+        protected readonly IProjectService _projectService;
 
         public UserController(IUserService userService, IMapper mapper, IRoleService roleService, ITeamService teamService)
             : base(userService, mapper)
@@ -25,10 +28,6 @@ namespace VacationsManagerMVC.Controllers
 
         protected override async Task<UserEditVM> PrePopulateVMAsync(UserEditVM editVM)
         {
-            if (editVM.TeamId == 0)
-            {
-                editVM.TeamId = null;
-            }
 
             editVM.AllRoles = (await _roleService.GetAllAsync())
                 .Select(x => new SelectListItem($"{x.Name}", x.Id.ToString()));
@@ -37,6 +36,17 @@ namespace VacationsManagerMVC.Controllers
                 .Select(x => new SelectListItem($"{x.Name}", x.Id.ToString()));
 
             return editVM;
+        }
+
+        [HttpPost]
+        public override async Task<IActionResult> Create(UserEditVM editVM)
+        {
+            if (!string.IsNullOrEmpty(editVM.Password))
+            {
+                editVM.Password = PasswordHasher.HashPassword(editVM.Password);
+            }
+
+            return await base.Create(editVM);
         }
     }
 }
