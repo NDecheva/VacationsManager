@@ -1,0 +1,67 @@
+﻿@model VacationsManagerMVC.ViewModels.RoleDetailsVM
+
+@{
+    ViewBag.Title = "Delete Role";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <h2>Delete Role</h2>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="text-center text-danger">Are you sure you want to delete this role?</h5>
+                        <hr />
+                        <dl class="row">
+                            <dt class="col-sm-4">Role Name:</dt>
+                            <dd class="col-sm-8">@Model.Name</dd>
+
+                            <dt class="col-sm-4">Role Type:</dt>
+                            <dd class="col-sm-8">@Model.RoleType</dd>
+
+                            <dt class="col-sm-4">Users Assigned:</dt>
+                            <dd class="col-sm-8">
+                                @if (Model.Users.Any())
+                                {
+                                    <ul>
+                                        @foreach (var user in Model.Users)
+                                        {
+                                            <li>@user.Username</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <span>No users assigned.</span>
+                                }
+                            </dd>
+                        </dl>
+                        <hr />
+                        <div class="text-center">
+                            @using (Html.BeginForm("Delete", "Role", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@Model.Id" />
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <a href="@Url.Action("List", "Role")" class="btn btn-secondary">Cancel</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

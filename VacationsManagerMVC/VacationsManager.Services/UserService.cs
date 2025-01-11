@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using VacationsManager.Shared.Attributes;
 using VacationsManager.Shared.Dtos;
 using VacationsManager.Shared.Repos.Contracts;
+using VacationsManager.Shared.Security;
 using VacationsManager.Shared.Services.Contracts;
 
 namespace VacationsManager.Services
@@ -18,9 +19,18 @@ namespace VacationsManager.Services
 
         }
 
-        public Task<bool> CanUserLoginAsync(string username, string password)
+        public async Task<bool> CanUserLoginAsync(string username, string password)
         {
-            return _repository.CanUserLoginAsync(username, password);
+            var user = await _repository.GetByUsernameAsync(username);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            bool passwordMatches = PasswordHasher.VerifyPassword(password, user.Password);
+
+            return passwordMatches;
         }
 
         public Task<UserDto> GetByUsernameAsync(string username)
