@@ -30,11 +30,11 @@ namespace VacationsManagerMVC.ViewModels
         public IEnumerable<SelectListItem> Requesters { get; set; }  
 
         [DisplayName("Attachment")]
-        public string Attachment { get; set; }
+        public string? Attachment { get; set; }
 
         [DisplayName("Vacation Type")]
         [Required(ErrorMessage = "Vacation type is required.")]
-        public VacationType SelectedVacationType { get; set; }
+        public VacationType VacationType { get; set; }
 
         public IEnumerable<SelectListItem> VacationTypes { get; set; }  // Списък с типове отпуски
 

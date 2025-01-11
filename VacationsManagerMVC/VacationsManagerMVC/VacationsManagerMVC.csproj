@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -30,6 +30,11 @@
 	  <ProjectReference Include="..\VacationsManager.Data\VacationsManager.Data.csproj" />
 	  <ProjectReference Include="..\VacationsManager.Services\VacationsManager.Services.csproj" />
 	  <ProjectReference Include="..\VacationsManager.Shared\VacationsManager.Shared.csproj" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\uploads\" />
 	</ItemGroup>
 
 

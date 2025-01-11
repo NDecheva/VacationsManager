@@ -15,7 +15,7 @@ namespace VacationsManager.Shared.Dtos
         public bool IsApproved { get; set; }
         public int RequesterId { get; set; }
         public UserDto Requester { get; set; }
-        public string Attachment { get; set; }
+        public string? Attachment { get; set; }
         public VacationType VacationType { get; set; }
         
     }

@@ -47,6 +47,20 @@
                         <div class="mb-3">
                             <strong>@Html.DisplayNameFor(model => model.Attachment)</strong>: @Model.Attachment
                         </div>
+                        <div class="mb-3">
+                            <strong>@Html.DisplayNameFor(model => model.Attachment)</strong>:
+                            @if (!string.IsNullOrEmpty(Model.Attachment))
+                            {
+                                <a href="@Url.Action("DownloadAttachment", "VacationRequest", new { fileName = Model.Attachment })" class="btn btn-primary">
+                                    Download Attachment
+                                </a>
+                            }
+                            else
+                            {
+                                <span>No attachment available.</span>
+                            }
+                        </div>
+
 
                         <div class="mb-3">
                             <strong>@Html.DisplayNameFor(model => model.VacationType)</strong>: @Model.VacationType.ToString()

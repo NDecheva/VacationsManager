@@ -86,7 +86,7 @@ namespace VacationsManagerMVC.Controllers
                 }
 
                 var model = this._mapper.Map<TModel>(editVM);
-                await this._service.SaveAsync(model);
+            await this._service.SaveAsync(model);
                 return await List();
             }
             [HttpGet]

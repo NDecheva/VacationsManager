@@ -13,5 +13,6 @@ namespace VacationsManager.Shared.Services.Contracts
         Task<bool> CanUserLoginAsync(string username, string password);
         Task<UserDto> GetByUsernameAsync(string username);
         Task<IEnumerable<UserDto>> GetAllActiveAsync();
+        Task<IEnumerable<UserDto>> GetTeamMembersAsync(int teamId);
     }
 }

@@ -66,5 +66,16 @@ namespace VacationsManager.Data.Repos
             return teamLeaders;
         }
 
+        public async Task<IEnumerable<UserDto>> GetTeamMembersAsync(int teamId)
+        {
+            var teamMembers = await _context.Set<User>()
+                .Where(u => u.TeamId == teamId)
+                .ToListAsync();
+
+            return _mapper.Map<IEnumerable<UserDto>>(teamMembers); // Мапване към DTO
+        }
+
+
+
     }
 }
