@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VacationsManager.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -129,7 +129,7 @@ namespace VacationsManager.Data.Migrations
                     IsHalfDay = table.Column<bool>(type: "bit", nullable: false),
                     IsApproved = table.Column<bool>(type: "bit", nullable: false),
                     RequesterId = table.Column<int>(type: "int", nullable: false),
-                    Attachment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Attachment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VacationType = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -150,16 +150,16 @@ namespace VacationsManager.Data.Migrations
                 columns: new[] { "Id", "CreatedAt", "Name", "RoleType", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4942), "CEO", 1, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4944) },
-                    { 2, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4999), "Developer", 2, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4999) },
-                    { 3, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5015), "TeamLead", 3, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5016) },
-                    { 4, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5031), "Unassigned", 4, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5032) }
+                    { 1, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3619), "CEO", 1, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3620) },
+                    { 2, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3669), "Developer", 2, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3669) },
+                    { 3, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3686), "TeamLead", 3, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3686) },
+                    { 4, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3701), "Unassigned", 4, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3701) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedAt", "FirstName", "LastName", "Password", "RoleId", "TeamId", "UpdatedAt", "Username" },
-                values: new object[] { 1, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5106), "Admin", "User", "pTDoIwVg8mxcdTjKNblSgFzO4H3GvZKY+jVZ+M0VtFU20mkeRPahTVdNtPBze0MX", 1, null, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5107), "admin" });
+                values: new object[] { 1, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3779), "Admin", "User", "immQRxaPfG/2bE5N/IWPlLTDkO98GxjyOv1zuHdtPPOgmec6o30kiAqlp+XaeXOR", 1, null, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3780), "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_RecipientId",

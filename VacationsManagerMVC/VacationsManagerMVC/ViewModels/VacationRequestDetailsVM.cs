@@ -21,7 +21,7 @@ namespace VacationsManagerMVC.ViewModels
         public UserDetailsVM Requester { get; set; }
 
         [DisplayName("Attachment")]
-        public string Attachment { get; set; }
+        public string? Attachment { get; set; }
 
         [DisplayName("Vacation Type")]
         public VacationType VacationType { get; set; }

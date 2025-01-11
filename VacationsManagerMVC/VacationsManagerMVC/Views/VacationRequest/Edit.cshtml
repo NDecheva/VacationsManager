@@ -87,9 +87,9 @@
 
                             <!-- Vacation Type -->
                             <div class="mb-3">
-                                @Html.LabelFor(model => model.SelectedVacationType, new { @class = "form-label" })
-                                @Html.DropDownListFor(model => model.SelectedVacationType, Model.VacationTypes, "Select Vacation Type", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.SelectedVacationType, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.VacationType, new { @class = "form-label" })
+                                @Html.DropDownListFor(model => model.VacationType, Model.VacationTypes, "Select Vacation Type", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.VacationType, "", new { @class = "text-danger" })
                             </div>
 
                             <div class="text-center">

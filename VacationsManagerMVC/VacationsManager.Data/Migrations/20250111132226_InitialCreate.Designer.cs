@@ -12,8 +12,8 @@ using VacationsManager.Data;
 namespace VacationsManager.Data.Migrations
 {
     [DbContext(typeof(VacationsManagerDbContext))]
-    [Migration("20241122193223_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250111132226_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,34 +118,34 @@ namespace VacationsManager.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4942),
+                            CreatedAt = new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3619),
                             Name = "CEO",
                             RoleType = 1,
-                            UpdatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4944)
+                            UpdatedAt = new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3620)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4999),
+                            CreatedAt = new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3669),
                             Name = "Developer",
                             RoleType = 2,
-                            UpdatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4999)
+                            UpdatedAt = new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3669)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5015),
+                            CreatedAt = new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3686),
                             Name = "TeamLead",
                             RoleType = 3,
-                            UpdatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5016)
+                            UpdatedAt = new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3686)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5031),
+                            CreatedAt = new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3701),
                             Name = "Unassigned",
                             RoleType = 4,
-                            UpdatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5032)
+                            UpdatedAt = new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3701)
                         });
                 });
 
@@ -230,12 +230,12 @@ namespace VacationsManager.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5106),
+                            CreatedAt = new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3779),
                             FirstName = "Admin",
                             LastName = "User",
-                            Password = "pTDoIwVg8mxcdTjKNblSgFzO4H3GvZKY+jVZ+M0VtFU20mkeRPahTVdNtPBze0MX",
+                            Password = "immQRxaPfG/2bE5N/IWPlLTDkO98GxjyOv1zuHdtPPOgmec6o30kiAqlp+XaeXOR",
                             RoleId = 1,
-                            UpdatedAt = new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5107),
+                            UpdatedAt = new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3780),
                             Username = "admin"
                         });
                 });
@@ -249,7 +249,6 @@ namespace VacationsManager.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Attachment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")

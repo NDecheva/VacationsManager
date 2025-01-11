@@ -15,7 +15,7 @@ namespace VacationsManager.Data.Entities
         public bool IsApproved { get; set; } = false;
         public int RequesterId { get; set; }
         public virtual User Requester { get; set; }
-        public string Attachment { get; set; } = string.Empty;
+        public string? Attachment { get; set; } = string.Empty;
         public VacationType VacationType { get; set; }
 
     }
