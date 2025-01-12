@@ -11,11 +11,18 @@ namespace VacationsManager.Services
     [AutoBind]
     public class VacationRequestService : BaseCrudService<VacationRequestDto, IVacationRequestRepository>, IVacationRequestService
     {
+        private readonly IUserService _userService;
+        private readonly INotificationService _notificationService;
 
-        public VacationRequestService(IVacationRequestRepository repository, IUserService userService) : base(repository)
+        public VacationRequestService(
+            IVacationRequestRepository repository,
+            IUserService userService,
+            INotificationService notificationService)
+            : base(repository)
         {
+            _userService = userService;
+            _notificationService = notificationService;
         }
-
 
         public async Task ApproveRequestAsync(int id)
         {
@@ -32,8 +39,11 @@ namespace VacationsManager.Services
 
             request.IsApproved = true;
             await _repository.SaveAsync(request);
-        }
 
+            // Изпрати нотификация
+            var message = $"Your vacation request from {request.StartDate:yyyy-MM-dd} to {request.EndDate:yyyy-MM-dd} has been approved.";
+            await _notificationService.SendNotificationAsync(request.RequesterId, message);
+        }
 
         public byte[] DownloadAttachment(string fileName)
         {

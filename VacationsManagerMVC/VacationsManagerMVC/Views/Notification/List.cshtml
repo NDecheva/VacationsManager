@@ -1,0 +1,25 @@
+﻿@model IEnumerable<VacationsManagerMVC.ViewModels.NotificationDetailsVM>
+
+<div class="container mt-4">
+    <h3 class="mb-4">Notifications</h3>
+    <div class="list-group">
+        @foreach (var notification in Model)
+        {
+            <div class="list-group-item d-flex justify-content-between align-items-center @(!notification.IsRead ? "bg-light" : "")">
+                <div>
+                    <h5 class="mb-1">@notification.Message</h5>
+                    <p class="mb-0 text-muted">
+                        <small>@notification.DateSent.ToString("yyyy-MM-dd HH:mm")</small>
+                    </p>
+                </div>
+                @if (!notification.IsRead)
+                {
+                    <form method="post" asp-action="MarkNotificationAsRead" class="d-inline">
+                        <input type="hidden" name="notificationId" value="@notification.Id" />
+                        <button type="submit" class="btn btn-sm btn-primary">Mark as Read</button>
+                    </form>
+                }
+            </div>
+        }
+    </div>
+</div>

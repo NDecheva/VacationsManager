@@ -8,7 +8,10 @@ using VacationsManager.Shared.Repos.Contracts;
 
 namespace VacationsManager.Shared.Services.Contracts
 {
-    public interface INotificationService : IBaseCrudService<NotificationDto, INotificationRepository> 
+    public interface INotificationService : IBaseCrudService<NotificationDto, INotificationRepository>
     {
+        public Task SendNotificationAsync(int recipientId, string message);
+        Task MarkAsReadAsync(int notificationId);
+        Task<IEnumerable<NotificationDto>> GetUnreadNotificationsAsync(int userId);
     }
 }

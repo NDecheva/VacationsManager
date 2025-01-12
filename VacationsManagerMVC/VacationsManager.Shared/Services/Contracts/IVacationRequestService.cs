@@ -15,5 +15,6 @@ namespace VacationsManager.Shared.Services.Contracts
         Task ApproveRequestAsync(int id);
 
         byte[] DownloadAttachment(string fileName);
+
     }
 }
