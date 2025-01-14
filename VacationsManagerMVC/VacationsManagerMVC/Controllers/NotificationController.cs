@@ -16,8 +16,7 @@ namespace VacationsManagerMVC.Controllers
     public class NotificationController : BaseCrudController<NotificationDto, INotificationRepository, INotificationService, NotificationEditVM, NotificationDetailsVM>
     {
         protected readonly IUserService _userService;
-        protected readonly INotificationService _notificationService; 
-
+        protected readonly INotificationService _notificationService;
 
         public NotificationController(IMapper mapper, INotificationService notificationService, IUserService userService)
             : base(notificationService, mapper)
@@ -30,9 +29,36 @@ namespace VacationsManagerMVC.Controllers
         {
             editVM.UserList = (await _userService.GetAllAsync())
                 .Select(x => new SelectListItem($"{x.Username}", x.Id.ToString()));
-           
 
             return editVM;
+        }
+
+        [HttpGet]
+        public override async Task<IActionResult> List(
+            int pageSize = DefaultPageSize,
+            int pageNumber = DefaultPageNumber)
+        {
+            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                return Unauthorized("User is not authenticated.");
+            }
+
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Unauthorized("User ID claim is missing.");
+            }
+
+            if (!int.TryParse(userIdClaim, out var userId))
+            {
+                return BadRequest("Invalid User ID.");
+            }
+
+            var notifications = await _notificationService.GetUnreadNotificationsAsync(userId);
+
+            var mappedNotifications = _mapper.Map<IEnumerable<NotificationDetailsVM>>(notifications);
+
+            return View(nameof(List), mappedNotifications);
         }
 
         [HttpPost]
@@ -42,21 +68,6 @@ namespace VacationsManagerMVC.Controllers
             {
                 await _notificationService.MarkAsReadAsync(notificationId);
                 return Ok("Notification marked as read.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetUnreadNotifications()
-        {
-            try
-            {
-                var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                var notifications = await _notificationService.GetUnreadNotificationsAsync(userId);
-                return Ok(notifications);
             }
             catch (Exception ex)
             {
@@ -79,7 +90,5 @@ namespace VacationsManagerMVC.Controllers
                 return StatusCode(500, "An error occurred.");
             }
         }
-
-
     }
 }

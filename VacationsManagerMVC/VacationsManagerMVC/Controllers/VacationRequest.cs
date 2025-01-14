@@ -176,6 +176,8 @@ namespace VacationsManagerMVC.Controllers
 
             try
             {
+                editVM.RequesterId = existingRequest.RequesterId;
+
                 if (AttachmentFile != null && AttachmentFile.Length > 0)
                 {
                     var uploadsPath = Path.Combine("wwwroot/uploads");
@@ -219,6 +221,7 @@ namespace VacationsManagerMVC.Controllers
 
 
 
+
         [HttpGet]
         public IActionResult DownloadAttachment(string fileName)
         {
@@ -241,7 +244,29 @@ namespace VacationsManagerMVC.Controllers
         {
             try
             {
+                // Вземете заявката по ID
+                var request = await _vacationRequestService.GetByIdIfExistsAsync(id);
+                if (request == null)
+                {
+                    return NotFound("Vacation request not found.");
+                }
+
+                // Проверете дали потребителят е TeamLead и заявката е подадена от TeamLead
+                var requester = await _userService.GetByIdIfExistsAsync(request.RequesterId);
+                if (requester == null)
+                {
+                    return NotFound("Requester not found.");
+                }
+
+                // Сравнете свойството Name или друго поле от RoleDto със стринг
+                if (requester.Role?.Name == "TeamLead" && !User.IsInRole("CEO"))
+                {
+                    return Forbid("Only a CEO can approve requests submitted by a TeamLead.");
+                }
+
+                // Одобряване на заявката
                 await _vacationRequestService.ApproveRequestAsync(id);
+
                 return RedirectToAction(nameof(List));
             }
             catch (Exception ex)
@@ -250,5 +275,7 @@ namespace VacationsManagerMVC.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
     }
 }

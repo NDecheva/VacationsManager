@@ -59,18 +59,24 @@
 
                             <!-- Approved -->
                             <div class="mb-3 form-check">
-                                @Html.CheckBoxFor(model => model.IsApproved, new { @class = "form-check-input" })
-                                @Html.LabelFor(model => model.IsApproved, new { @class = "form-check-label" })
+                                @if (User.IsInRole("CEO"))
+                                {
+                                    @Html.CheckBoxFor(model => model.IsApproved, new { @class = "form-check-input" })
+                                    @Html.LabelFor(model => model.IsApproved, new { @class = "form-check-label" })
+                                }
+                                else
+                                {
+                                    <input type="checkbox" class="form-check-input" @(Model.IsApproved ? "checked" : "") disabled />
+                                    <label class="form-check-label">Approved</label>
+                                }
                                 @Html.ValidationMessageFor(model => model.IsApproved, "", new { @class = "text-danger" })
                             </div>
 
-                            <!-- Requester -->
-                            <div class="mb-3">
-                                @Html.LabelFor(model => model.RequesterId, new { @class = "form-label" })
-                                <input type="text" class="form-control" value="@Model.Requesters.FirstOrDefault(r => r.Value == Model.RequesterId.ToString())?.Text" readonly />
-                                @Html.HiddenFor(model => model.RequesterId)
-                                @Html.ValidationMessageFor(model => model.RequesterId, "", new { @class = "text-danger" })
-                            </div>
+
+                            <!-- Hidden Requester -->
+                            @Html.HiddenFor(model => model.RequesterId)
+                            @Html.ValidationMessageFor(model => model.RequesterId, "", new { @class = "text-danger" })
+
 
                             <!-- Attachment -->
                             <div class="mb-3">
