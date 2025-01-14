@@ -27,20 +27,21 @@ namespace VacationsManager.Services
         public async Task AddDeveloperToTeamAsync(int teamId, int userId)
         {
             var team = await _repository.GetByIdAsync(teamId);
-            if (team == null) throw new ArgumentException("Team not found.");
+            if (team == null)
+                throw new ArgumentException("Team not found.");
 
-            var user = await _userService.GetByIdIfExistsAsync(userId); 
-            if (user == null) throw new ArgumentException("User not found.");
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user == null)
+                throw new ArgumentException("User not found.");
 
-            if (team.Developers == null)
-                team.Developers = new List<UserDto>();
+            if (user.TeamId == teamId)
+                throw new InvalidOperationException("User is already a member of this team.");
 
-            if (team.Developers.Any(d => d.Id == userId))
-                throw new InvalidOperationException("User is already a developer in this team.");
+            user.TeamId = teamId;
 
-            team.Developers.Add(user);
-            await _repository.SaveAsync(team);
+            await _userRepository.SaveAsync(user);
         }
+
 
         public async Task RemoveDeveloperFromTeamAsync(int teamId, int userId)
         {

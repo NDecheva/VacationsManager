@@ -76,22 +76,17 @@ namespace VacationsManagerMVC.Controllers
             try
             {
                 await _teamService.AddDeveloperToTeamAsync(teamId, userId);
+
                 return RedirectToAction("Details", new { id = teamId });
-            }
-            catch (ArgumentException ex)
-            {
-                return NotFound(ex.Message); // Ако няма намерен Team или User
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message); // Ако потребителят вече е част от екипа
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error adding developer: {ex.Message}");
+
                 return StatusCode(500, "An error occurred while adding the developer.");
             }
         }
+
 
         [HttpPost]
         public async Task<IActionResult> RemoveDeveloper(int teamId, int userId)
@@ -115,33 +110,29 @@ namespace VacationsManagerMVC.Controllers
         }
 
 
-
-
-
-
-        [Route("Team/Details")] 
+        [Route("Team/Details")]
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var team = await _teamService.GetByIdIfExistsAsync(id);
             if (team == null)
             {
-                return NotFound("Team not found.");
+                return NotFound();
             }
 
-            var teamDevelopersIds = team.Developers?.Select(d => d.Id).ToList() ?? new List<int>();
-            var availableUsers = await _userService.GetAllActiveAsync();
-            var nonTeamUsers = availableUsers.Where(u => !teamDevelopersIds.Contains(u.Id));
+            var availableDevelopers = (await _userService.GetAllAsync())
+                .Where(user => user.Role != null && user.Role.Name == "Developer" && user.TeamId == null) 
+                .Select(user => new { user.Id, user.FirstName, user.LastName })
+                .ToList();
 
-            ViewBag.Users = nonTeamUsers.Select(u => new
-            {
-                u.Id,
-                u.FirstName
-            });
+            ViewBag.Users = availableDevelopers;
 
-            var teamDetailsVM = _mapper.Map<TeamDetailsVM>(team);
-            return View(teamDetailsVM);
+            var teamVM = _mapper.Map<TeamDetailsVM>(team);
+
+            return View(teamVM);
         }
+
+
 
 
     }

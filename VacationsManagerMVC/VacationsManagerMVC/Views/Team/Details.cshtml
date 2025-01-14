@@ -24,8 +24,8 @@
                         <h5>@Model.Name</h5>
                     </div>
                     <div class="card-body">
-                        <p><strong>Project:</strong> @Model.Project</p>
-                        <p><strong>Team Leader:</strong> @Model.TeamLeader</p>
+                        <p><strong>Project:</strong> @(Model.Project?.Name ?? "No Project Assigned")</p>
+                        <p><strong>Team Leader:</strong> @(Model.TeamLeader?.Username ?? "No Team Leader Assigned")</p>
 
                         <p><strong>Developers:</strong></p>
                         @if (Model.Developers.Any())
@@ -51,7 +51,8 @@
                         <form method="post" action="@Url.Action("AddDeveloper")" class="mt-3">
                             <input type="hidden" name="teamId" value="@Model.Id" />
                             <div class="input-group">
-                                <select name="userId" class="form-control">
+                                <select name="userId" class="form-control" required>
+                                    <option value="" disabled selected>Select a developer</option> <!-- Placeholder -->
                                     @if (ViewBag.Users != null && ((IEnumerable<dynamic>)ViewBag.Users).Any())
                                     {
                                         @foreach (var user in ViewBag.Users)
@@ -69,6 +70,7 @@
                         </form>
 
                     </div>
+
                 </div>
 
                 <div class="mt-4">
