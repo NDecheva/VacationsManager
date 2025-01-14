@@ -16,10 +16,12 @@ namespace VacationsManager.Services
     public class TeamService : BaseCrudService<TeamDto, ITeamRepository>, ITeamService
     {
         private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
 
-        public TeamService(ITeamRepository repository, IUserService userService) : base(repository)
+        public TeamService(ITeamRepository repository, IUserService userService, IUserRepository userRepository) : base(repository)
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _userRepository = userRepository;
         }
 
         public async Task AddDeveloperToTeamAsync(int teamId, int userId)
@@ -42,22 +44,22 @@ namespace VacationsManager.Services
 
         public async Task RemoveDeveloperFromTeamAsync(int teamId, int userId)
         {
+
             var team = await _repository.GetByIdAsync(teamId);
             if (team == null)
                 throw new ArgumentException("Team not found.");
 
-            var developer = team.Developers?.FirstOrDefault(d => d.Id == userId);
-            if (developer == null)
-                throw new ArgumentException("Developer not found in this team.");
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user == null)
+                throw new ArgumentException("User not found.");
 
-            developer.TeamId = null; 
+            if (user.TeamId != teamId)
+                throw new InvalidOperationException("User is not a member of this team.");
 
-            await _repository.SaveAsync(team);
-            var updatedTeam = await _repository.GetByIdAsync(teamId);
-            Console.WriteLine($"Updated TeamId is: {updatedTeam.Id}");
+            user.TeamId = null;
 
+            await _userRepository.SaveAsync(user); 
         }
-
 
     }
 

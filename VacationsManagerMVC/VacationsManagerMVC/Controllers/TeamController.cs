@@ -98,20 +98,23 @@ namespace VacationsManagerMVC.Controllers
         {
             try
             {
+                // Премахване на разработчика чрез сървиса
                 await _teamService.RemoveDeveloperFromTeamAsync(teamId, userId);
 
-                // Проверете броя на разработчиците
-                var team = await _teamService.GetByIdIfExistsAsync(teamId);
-                Console.WriteLine($"Developers Count after removal: {team.Developers?.Count ?? 0}");
-
+                // Пренасочване към детайлите на екипа
                 return RedirectToAction("Details", new { id = teamId });
             }
             catch (Exception ex)
             {
+                // Логване на грешката
                 Console.WriteLine($"Error removing developer: {ex.Message}");
+
+                // Връщане на грешка към клиента
                 return StatusCode(500, "An error occurred while removing the developer.");
             }
         }
+
+
 
 
 
