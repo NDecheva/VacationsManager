@@ -1,11 +1,11 @@
 ﻿using Moq;
 using System;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using VacationsManager.Services;
 using VacationsManager.Shared.Dtos;
 using VacationsManager.Shared.Repos.Contracts;
 using VacationsManager.Shared.Services.Contracts;
-using NUnit.Framework;
 using VacationsManager.Shared.Enums;
 
 namespace VacationManager.Tests.Services
@@ -13,11 +13,16 @@ namespace VacationManager.Tests.Services
     public class VacationRequestServiceTests
     {
         private readonly Mock<IVacationRequestRepository> _vacationRequestRepositoryMock = new Mock<IVacationRequestRepository>();
+        private readonly Mock<IUserService> _userServiceMock = new Mock<IUserService>();
+        private readonly Mock<INotificationService> _notificationServiceMock = new Mock<INotificationService>();
         private readonly IVacationRequestService _service;
 
         public VacationRequestServiceTests()
         {
-            _service = new VacationRequestService(_vacationRequestRepositoryMock.Object);
+            _service = new VacationRequestService(
+                _vacationRequestRepositoryMock.Object,
+                _userServiceMock.Object,
+                _notificationServiceMock.Object);
         }
 
         [Test]
@@ -32,7 +37,7 @@ namespace VacationManager.Tests.Services
                 IsApproved = false,
                 Requester = new UserDto { Id = 1, Username = "Jane Doe" },
                 Attachment = "vacation_attachment.pdf",
-                VacationType = VacationType.PaidLeave // Using the enum here
+                VacationType = VacationType.PaidLeave
             };
 
             // Act
@@ -57,7 +62,6 @@ namespace VacationManager.Tests.Services
         [TestCase(131)]
         public async Task WhenDeleteAsync_WithCorrectId_ThenCallDeleteAsyncInRepository(int id)
         {
-            // Arrange
             // Act
             await _service.DeleteAsync(id);
 
@@ -80,7 +84,7 @@ namespace VacationManager.Tests.Services
                 IsApproved = false,
                 Requester = new UserDto { Id = 1, Username = "Jane Doe" },
                 Attachment = "vacation_attachment.pdf",
-                VacationType = VacationType.PaidLeave // Using the enum here
+                VacationType = VacationType.PaidLeave
             };
 
             _vacationRequestRepositoryMock.Setup(x => x.GetByIdAsync(It.Is<int>(x => x.Equals(requestId))))
@@ -125,7 +129,7 @@ namespace VacationManager.Tests.Services
                 IsApproved = true,
                 Requester = new UserDto { Id = 1, Username = "Jane Doe" },
                 Attachment = "updated_vacation_attachment.pdf",
-                VacationType = VacationType.UnpaidLeave // Using the enum here
+                VacationType = VacationType.UnpaidLeave
             };
 
             _vacationRequestRepositoryMock.Setup(s => s.SaveAsync(It.Is<VacationRequestDto>(x => x.Equals(vacationRequestDto))))

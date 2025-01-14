@@ -15,7 +15,7 @@ namespace VacationsManager.Data.Entities
         }
 
         public string Name { get; set; }
-        public int ProjectId { get; set; }
+        public int? ProjectId { get; set; }
         public int TeamLeaderId { get; set; }
         public virtual Project Project { get; set; }
 

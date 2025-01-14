@@ -132,9 +132,6 @@ namespace VacationsManagerMVC.Controllers
             return View(teamVM);
         }
 
-
-
-
     }
 
 }

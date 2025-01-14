@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VacationsManager.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -70,7 +70,7 @@ namespace VacationsManager.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: true),
                     TeamLeaderId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -83,7 +83,7 @@ namespace VacationsManager.Data.Migrations
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -150,16 +150,16 @@ namespace VacationsManager.Data.Migrations
                 columns: new[] { "Id", "CreatedAt", "Name", "RoleType", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3619), "CEO", 1, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3620) },
-                    { 2, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3669), "Developer", 2, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3669) },
-                    { 3, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3686), "TeamLead", 3, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3686) },
-                    { 4, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3701), "Unassigned", 4, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3701) }
+                    { 1, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5162), "CEO", 1, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5164) },
+                    { 2, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5205), "Developer", 2, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5206) },
+                    { 3, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5215), "TeamLead", 3, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5216) },
+                    { 4, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5225), "Unassigned", 4, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5225) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedAt", "FirstName", "LastName", "Password", "RoleId", "TeamId", "UpdatedAt", "Username" },
-                values: new object[] { 1, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3779), "Admin", "User", "immQRxaPfG/2bE5N/IWPlLTDkO98GxjyOv1zuHdtPPOgmec6o30kiAqlp+XaeXOR", 1, null, new DateTime(2025, 1, 11, 13, 22, 25, 489, DateTimeKind.Utc).AddTicks(3780), "admin" });
+                values: new object[] { 1, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5313), "Admin", "User", "8iC7E27P8GljkrAOLItA3DE8Dv41+M01LkcGmhU4yfOo6R7Q17np6yJ4g81THBFg", 1, null, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5313), "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_RecipientId",

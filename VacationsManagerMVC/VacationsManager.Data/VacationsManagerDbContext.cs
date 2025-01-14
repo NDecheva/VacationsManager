@@ -39,7 +39,8 @@ namespace VacationsManager.Data
                 .HasMany(p => p.Teams)
                 .WithOne(t => t.Project)
                 .HasForeignKey(t => t.ProjectId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull); 
+
 
             modelBuilder.Entity<Role>()
                 .HasMany(r => r.Users)

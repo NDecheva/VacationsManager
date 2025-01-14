@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,13 @@ namespace VacationManager.Tests.Services
     public class ProjectServiceTests
     {
         private readonly Mock<IProjectRepository> _projectRepositoryMock = new Mock<IProjectRepository>();
+        private readonly Mock<ITeamService> _teamServiceMock = new Mock<ITeamService>(); // Добавяне на мок за ITeamService
         private readonly IProjectService _service;
 
         public ProjectServiceTests()
         {
-            _service = new ProjectService(_projectRepositoryMock.Object);
+            // Предаване на мокнатия ITeamService
+            _service = new ProjectService(_projectRepositoryMock.Object, _teamServiceMock.Object);
         }
 
         [Test]

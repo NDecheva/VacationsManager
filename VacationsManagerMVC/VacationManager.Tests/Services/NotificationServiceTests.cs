@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,12 @@ namespace VacationManager.Tests.Services
     public class NotificationServiceTests
     {
         private readonly Mock<INotificationRepository> _notificationRepositoryMock = new Mock<INotificationRepository>();
+        private readonly Mock<IMapper> _mapperMock = new Mock<IMapper>(); 
         private readonly INotificationService _service;
 
         public NotificationServiceTests()
         {
-            _service = new NotificationService(_notificationRepositoryMock.Object);
+            _service = new NotificationService(_notificationRepositoryMock.Object, _mapperMock.Object); 
         }
 
         [Test]
