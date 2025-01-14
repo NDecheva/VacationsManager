@@ -37,12 +37,12 @@ namespace VacationsManagerMVC.Controllers
 
             return editVM;
         }
-        [HttpGet]
-        [Route("Team/List")]
-        public async Task<IActionResult> List()
-        {
-            return await base.List();
-        }
+        //[HttpGet]
+        //[Route("Team/List")]
+        //public async Task<IActionResult> List()
+        //{
+        //    return await base.List();
+        //}
         [HttpGet]
         [Route("Team/Search")]
         public async Task<IActionResult> Search(string searchTerm)

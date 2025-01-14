@@ -15,13 +15,13 @@ namespace VacationManager.Tests.Services
     public class ProjectServiceTests
     {
         private readonly Mock<IProjectRepository> _projectRepositoryMock = new Mock<IProjectRepository>();
-        private readonly Mock<ITeamService> _teamServiceMock = new Mock<ITeamService>(); // Добавяне на мок за ITeamService
+        private readonly Mock<ITeamService> _teamServiceMock = new Mock<ITeamService>();
+        private readonly Mock<ITeamRepository> _teamRepositoryMock = new Mock<ITeamRepository>();  // Add this line
         private readonly IProjectService _service;
 
         public ProjectServiceTests()
         {
-            // Предаване на мокнатия ITeamService
-            _service = new ProjectService(_projectRepositoryMock.Object, _teamServiceMock.Object);
+            _service = new ProjectService(_projectRepositoryMock.Object, _teamServiceMock.Object, _teamRepositoryMock.Object);
         }
 
         [Test]

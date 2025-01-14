@@ -21,6 +21,13 @@
                     <div class="card-header bg-primary text-white">
                         <h2>User List</h2>
                     </div>
+                    <!-- Search Form -->
+                    <form method="get" action="@Url.Action("Search", "User")" class="mb-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="searchTerm" placeholder="Search for users..." value="@ViewBag.SearchTerm" />
+                            <button class="btn btn-secondary" type="submit">Search</button>
+                        </div>
+                    </form>
                     <div class="card-body">
                         <table class="table table-striped">
                             <thead>
