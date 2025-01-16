@@ -25,26 +25,40 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Team" asp-action="List">Team</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="List">User</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="List">Role</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="VacationRequest" asp-action="List">VacationRequest</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="List">Project</a>
-                    </li>
-                    <li class="nav-item">
-                        <a id="notificationLink" class="nav-link text-dark" asp-area="" asp-controller="Notification" asp-action="List">Notifications</a>
-                    </li>
 
+                    @if (Context.User.IsInRole("CEO"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="List">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="List">Roles</a>
+                        </li>
+                    }
+
+                    @if (Context.User.IsInRole("CEO") || Context.User.IsInRole("TeamLead"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="List">Projects</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Team" asp-action="List">Teams</a>
+                        </li>
+                    }
+
+                    @if (Context.User.IsInRole("CEO") || Context.User.IsInRole("Developer") || Context.User.IsInRole("TeamLead"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="VacationRequest" asp-action="List">Vacation Requests</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id="notificationLink" class="nav-link text-dark" asp-area="" asp-controller="Notification" asp-action="List">Notifications</a>
+                        </li>
+                    }
                 </ul>
+
 
 
                 <!-- Login and Register links -->

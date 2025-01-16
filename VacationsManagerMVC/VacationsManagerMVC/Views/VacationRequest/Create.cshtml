@@ -62,12 +62,6 @@
                                 @Html.ValidationMessageFor(model => model.IsHalfDay, "", new { @class = "text-danger" })
                             </div>
 
-                            <!-- Approved -->
-                            <div class="mb-3 form-check">
-                                @Html.CheckBoxFor(model => model.IsApproved, new { @class = "form-check-input" })
-                                @Html.LabelFor(model => model.IsApproved, new { @class = "form-check-label" })
-                                @Html.ValidationMessageFor(model => model.IsApproved, "", new { @class = "text-danger" })
-                            </div>
 
                             <!-- Requester -->
                             <div class="mb-3">
