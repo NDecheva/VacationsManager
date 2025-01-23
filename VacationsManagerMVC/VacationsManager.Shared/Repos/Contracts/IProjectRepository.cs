@@ -10,5 +10,6 @@ namespace VacationsManager.Shared.Repos.Contracts
 {
     public interface IProjectRepository : IBaseRepository<ProjectDto>
     {
+        Task<List<TeamDto>> GetAvailableTeamsAsync(int projectId);
     }
 }

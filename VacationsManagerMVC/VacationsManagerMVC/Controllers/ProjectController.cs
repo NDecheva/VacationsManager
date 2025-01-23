@@ -85,30 +85,35 @@ namespace VacationsManagerMVC.Controllers
 
         [HttpGet]
         [Route("Project/Details")]
-        public async Task<IActionResult> Details(int id)
+        public override async Task<IActionResult> Details(int id)
         {
-            var project = await _projectService.GetByIdIfExistsAsync(id);
-            if (project == null)
+            var baseResult = await base.Details(id) as ViewResult;
+
+            if (baseResult == null || baseResult.Model == null)
             {
                 return NotFound("Project not found.");
             }
 
-            // Зареждане на всички екипи
-            var allTeams = await _teamService.GetAllAsync();
-            // Намиране на наличните екипи, които не са асоциирани с проекта
-            var availableTeams = allTeams.Where(t => !project.Teams.Any(pt => pt.Id == t.Id)).ToList();
+            var projectVM = baseResult.Model as ProjectDetailsVM;
 
-            // Задаване на ViewBag.Teams за използване в изгледа
+            if (projectVM == null)
+            {
+                return BadRequest("Unable to load project details.");
+            }
+
+            // Извикване на сървиса за наличните екипи
+            var availableTeams = await _projectService.GetAvailableTeamsAsync(id);
+
+            // Задаване на ViewBag.Teams
             ViewBag.Teams = availableTeams.Select(team => new SelectListItem
             {
                 Value = team.Id.ToString(),
                 Text = team.Name
             }).ToList();
 
-            // Мапване на проекта към ViewModel
-            var projectVM = _mapper.Map<ProjectDetailsVM>(project);
             return View(projectVM);
         }
+
 
 
     }

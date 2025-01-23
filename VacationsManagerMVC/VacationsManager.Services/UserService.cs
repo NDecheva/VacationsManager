@@ -50,5 +50,10 @@ namespace VacationsManager.Services
             return await _repository.GetTeamMembersAsync(teamId);
         }
 
+        public async Task<IEnumerable<UserDto>> GetAvailableDevelopersAsync()
+        {
+            return await _repository.GetAvailableDevelopersAsync();
+        }
+
     }
 }

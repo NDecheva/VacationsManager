@@ -112,7 +112,7 @@ namespace VacationsManagerMVC.Controllers
 
         [Route("Team/Details")]
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public override async Task<IActionResult> Details(int id)
         {
             var team = await _teamService.GetByIdIfExistsAsync(id);
             if (team == null)
@@ -120,17 +120,14 @@ namespace VacationsManagerMVC.Controllers
                 return NotFound();
             }
 
-            var availableDevelopers = (await _userService.GetAllAsync())
-                .Where(user => user.Role != null && user.Role.Name == "Developer" && user.TeamId == null) 
-                .Select(user => new { user.Id, user.FirstName, user.LastName })
-                .ToList();
-
+            var availableDevelopers = await _userService.GetAvailableDevelopersAsync();
             ViewBag.Users = availableDevelopers;
 
             var teamVM = _mapper.Map<TeamDetailsVM>(team);
 
             return View(teamVM);
         }
+
 
     }
 

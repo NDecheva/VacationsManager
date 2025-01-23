@@ -55,5 +55,9 @@ namespace VacationsManager.Services
             await _teamRepository.SaveAsync(team);
         }
 
+        public async Task<List<TeamDto>> GetAvailableTeamsAsync(int projectId)
+        {
+            return await _repository.GetAvailableTeamsAsync(projectId);
+        }
     }
 }
