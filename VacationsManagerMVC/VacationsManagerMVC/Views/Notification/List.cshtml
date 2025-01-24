@@ -1,25 +1,50 @@
 ﻿@model IEnumerable<VacationsManagerMVC.ViewModels.NotificationDetailsVM>
 
-<div class="container mt-4">
-    <h3 class="mb-4">Notifications</h3>
-    <div class="list-group">
-        @foreach (var notification in Model)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+
+    <!-- Adding Bootstrap Lux Theme -->
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container mt-4">
+        <h3 class="mb-4">Notifications</h3>
+
+        <!-- Check if there are no notifications -->
+        @if (!Model.Any())
         {
-            <div class="list-group-item d-flex justify-content-between align-items-center @(!notification.IsRead ? "bg-light" : "")">
-                <div>
-                    <h5 class="mb-1">@notification.Message</h5>
-                    <p class="mb-0 text-muted">
-                        <small>@notification.DateSent.ToString("yyyy-MM-dd HH:mm")</small>
-                    </p>
-                </div>
-                @if (!notification.IsRead)
+            <p class="text-muted">No notifications to show</p>
+        }
+        else
+        {
+            <div class="list-group">
+                @foreach (var notification in Model)
                 {
-                    <form method="post" asp-action="MarkNotificationAsRead" class="d-inline">
-                        <input type="hidden" name="notificationId" value="@notification.Id" />
-                        <button type="submit" class="btn btn-sm btn-primary">Mark as Read</button>
-                    </form>
+                    <div class="list-group-item d-flex justify-content-between align-items-center @(!notification.IsRead ? "bg-light" : "")">
+                        <div>
+                            <h5 class="mb-1">@notification.Message</h5>
+                            <p class="mb-0 text-muted">
+                                <small>@notification.DateSent.ToString("yyyy-MM-dd HH:mm")</small>
+                            </p>
+                        </div>
+                        @if (!notification.IsRead)
+                        {
+                            <form method="post" asp-action="MarkNotificationAsRead" class="d-inline">
+                                <input type="hidden" name="notificationId" value="@notification.Id" />
+                                <button type="submit" class="btn btn-sm btn-primary">Mark as Read</button>
+                            </form>
+                        }
+                    </div>
                 }
             </div>
         }
     </div>
-</div>
+
+    <!-- Adding Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
