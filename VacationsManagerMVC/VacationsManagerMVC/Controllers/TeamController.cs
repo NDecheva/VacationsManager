@@ -31,7 +31,7 @@ namespace VacationsManagerMVC.Controllers
         protected override async Task<TeamEditVM> PrePopulateVMAsync(TeamEditVM editVM)
         {
             editVM.AllTeamLeaders = (await _userService.GetAllActiveAsync())
-                .Select(x => new SelectListItem($"{x.Username}", x.Id.ToString()));
+                .Select(x => new SelectListItem($"{x.FirstName} {x.LastName}", x.Id.ToString()));
             editVM.Projects = (await _projectService.GetAllAsync())
                 .Select(x => new SelectListItem($"{x.Name}", x.Id.ToString()));
 
