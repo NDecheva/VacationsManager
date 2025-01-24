@@ -57,9 +57,10 @@ namespace VacationsManagerMVC.Controllers
             var user = await this.usersService.GetByUsernameAsync(username);
             var claims = new[]
             {
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), 
         new Claim(ClaimTypes.Name, user.Username),
         new Claim(ClaimTypes.Role, user.Role.Name),
-            };
+    };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -69,6 +70,7 @@ namespace VacationsManagerMVC.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 principle);
         }
+
 
 
         [HttpGet]

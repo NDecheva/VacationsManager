@@ -58,7 +58,7 @@ namespace VacationsManagerMVC.Controllers
 
             var mappedNotifications = _mapper.Map<IEnumerable<NotificationDetailsVM>>(notifications);
 
-            return View(nameof(List), mappedNotifications);
+            return View(nameof(List), mappedNotifications);  
         }
 
         [HttpPost]

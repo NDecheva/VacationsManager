@@ -66,6 +66,23 @@ namespace VacationsManager.Data.Repos
             return teamLeaders;
         }
 
+
+        public async Task<IEnumerable<UserDto>> GetAvailableDevelopersAsync()
+        {
+            var developers = await _context.Set<User>()
+                .Where(user => user.Role != null && user.Role.Name == "Developer" && user.TeamId == null)
+                .Select(user => new UserDto
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                })
+                .ToListAsync();
+
+            return developers;
+        }
+
+
         public async Task<IEnumerable<UserDto>> GetTeamMembersAsync(int teamId)
         {
             var teamMembers = await _context.Set<User>()
@@ -74,8 +91,5 @@ namespace VacationsManager.Data.Repos
 
             return _mapper.Map<IEnumerable<UserDto>>(teamMembers); // Мапване към DTO
         }
-
-
-
     }
 }
