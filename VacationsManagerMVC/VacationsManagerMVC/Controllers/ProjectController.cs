@@ -23,12 +23,12 @@ namespace VacationsManagerMVC.Controllers
             _projectService = projectService;
         }
 
-        //[HttpGet]
-        //[Route("Project/List")]
-        //public async Task<IActionResult> List()
-        //{
-        //    return await base.List();
-        //}
+        [HttpGet]
+        [Route("Project/List")]
+        public async Task<IActionResult> List()
+        {
+            return await base.List();
+        }
 
         [HttpGet]
         [Route("Project/Search")]

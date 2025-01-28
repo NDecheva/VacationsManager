@@ -40,13 +40,6 @@ namespace VacationsManagerMVC.Controllers
                 })
                 .ToList();
 
-
-            Console.WriteLine("VacationTypes loaded:");
-            foreach (var type in editVM.VacationTypes)
-            {
-                Console.WriteLine($"Value: {type.Value}, Text: {type.Text}");
-            }
-
             var currentUserId = User.Identity.Name;
             var currentUser = await _userService.GetByUsernameAsync(currentUserId);
 
@@ -60,44 +53,67 @@ namespace VacationsManagerMVC.Controllers
 
 
         [HttpGet]
-        public override async Task<IActionResult> List(
-            int pageSize = DefaultPageSize,
-            int pageNumber = DefaultPageNumber)
+        public override async Task<IActionResult> List(int pageSize = DefaultPageSize, int pageNumber = DefaultPageNumber)
         {
+            // Извикване на базовия метод
+            var baseResult = await base.List(pageSize, pageNumber) as ViewResult;
+
+            if (baseResult == null || !(baseResult.Model is IEnumerable<VacationRequestDetailsVM> paginatedRequests))
+            {
+                return BadRequest("Error loading paginated data.");
+            }
+
+            // Вземане на текущия потребител
             var currentUserId = User.Identity.Name;
             var currentUser = await _userService.GetByUsernameAsync(currentUserId);
 
             if (currentUser == null)
             {
-                return Unauthorized();
+                return Unauthorized("User not found.");
             }
 
-            var requests = await _service.GetAllAsync();
-
+            // Определяне на ролята на потребителя
+            RoleType role = RoleType.Unassigned;
             if (User.IsInRole("Developer"))
             {
-                requests = requests.Where(r => r.RequesterId == currentUser.Id).ToList();
+                role = RoleType.Developer;
             }
             else if (User.IsInRole("TeamLead"))
             {
-                if (currentUser.TeamId.HasValue)
-                {
-                    var teamMembers = await _userService.GetTeamMembersAsync(currentUser.TeamId.Value);
-
-                    requests = requests.Where(r =>
-                            r.RequesterId == currentUser.Id ||
-                            teamMembers.Any(tm => tm.Id == r.RequesterId))
-                        .ToList();
-                }
-                else
-                {
-                    requests = requests.Where(r => r.RequesterId == currentUser.Id).ToList();
-                }
+                role = RoleType.TeamLead;
+            }
+            else if (User.IsInRole("CEO"))
+            {
+                role = RoleType.CEO;
             }
 
-            var mappedRequests = _mapper.Map<IEnumerable<VacationRequestDetailsVM>>(requests);
-            return View("List", mappedRequests);
+            // Получаване на филтрираните заявки от базата данни
+            var query = await _vacationRequestService.GetRequestsByUserRoleAsync(currentUser, role);
+
+            // Изчисляване на общия брой записи за избраната роля
+            var totalRecords = query.Count();
+
+            // Пагиниране на заявките
+            var paginatedRequestsResult = query
+                .OrderBy(r => r.Id) // Сортиране на заявките по ID за правилната пагинация
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList(); // Извършваме пагинацията тук
+
+            // Преобразуване в ViewModel
+            var mappedModels = _mapper.Map<IEnumerable<VacationRequestDetailsVM>>(paginatedRequestsResult);
+
+            // Изчисляване на общия брой страници
+            var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            // Предаване на информация за пагинацията към View
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = pageNumber;
+
+            return View(nameof(List), mappedModels);
         }
+
+
 
 
         [HttpGet]
@@ -125,8 +141,6 @@ namespace VacationsManagerMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateWithAttachment(VacationRequestEditVM editVM, IFormFile attachmentFile)
         {
-            Console.WriteLine($"VacationType in editVM (SelectedVacationType): {editVM.VacationType}");
-
             var errors = await Validate(editVM);
             if (errors != null)
             {
@@ -153,7 +167,6 @@ namespace VacationsManagerMVC.Controllers
             }
 
             var vacationRequestDto = _mapper.Map<VacationRequestDto>(editVM);
-            Console.WriteLine($"VacationType in DTO: {vacationRequestDto.VacationType}");
 
             await _service.SaveAsync(vacationRequestDto);
             return RedirectToAction(nameof(List));

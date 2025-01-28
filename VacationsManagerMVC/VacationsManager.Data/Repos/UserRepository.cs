@@ -86,10 +86,11 @@ namespace VacationsManager.Data.Repos
         public async Task<IEnumerable<UserDto>> GetTeamMembersAsync(int teamId)
         {
             var teamMembers = await _context.Set<User>()
-                .Where(u => u.TeamId == teamId)
+                .Where(u => u.TeamId == teamId && u.Role.Name == RoleType.Developer.ToString())  // Филтрираме само с роля "Developer"
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<UserDto>>(teamMembers); // Мапване към DTO
         }
+
     }
 }

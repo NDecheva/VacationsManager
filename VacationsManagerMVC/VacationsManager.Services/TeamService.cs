@@ -62,6 +62,11 @@ namespace VacationsManager.Services
             await _userRepository.SaveAsync(user); 
         }
 
+        //public async Task CreateAndAssignTeamLeaderAsync(TeamDto teamDto)
+        //{
+        //    await _repository.CreateAndAssignTeamLeaderAsync(teamDto);
+        //}
+
     }
 
 }

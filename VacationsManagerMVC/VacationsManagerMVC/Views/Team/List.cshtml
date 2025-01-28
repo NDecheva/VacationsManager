@@ -50,14 +50,14 @@
                                 <tr>
                                     <td>@team.Name</td>
                                     <td>@team.Project?.Name</td>
-                                    <td>@team.TeamLeader?.FirstName</td>
+                                    <td>@team.TeamLeader?.Username</td>
                                     <td>
                                         @if (team.Developers.Any())
                                         {
                                             <ul>
                                                 @foreach (var developer in team.Developers)
                                                 {
-                                                    <li>@developer.FirstName</li>
+                                                    <li>@developer.Username</li>
                                                 }
                                             </ul>
                                         }

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NuGet.Protocol.Core.Types;
+using VacationsManager.Data.Entities;
 using VacationsManager.Services;
 using VacationsManager.Shared.Dtos;
 using VacationsManager.Shared.Repos.Contracts;
@@ -108,6 +110,56 @@ namespace VacationsManagerMVC.Controllers
                 return StatusCode(500, "An error occurred while removing the developer.");
             }
         }
+
+
+
+
+
+
+        //[HttpPost]
+        //public override async Task<IActionResult> Create(TeamEditVM editVM)
+        //{
+        //    try
+        //    {
+        //        // Записваме началото на операцията
+        //        Console.WriteLine($"Започва създаването на екип с име: {editVM.Name}");
+
+        //        // Проверка дали ID на лидера на екипа е валидно
+        //        if (editVM.TeamLeaderId == 0)
+        //        {
+        //            Console.WriteLine("ID на лидер на екипа е 0. Ще се създаде нов лидер.");
+        //        }
+
+        //        // Присвояваме лидер на екипа и актуализираме потребителите
+        //        var team = new Team
+        //        {
+        //            Name = editVM.Name,
+        //            ProjectId = editVM.ProjectId,
+        //            TeamLeaderId = editVM.TeamLeaderId
+        //        };
+
+        //        // Картографираме Team към TeamDto
+        //        var teamDto = _mapper.Map<TeamDto>(team);
+
+        //        // Присвояваме лидер на екипа и актуализираме потребителите
+        //        await _teamService.CreateAndAssignTeamLeaderAsync(teamDto);
+
+        //        // Успешно записване
+        //        Console.WriteLine($"Екипът с име {editVM.Name} и лидер с ID {editVM.TeamLeaderId} е успешно създаден.");
+
+        //        return RedirectToAction("List");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Логваме грешката
+        //        Console.WriteLine($"Грешка при създаването на екипа с име {editVM.Name}. Грешка: {ex.Message}");
+
+        //        // Може да предоставим на потребителя подробна информация в прозорец за грешка
+        //        return View("Error");
+        //    }
+        //}
+
+
 
 
         [Route("Team/Details")]

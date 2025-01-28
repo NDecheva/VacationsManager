@@ -10,5 +10,6 @@ namespace VacationsManager.Shared.Repos.Contracts
 {
     public interface ITeamRepository : IBaseRepository<TeamDto>
     {
+        //public Task CreateAndAssignTeamLeaderAsync(TeamDto teamDto);
     }
 }

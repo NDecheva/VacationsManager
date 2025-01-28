@@ -40,22 +40,29 @@ namespace VacationsManagerMVC.Controllers
             {
                 return Task.FromResult(editVM);
             }
+            
             [HttpGet]
-
-            public virtual async Task<IActionResult> List(
-                int pageSize = DefaultPageSize,
-                int pageNumber = DefaultPageNumber)
+            public virtual async Task<IActionResult> List(int pageSize = DefaultPageSize, int pageNumber = DefaultPageNumber)
             {
                 if (pageSize <= 0 || pageSize > MaxPageSize || pageNumber <= 0)
                 {
                     return BadRequest(Constants.InvalidPagination);
                 }
-                var models = await this._service.GetWithPaginationAsync(pageSize, pageNumber);
+
+                var models = await _service.GetWithPaginationAsync(pageSize, pageNumber);
+                var totalRecords = await _service.GetAllAsync();
+                var totalPages = (int)Math.Ceiling((double)totalRecords.Count() / pageSize);
+
                 var mappedModels = _mapper.Map<IEnumerable<TDetailsVM>>(models);
+
+                ViewBag.TotalPages = totalPages;
+                ViewBag.CurrentPage = pageNumber;
+
                 return View(nameof(List), mappedModels);
             }
 
-            [HttpGet]
+
+        [HttpGet]
             public virtual async Task<IActionResult> Details(int id)
             {
                 var model = await this._service.GetByIdIfExistsAsync(id);

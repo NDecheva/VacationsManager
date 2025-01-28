@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using VacationsManager.Shared.Attributes;
 using VacationsManager.Shared.Dtos;
+using VacationsManager.Shared.Enums;
 using VacationsManager.Shared.Repos.Contracts;
 using VacationsManager.Shared.Services.Contracts;
 
@@ -43,6 +44,11 @@ namespace VacationsManager.Services
             // Изпрати нотификация
             var message = $"Your vacation request from {request.StartDate:yyyy-MM-dd} to {request.EndDate:yyyy-MM-dd} has been approved.";
             await _notificationService.SendNotificationAsync(request.RequesterId, message);
+        }
+
+        public async Task<IEnumerable<VacationRequestDto>> GetRequestsByUserRoleAsync(UserDto currentUser, RoleType role)
+        {
+            return await _repository.GetRequestsByUserRoleAsync(currentUser, role);
         }
 
         public byte[] DownloadAttachment(string fileName)

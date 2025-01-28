@@ -13,5 +13,7 @@ namespace VacationsManager.Shared.Services.Contracts
     {
         public Task AddDeveloperToTeamAsync(int teamId, int userId);
         public Task RemoveDeveloperFromTeamAsync(int teamId, int userId);
+
+        //public Task CreateAndAssignTeamLeaderAsync(TeamDto teamDto);
     }
 }
