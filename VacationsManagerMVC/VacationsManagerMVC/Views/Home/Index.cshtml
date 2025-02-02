@@ -10,28 +10,74 @@
     <title>@ViewData["Title"]</title>
 
     <!-- Добавяне на Bootstrap Lux Theme -->
-    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-4">
-        <div class="text-center">
-            <h1 class="display-4">Welcome to the Vacation Manager Project</h1>
-            <p>Learn more about <a href="https://it-kariera.mon.bg/e-learning/" target="_blank">this project here</a>.</p>
+    <div class="container mt-5">
+        <!-- Hero Section -->
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold text-primary"><i class="bi bi-briefcase-fill"></i> Welcome to Vacation Manager</h1>
+            <p class="lead">Streamline your organization’s leave management with our intuitive platform.</p>
+            <a href="@Url.Action("Login", "Auth")" class="btn btn-lg btn-primary shadow-sm">
+                <i class="bi bi-arrow-right-circle"></i> Get Started
+            </a>
         </div>
 
-        <div>
-            <h2>Project Overview</h2>
-            <p>The Vacation Manager is a web-based application designed to manage employee leaves within an organization. It allows employees to request paid, unpaid, and sick leaves, which are then approved by team leaders or the CEO.</p>
+        <!-- Project Overview Section -->
+        <div class="card border-0 shadow-lg mb-5">
+            <div class="card-body">
+                <h2 class="card-title text-primary fw-bold"><i class="bi bi-info-circle"></i> Project Overview</h2>
+                <p class="card-text">
+                    The Vacation Manager is a web-based application designed to manage employee leaves within an organization. It allows employees to request paid, unpaid, and sick leaves, which are then approved by team leaders or the CEO.
+                </p>
+            </div>
+        </div>
 
-            <h3>Core Features</h3>
-            <ul>
-                <li><strong>User Management:</strong> CRUD operations for users, with roles like CEO, Developer, and Team Lead.</li>
-                <li><strong>Leave Requests:</strong> Employees can submit, view, and manage their leave requests, including half-day and sick leave options.</li>
-                <li><strong>Team & Project Management:</strong> Teams can be managed, assigned to projects, and filtered by name or project.</li>
-                <li><strong>Role-based Access:</strong> Different roles have different privileges, such as approving leave requests and managing teams.</li>
-            </ul>
+        <!-- Core Features Section -->
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card border-0 shadow-lg h-100">
+                    <div class="card-body">
+                        <h3 class="card-title text-primary"><i class="bi bi-people-fill"></i> User Management</h3>
+                        <p>CRUD operations for users, with roles like CEO, Developer, and Team Lead. Manage employees efficiently and assign roles seamlessly.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card border-0 shadow-lg h-100">
+                    <div class="card-body">
+                        <h3 class="card-title text-primary"><i class="bi bi-calendar-check"></i> Leave Requests</h3>
+                        <p>Employees can submit, view, and manage their leave requests, including half-day and sick leave options. Simplify leave approval workflows.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card border-0 shadow-lg h-100">
+                    <div class="card-body">
+                        <h3 class="card-title text-primary"><i class="bi bi-diagram-3-fill"></i> Team & Project Management</h3>
+                        <p>Teams can be managed, assigned to projects, and filtered by name or project. Organize your workforce effectively with intuitive tools.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card border-0 shadow-lg h-100">
+                    <div class="card-body">
+                        <h3 class="card-title text-primary"><i class="bi bi-shield-lock-fill"></i> Role-Based Access</h3>
+                        <p>Different roles have distinct privileges, such as approving leave requests and managing teams. Ensure secure and appropriate access for every user.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            
+        <!-- Additional Resources Section -->
+        <div class="text-center mt-5">
+            <h3 class="text-secondary">Learn more about the project</h3>
+            <p>
+                <a href="https://it-kariera.mon.bg/e-learning/" target="_blank" class="btn btn-outline-primary shadow-sm">
+                    <i class="bi bi-box-arrow-up-right"></i> Visit Documentation
+                </a>
+            </p>
         </div>
     </div>
 

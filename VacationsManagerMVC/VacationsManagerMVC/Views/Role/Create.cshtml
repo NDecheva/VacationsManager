@@ -4,7 +4,7 @@
 @model VacationsManagerMVC.ViewModels.RoleEditVM
 
 @{
-    ViewBag.Title = "Edit Role";
+    ViewBag.Title = "Create Role";
 }
 
 <!DOCTYPE html>
@@ -22,7 +22,7 @@
             <div class="col-md-8">
                 <div class="card shadow-sm">
                     <div class="card-header bg-info text-white">
-                        <h2>Edit Role</h2>
+                        <h2>Create Role</h2>
                     </div>
                     <div class="card-body">
                         @using (Html.BeginForm())
@@ -43,7 +43,7 @@
                             </div>
 
                             <div class="text-center">
-                                <button type="submit" class="btn btn-success">Save</button>
+                                <button type="submit" class="btn btn-success">Create</button>
                                 <a href="@Url.Action("List", "Role")" class="btn btn-secondary">Cancel</a>
                             </div>
                         }

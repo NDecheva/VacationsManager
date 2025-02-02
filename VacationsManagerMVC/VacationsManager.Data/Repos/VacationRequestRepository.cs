@@ -27,51 +27,61 @@ namespace VacationsManager.Data.Repos
         public async Task<IEnumerable<VacationRequestDto>> GetRequestsByUserRoleAsync(UserDto currentUser, RoleType role)
         {
             var requestsQuery = _context.Set<VacationRequest>()
-                .AsNoTracking() // По-бързо зареждане без проследяване на промените
-                .Include(r => r.Requester) // Включване на Requester
+                .AsNoTracking()
+                .Include(r => r.Requester)
                 .AsQueryable();
 
-            // Филтриране по роля на потребителя
-            if (role == RoleType.Developer)
+            switch (role)
             {
-                requestsQuery = requestsQuery.Where(r => r.RequesterId == currentUser.Id);
-            }
-            else if (role == RoleType.TeamLead)
-            {
-                // Вземаме заявки на членовете на екипа на TeamLead
-                var teamLeaderTeamId = await _context.Set<Team>()
-                    .Where(t => t.TeamLeaderId == currentUser.Id)
-                    .Select(t => t.Id)
-                    .FirstOrDefaultAsync();
-
-                if (teamLeaderTeamId != 0)
-                {
-                    var teamMembersIds = await _context.Set<User>()
-                        .Where(u => u.TeamId == teamLeaderTeamId)
-                        .Select(u => u.Id)
-                        .ToListAsync();
-
-                    requestsQuery = requestsQuery.Where(r => teamMembersIds.Contains(r.RequesterId) || r.RequesterId == currentUser.Id);
-                }
-                else
-                {
+                case RoleType.Developer:
                     requestsQuery = requestsQuery.Where(r => r.RequesterId == currentUser.Id);
-                }
+                    break;
+
+                case RoleType.TeamLead:
+                    var teamLeaderTeamId = await _context.Set<Team>()
+                        .Where(t => t.TeamLeaderId == currentUser.Id)
+                        .Select(t => t.Id)
+                        .FirstOrDefaultAsync();
+
+                    if (teamLeaderTeamId != 0)
+                    {
+                        var teamMembersIds = await _context.Set<User>()
+                            .Where(u => u.TeamId == teamLeaderTeamId)
+                            .Select(u => u.Id)
+                            .ToListAsync();
+
+                        requestsQuery = requestsQuery.Where(r => teamMembersIds.Contains(r.RequesterId) || r.RequesterId == currentUser.Id);
+                    }
+                    else
+                    {
+                        requestsQuery = requestsQuery.Where(r => r.RequesterId == currentUser.Id);
+                    }
+                    break;
+
+                case RoleType.CEO:
+                    // CEO вижда всички заявки
+                    break;
+
+                default:
+                    return new List<VacationRequestDto>(); // В случай на грешка, връщаме празен списък
             }
 
-            // Мапираме резултатите от VacationRequest към VacationRequestDto чрез AutoMapper
-            var result = await requestsQuery
-                .ProjectTo<VacationRequestDto>(_mapper.ConfigurationProvider) // Използваме AutoMapper за директно мапиране към DTO
-                .AsSplitQuery() // Използване на разделени заявки
+            return await requestsQuery
+                .ProjectTo<VacationRequestDto>(_mapper.ConfigurationProvider)
+                .AsSplitQuery()
                 .ToListAsync();
-
-            return result;
         }
 
 
 
+        public async Task<IEnumerable<VacationRequestDto>> GetRequestsByDateAsync(UserDto currentUser, RoleType role, DateTime startDate)
+        {
+            var allRequests = await GetRequestsByUserRoleAsync(currentUser, role);
 
-
+            return allRequests
+                .Where(r => r.StartDate >= startDate)
+                .ToList();
+        }
     }
 }
 

@@ -9,61 +9,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
 
-    <!-- Добавяне на Bootstrap Lux Theme -->
-    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Lux Theme -->
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .privacy-container {
+            max-width: 1200px;
+            padding: 40px;
+        }
+
+        .privacy-card {
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            background-color: white;
+        }
+
+            .privacy-card h3 {
+                color: #0056b3;
+            }
+
+        .btn-back {
+            transition: all 0.3s ease-in-out;
+        }
+
+            .btn-back:hover {
+                transform: scale(1.05);
+            }
+    </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <h1>@ViewData["Title"]</h1>
+    <div class="container-fluid mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-9 privacy-container">
+                <div class="card privacy-card">
+                    <h1 class="text-center text-primary fw-bold mb-4">
+                        <i class="bi bi-shield-lock-fill"></i> @ViewData["Title"]
+                    </h1>
 
-        
+                    <p class="text-muted text-center">
+                        At <strong>Vacation Manager</strong>, we prioritize your privacy. Here’s how we protect and handle your data.
+                    </p>
 
-        <div>
-            
+                    <hr>
 
-            <p>At Vacation Manager, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your personal data when you use our website and services.</p>
+                    <h3><i class="bi bi-person-lines-fill"></i> 1. Information We Collect</h3>
+                    <p>We collect the following types of personal data:</p>
+                    <ul>
+                        <li><strong>Personal Identification Information:</strong> Name, email, username, role.</li>
+                        <li><strong>Usage Data:</strong> Interactions with leave management features.</li>
+                        <li><strong>Cookies:</strong> Used to enhance user experience.</li>
+                    </ul>
 
-            <h3>1. Information We Collect</h3>
-            <p>We collect the following types of personal data from users:</p>
-            <ul>
-                <li><strong>Personal Identification Information:</strong> This includes your name, email address, username, and role within the organization.</li>
-                <li><strong>Usage Data:</strong> We collect information about how you use the system, including your interaction with the leave management features.</li>
-                <li><strong>Cookies:</strong> We use cookies to enhance user experience and track usage patterns on our website.</li>
-            </ul>
+                    <h3><i class="bi bi-gear-wide-connected"></i> 2. How We Use Your Information</h3>
+                    <ul>
+                        <li>Managing and securing the system.</li>
+                        <li>Authenticating users.</li>
+                        <li>Improving functionalities based on feedback.</li>
+                        <li>Sending important updates.</li>
+                    </ul>
 
-            <h3>2. How We Use Your Information</h3>
-            <p>We use the information collected for the following purposes:</p>
-            <ul>
-                <li>To provide and manage the leave management system.</li>
-                <li>To authenticate and authorize user access based on roles and permissions.</li>
-                <li>To improve the website and system functionalities based on user feedback.</li>
-                <li>To communicate important information, including system updates or changes to policies.</li>
-            </ul>
+                    <h3><i class="bi bi-share-fill"></i> 3. Sharing of Your Information</h3>
+                    <ul>
+                        <li>We do not share your data, except when required by law or with service providers under confidentiality agreements.</li>
+                    </ul>
 
-            <h3>3. Sharing of Your Information</h3>
-            <p>We do not share your personal data with third parties except in the following circumstances:</p>
-            <ul>
-                <li>With service providers that assist in the operation of the system, under strict confidentiality agreements.</li>
-                <li>When required by law or to protect the rights and safety of our users.</li>
-            </ul>
+                    <h3><i class="bi bi-shield-check"></i> 4. Data Security</h3>
+                    <p>We use industry-standard security measures, but no method is 100% secure.</p>
 
-            <h3>4. Data Security</h3>
-            <p>We implement industry-standard security measures to protect your personal data. However, no method of transmission over the internet or method of electronic storage is 100% secure, and we cannot guarantee its absolute security.</p>
+                    <h3><i class="bi bi-person-check"></i> 5. Your Rights</h3>
+                    <ul>
+                        <li>Access and correct your data.</li>
+                        <li>Request deletion of your personal data.</li>
+                    </ul>
 
-            <h3>5. Your Rights</h3>
-            <p>You have the right to:</p>
-            <ul>
-                <li>Access the personal data we hold about you.</li>
-                <li>Request corrections or updates to your personal data.</li>
-                <li>Request the deletion of your personal data.</li>
-                
-            </ul>
+                    <hr>
 
-           
+                    <!-- Back Button -->
+                    <div class="text-center mt-4">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-lg btn-primary btn-back">
+                            <i class="bi bi-arrow-left-circle"></i> Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Добавяне на Bootstrap JS -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

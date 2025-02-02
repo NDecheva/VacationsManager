@@ -51,6 +51,11 @@ namespace VacationsManager.Services
             return await _repository.GetRequestsByUserRoleAsync(currentUser, role);
         }
 
+        public async Task<IEnumerable<VacationRequestDto>> GetRequestsByDateAsync(UserDto currentUser, RoleType role, DateTime startDate)
+        {
+            return await _repository.GetRequestsByDateAsync(currentUser, role, startDate);
+        }
+
         public byte[] DownloadAttachment(string fileName)
         {
             var filePath = Path.Combine("wwwroot/uploads", fileName);

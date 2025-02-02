@@ -4,97 +4,138 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - VacationsManagerMVC</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Bootstrap Lux Theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/VacationsManagerMVC.styles.css" asp-append-version="true" />
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">VacationsManagerMVC</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+            <div class="container-fluid">
+                <!-- 🔹 Брандът в началото (вляво) -->
+                <a class="navbar-brand me-auto d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-calendar-check me-2"></i> VacationsManagerMVC
+                </a>
 
-                    @if (Context.User.IsInRole("CEO"))
-                    {
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                    <!-- 🔹 Навигационни линкове -->
+                    <ul class="navbar-nav gap-3">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="List">Users</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-door"></i> Home
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="List">Roles</a>
-                        </li>
-                    }
-
-                    @if (Context.User.IsInRole("CEO") || Context.User.IsInRole("TeamLead"))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="List">Projects</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                <i class="bi bi-shield-lock"></i> Privacy
+                            </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Team" asp-action="List">Teams</a>
-                        </li>
-                    }
+                        @if (Context.User.IsInRole("CEO"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="List">
+                                    <i class="bi bi-person-badge"></i> Users
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Role" asp-action="List">
+                                    <i class="bi bi-people-fill"></i> Roles
+                                </a>
+                            </li>
+                        }
 
-                    @if (Context.User.IsInRole("CEO") || Context.User.IsInRole("Developer") || Context.User.IsInRole("TeamLead"))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="VacationRequest" asp-action="List">Vacation Requests</a>
-                        </li>
+                        @if (Context.User.IsInRole("CEO") || Context.User.IsInRole("TeamLead"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Project" asp-action="List">
+                                    <i class="bi bi-kanban"></i> Projects
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Team" asp-action="List">
+                                    <i class="bi bi-people"></i> Teams
+                                </a>
+                            </li>
+                        }
 
-                        <li class="nav-item">
-                            <a id="notificationLink" class="nav-link text-dark" asp-area="" asp-controller="Notification" asp-action="List">Notifications</a>
-                        </li>
-                    }
-                </ul>
+                        @if (Context.User.IsInRole("CEO") || Context.User.IsInRole("Developer") || Context.User.IsInRole("TeamLead"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="VacationRequest" asp-action="List">
+                                    <i class="bi bi-calendar"></i> Vacation Requests
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="notificationLink" class="nav-link" asp-area="" asp-controller="Notification" asp-action="List">
+                                    <i class="bi bi-bell"></i> Notifications
+                                </a>
+                            </li>
+                        }
+                    </ul>
 
+                    <!-- 🔹 Десни бутони (тъмна тема + logout) -->
+                    <div class="d-flex align-items-center gap-3 ms-auto">
+                        <!-- Dark Mode Toggle -->
+                        <button id="darkModeToggle" class="btn btn-outline-light">
+                            <i class="bi bi-moon-fill"></i>
+                        </button>
 
-
-                <!-- Login and Register links -->
-                @if (Context.User.Identity.IsAuthenticated)
-                {
-                    <div style="margin-right: 30px;">
-                        <a asp-controller="Auth" asp-action="ConfirmLogout" class="nav-link">Logout</a>
+                        <!-- Login / Logout -->
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {
+                            <a asp-controller="Auth" asp-action="ConfirmLogout" class="btn btn-outline-light">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Auth" asp-action="Login" class="btn btn-outline-light">
+                                <i class="bi bi-box-arrow-in-right"></i> Login
+                            </a>
+                        }
                     </div>
-                }
-                else
-                {
-                    <div style="margin-right: 10px;">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
-                    </div>
-                }
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container main-content">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="bg-light border-top py-4 mt-auto">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <span class="text-secondary">&copy; 2025 - <strong>VacationsManagerMVC</strong></span>
+                    <p class="small text-muted mb-0">
+                        Streamline your leave management with ease.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="@Url.Action("Privacy", "Home")" class="text-secondary me-3">Privacy</a>
+                    <a href="@Url.Action("Index", "Home")" class="text-secondary me-3">Home</a>
+                    <a href="https://it-kariera.mon.bg/e-learning/" target="_blank" class="btn btn-sm btn-outline-primary shadow-sm">
+                        <i class="bi bi-box-arrow-up-right"></i> Documentation
+                    </a>
+                </div>
             </div>
         </div>
-    </nav>
-</header>
-<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
+    </footer>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2024 - VacationsManagerMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
-</footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+    <script>
+        document.getElementById("darkModeToggle").addEventListener("click", function () {
+            document.body.classList.toggle("dark-mode");
+        });
+    </script>
 </body>
 </html>
-
-
-

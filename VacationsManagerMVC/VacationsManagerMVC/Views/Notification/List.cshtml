@@ -7,44 +7,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notifications</title>
 
-    <!-- Adding Bootstrap Lux Theme -->
+    <!-- Bootstrap Lux Theme -->
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <style>
+        .notification-container {
+            max-width: 900px;
+        }
+
+        .notification-item {
+            transition: all 0.3s ease-in-out;
+            border-left: 5px solid transparent;
+        }
+
+            .notification-item.unread {
+                background-color: #f8f9fa;
+                border-left: 5px solid #007bff;
+            }
+
+            .notification-item:hover {
+                transform: scale(1.02);
+                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+        .notification-meta {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .btn-mark-read {
+            transition: all 0.3s ease;
+        }
+
+            .btn-mark-read:hover {
+                transform: scale(1.05);
+            }
+    </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <h3 class="mb-4">Notifications</h3>
+    <div class="container mt-5">
+        <div class="notification-container mx-auto">
+            <h2 class="text-center text-primary mb-4"><i class="bi bi-bell-fill"></i> Notifications</h2>
 
-        <!-- Check if there are no notifications -->
-        @if (!Model.Any())
-        {
-            <p class="text-muted">No notifications to show</p>
-        }
-        else
-        {
-            <div class="list-group">
-                @foreach (var notification in Model)
-                {
-                    <div class="list-group-item d-flex justify-content-between align-items-center @(!notification.IsRead ? "bg-light" : "")">
-                        <div>
-                            <h5 class="mb-1">@notification.Message</h5>
-                            <p class="mb-0 text-muted">
-                                <small>@notification.DateSent.ToString("yyyy-MM-dd HH:mm")</small>
-                            </p>
+            @if (!Model.Any())
+            {
+                <div class="alert alert-warning text-center">
+                    <i class="bi bi-info-circle-fill"></i> No notifications to show.
+                </div>
+            }
+            else
+            {
+                <div class="list-group">
+                    @foreach (var notification in Model)
+                    {
+                        <div class="list-group-item notification-item d-flex justify-content-between align-items-center @(notification.IsRead ? "" : "unread")">
+                            <div>
+                                <h5 class="mb-1"><i class="bi bi-envelope@(notification.IsRead ? "-open" : "")-fill"></i> @notification.Message</h5>
+                                <p class="notification-meta mb-0">
+                                    <i class="bi bi-clock"></i> <small>@notification.DateSent.ToString("yyyy-MM-dd HH:mm")</small>
+                                </p>
+                            </div>
+                            @if (!notification.IsRead)
+                            {
+                                <form method="post" asp-action="MarkNotificationAsRead" class="d-inline">
+                                    <input type="hidden" name="notificationId" value="@notification.Id" />
+                                    <button type="submit" class="btn btn-sm btn-outline-primary btn-mark-read">
+                                        <i class="bi bi-check-circle-fill"></i> Mark as Read
+                                    </button>
+                                </form>
+                            }
                         </div>
-                        @if (!notification.IsRead)
-                        {
-                            <form method="post" asp-action="MarkNotificationAsRead" class="d-inline">
-                                <input type="hidden" name="notificationId" value="@notification.Id" />
-                                <button type="submit" class="btn btn-sm btn-primary">Mark as Read</button>
-                            </form>
-                        }
-                    </div>
-                }
-            </div>
-        }
+                    }
+                </div>
+            }
+        </div>
     </div>
 
-    <!-- Adding Bootstrap JS -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

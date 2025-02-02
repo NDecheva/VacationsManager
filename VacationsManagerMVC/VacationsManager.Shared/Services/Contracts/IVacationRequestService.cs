@@ -19,5 +19,7 @@ namespace VacationsManager.Shared.Services.Contracts
 
         Task<IEnumerable<VacationRequestDto>> GetRequestsByUserRoleAsync(UserDto currentUser, RoleType role);
 
+        Task<IEnumerable<VacationRequestDto>> GetRequestsByDateAsync(UserDto currentUser, RoleType role, DateTime startDate);
+
     }
 }

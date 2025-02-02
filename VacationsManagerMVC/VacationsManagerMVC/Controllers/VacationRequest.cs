@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using VacationsManager.Data.Entities;
 using VacationsManager.Shared.Dtos;
 using VacationsManager.Shared.Enums;
 using VacationsManager.Shared.Repos.Contracts;
@@ -55,64 +56,37 @@ namespace VacationsManagerMVC.Controllers
         [HttpGet]
         public override async Task<IActionResult> List(int pageSize = DefaultPageSize, int pageNumber = DefaultPageNumber)
         {
-            // Извикване на базовия метод
-            var baseResult = await base.List(pageSize, pageNumber) as ViewResult;
-
-            if (baseResult == null || !(baseResult.Model is IEnumerable<VacationRequestDetailsVM> paginatedRequests))
+            try
             {
-                return BadRequest("Error loading paginated data.");
+                var currentUserId = User.Identity.Name;
+                var currentUser = await _userService.GetByUsernameAsync(currentUserId);
+                if (currentUser == null) return Unauthorized("User not found.");
+
+                // 🔹 Конвертираме RoleDto към RoleType
+                RoleType role = (RoleType)currentUser.Role.Id;
+
+                var vacationRequests = await _vacationRequestService.GetRequestsByUserRoleAsync(currentUser, role);
+
+                var totalRecords = vacationRequests.Count();
+                var paginatedRequests = vacationRequests
+                    .OrderBy(r => r.Id)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                var mappedModels = _mapper.Map<IEnumerable<VacationRequestDetailsVM>>(paginatedRequests);
+
+                ViewBag.TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+                ViewBag.CurrentPage = pageNumber;
+
+                return View(nameof(List), mappedModels);
             }
-
-            // Вземане на текущия потребител
-            var currentUserId = User.Identity.Name;
-            var currentUser = await _userService.GetByUsernameAsync(currentUserId);
-
-            if (currentUser == null)
+            catch (Exception ex)
             {
-                return Unauthorized("User not found.");
+                Console.WriteLine($"Error: {ex.Message}");
+                return BadRequest("Error loading data.");
             }
-
-            // Определяне на ролята на потребителя
-            RoleType role = RoleType.Unassigned;
-            if (User.IsInRole("Developer"))
-            {
-                role = RoleType.Developer;
-            }
-            else if (User.IsInRole("TeamLead"))
-            {
-                role = RoleType.TeamLead;
-            }
-            else if (User.IsInRole("CEO"))
-            {
-                role = RoleType.CEO;
-            }
-
-            // Получаване на филтрираните заявки от базата данни
-            var query = await _vacationRequestService.GetRequestsByUserRoleAsync(currentUser, role);
-
-            // Изчисляване на общия брой записи за избраната роля
-            var totalRecords = query.Count();
-
-            // Пагиниране на заявките
-            var paginatedRequestsResult = query
-                .OrderBy(r => r.Id) // Сортиране на заявките по ID за правилната пагинация
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList(); // Извършваме пагинацията тук
-
-            // Преобразуване в ViewModel
-            var mappedModels = _mapper.Map<IEnumerable<VacationRequestDetailsVM>>(paginatedRequestsResult);
-
-            // Изчисляване на общия брой страници
-            var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
-
-            // Предаване на информация за пагинацията към View
-            ViewBag.TotalPages = totalPages;
-            ViewBag.CurrentPage = pageNumber;
-
-            return View(nameof(List), mappedModels);
         }
-
 
 
 
@@ -127,15 +101,30 @@ namespace VacationsManagerMVC.Controllers
                 return RedirectToAction(nameof(List));
             }
 
-            var vacationRequests = await _vacationRequestService.GetAllAsync();
-            var filteredRequests = vacationRequests
-                .Where(v => v.StartDate >= startDate.Value)
-                .ToList();
+            try
+            {
+                var currentUserId = User.Identity.Name;
+                var currentUser = await _userService.GetByUsernameAsync(currentUserId);
+                if (currentUser == null) return Unauthorized("User not found.");
 
-            var vacationRequestVMs = _mapper.Map<IEnumerable<VacationRequestDetailsVM>>(filteredRequests);
+                // 🔹 Конвертираме RoleDto към RoleType
+                RoleType role = (RoleType)currentUser.Role.Id;
 
-            return View("List", vacationRequestVMs);
+                var vacationRequests = await _vacationRequestService.GetRequestsByDateAsync(currentUser, role, startDate.Value);
+
+                var vacationRequestVMs = _mapper.Map<IEnumerable<VacationRequestDetailsVM>>(vacationRequests);
+
+                return View("List", vacationRequestVMs);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return BadRequest("Error filtering data.");
+            }
         }
+
+
+
 
 
         [HttpPost]
