@@ -52,9 +52,7 @@ namespace VacationsManager.Services
 
         public async Task<IEnumerable<NotificationDto>> GetUnreadNotificationsAsync(int userId)
         {
-            return (await _repository.GetAllAsync())
-                .Where(n => n.RecipientId == userId && !n.IsRead)
-                .ToList();
+            return await _repository.GetUnreadNotificationsAsync(userId);
         }
     }
 }

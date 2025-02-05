@@ -23,8 +23,5 @@ namespace VacationsManager.Services
             return _repository.GetByNameIfExistsAsync(name);
         }
 
-
-
-
     }
 }
