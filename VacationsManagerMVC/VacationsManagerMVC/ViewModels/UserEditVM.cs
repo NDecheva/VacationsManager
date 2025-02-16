@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using VacationsManager.Shared.Enums;
 
 namespace VacationsManagerMVC.ViewModels
 {
@@ -33,5 +34,12 @@ namespace VacationsManagerMVC.ViewModels
         [DisplayName("Team")]
         public int? TeamId { get; set; } 
         public IEnumerable<SelectListItem> AllTeams { get; set; }
+
+        public UserEditVM()
+        {
+            AllRoles = new List<SelectListItem>();
+            AllTeams = new List<SelectListItem>();
+        }
+
     }
 }
