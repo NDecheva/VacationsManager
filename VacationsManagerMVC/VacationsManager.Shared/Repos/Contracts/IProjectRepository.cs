@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Build.Evaluation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,6 @@ namespace VacationsManager.Shared.Repos.Contracts
     public interface IProjectRepository : IBaseRepository<ProjectDto>
     {
         Task<List<TeamDto>> GetAvailableTeamsAsync(int projectId);
+        Task<IEnumerable<ProjectDto>> GetProjectsForTeamLeadAsync(string username, int pageSize, int pageNumber);
     }
 }

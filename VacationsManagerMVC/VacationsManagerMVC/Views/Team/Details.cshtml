@@ -34,7 +34,7 @@
                                 @foreach (var developer in Model.Developers)
                                 {
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        @developer.FirstName
+                                        @developer.Username
                                         <form method="post" action="@Url.Action("RemoveDeveloper", new { teamId = Model.Id, userId = developer.Id })" class="d-inline">
                                             <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                                         </form>
@@ -57,7 +57,7 @@
                                     {
                                         @foreach (var user in ViewBag.Users)
                                         {
-                                            <option value="@user.Id">@user.FirstName</option>
+                                            <option value="@user.Id">@user.Username</option>
                                         }
                                     }
                                     else

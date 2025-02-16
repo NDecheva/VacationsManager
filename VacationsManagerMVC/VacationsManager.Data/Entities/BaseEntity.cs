@@ -14,8 +14,8 @@ namespace VacationsManager.Data.Entities
 
         protected BaseEntity()
         {
-            CreatedAt = DateTime.UtcNow;
-            UpdatedAt = DateTime.UtcNow;
+            CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
         }
     }
 }

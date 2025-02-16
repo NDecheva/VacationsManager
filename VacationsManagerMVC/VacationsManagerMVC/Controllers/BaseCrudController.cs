@@ -62,7 +62,7 @@ namespace VacationsManagerMVC.Controllers
             }
 
 
-        [HttpGet]
+            [HttpGet]
             public virtual async Task<IActionResult> Details(int id)
             {
                 var model = await this._service.GetByIdIfExistsAsync(id);
@@ -85,15 +85,22 @@ namespace VacationsManagerMVC.Controllers
             [HttpPost]
             public virtual async Task<IActionResult> Create(TEditVM editVM)
             {
-                var errors = await Validate(editVM);
-
-                if (errors != null)
+                if (!ModelState.IsValid)
                 {
+                    editVM = await PrePopulateVMAsync(editVM); 
                     return View(editVM);
                 }
 
-                var model = this._mapper.Map<TModel>(editVM);
-            await this._service.SaveAsync(model);
+                var errors = await Validate(editVM);
+                if (errors != null)
+                {
+                    ModelState.AddModelError("", errors);
+                    editVM = await PrePopulateVMAsync(editVM);
+                    return View(editVM);
+                }
+
+                var model = _mapper.Map<TModel>(editVM);
+                await _service.SaveAsync(model);
                 return await List();
             }
             [HttpGet]
@@ -115,19 +122,30 @@ namespace VacationsManagerMVC.Controllers
             [HttpPost]
             public virtual async Task<IActionResult> Edit(int id, TEditVM editVM)
             {
+                if (!ModelState.IsValid)
+                {
+                    editVM = await PrePopulateVMAsync(editVM); // Попълни отново стойностите
+                    return View(editVM);
+                }
+
                 var errors = await Validate(editVM);
                 if (errors != null)
                 {
+                    ModelState.AddModelError("", errors);
+                    editVM = await PrePopulateVMAsync(editVM);
                     return View(editVM);
                 }
-                if (!await this._service.ExistsByIdAsync(id))
+
+                if (!await _service.ExistsByIdAsync(id))
                 {
                     return BadRequest(Constants.InvalidId);
                 }
+
                 var mappedModel = _mapper.Map<TModel>(editVM);
-                await this._service.SaveAsync(mappedModel);
+                await _service.SaveAsync(mappedModel);
                 return await List();
             }
+
             [HttpGet]
             public virtual async Task<IActionResult> Delete(int? id)
             {

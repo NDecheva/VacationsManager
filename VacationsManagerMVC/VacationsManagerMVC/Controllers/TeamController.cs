@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NuGet.Protocol.Core.Types;
+using System.Security.Claims;
 using VacationsManager.Data.Entities;
 using VacationsManager.Services;
 using VacationsManager.Shared.Dtos;
@@ -112,8 +113,27 @@ namespace VacationsManagerMVC.Controllers
         }
 
 
+        [HttpGet]
+        public override async Task<IActionResult> List(int pageSize = DefaultPageSize, int pageNumber = DefaultPageNumber)
+        {
+            var currentUserId = User.Identity.Name;
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value; 
 
+            if (string.IsNullOrEmpty(userRole))
+            {
+                return Unauthorized("User not found.");
+            }
 
+            if (userRole == "CEO")
+            {
+                return await base.List(pageSize, pageNumber);
+            }
+
+            var myTeams = await _teamService.GetTeamsByTeamLeadAsync(currentUserId, pageSize, pageNumber);
+            var mappedTeams = _mapper.Map<IEnumerable<TeamDetailsVM>>(myTeams);
+
+            return View(nameof(List), mappedTeams);
+        }
 
 
         //[HttpPost]

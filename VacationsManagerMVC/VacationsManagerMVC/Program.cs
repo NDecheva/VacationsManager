@@ -29,9 +29,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddDbContext<VacationsManagerDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-            sqlOptions => sqlOptions.UseRowNumberForPaging())
-        .EnableSensitiveDataLogging() 
-        .LogTo(Console.WriteLine, LogLevel.Information); 
+        sqlOptions => sqlOptions.UseRowNumberForPaging());
 });
 
 

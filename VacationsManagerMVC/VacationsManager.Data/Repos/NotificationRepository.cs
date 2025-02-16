@@ -24,7 +24,7 @@ namespace VacationsManager.Data.Repos
                 .Where(n => n.RecipientId == recipientId && !n.IsRead)
                 .ToListAsync();
 
-            return _mapper.Map<IEnumerable<NotificationDto>>(unreadNotifications);
+            return MapToEnumerableOfModel(unreadNotifications);
         }
 
     }

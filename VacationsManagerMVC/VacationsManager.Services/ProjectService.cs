@@ -12,14 +12,16 @@ namespace VacationsManager.Services
     public class ProjectService : BaseCrudService<ProjectDto, IProjectRepository>, IProjectService
     {
         private readonly ITeamService _teamService;
+        private readonly IUserService _userService;
         private readonly IProjectRepository _projectRepository;
         private readonly ITeamRepository _teamRepository;
 
-        public ProjectService(IProjectRepository repository, ITeamService teamService, ITeamRepository teamRepository) : base(repository)
+        public ProjectService(IProjectRepository repository, ITeamService teamService, IUserService userService, ITeamRepository teamRepository) : base(repository)
         {
             _teamService = teamService ?? throw new ArgumentNullException(nameof(teamService));
             _projectRepository = repository;
             _teamRepository = teamRepository;
+            _userService = userService;
         }
 
         public async Task AddTeamToProjectAsync(int projectId, int teamId)
@@ -55,9 +57,45 @@ namespace VacationsManager.Services
             await _teamRepository.SaveAsync(team);
         }
 
+        public async Task CreateProjectAsync(ProjectDto projectDto, string username)
+        {
+            await _repository.SaveAsync(projectDto);
+
+            var savedProject = (await _repository.GetAllAsync())
+                .FirstOrDefault(p => p.Name == projectDto.Name && p.Description == projectDto.Description);
+
+            if (savedProject == null || savedProject.Id == 0)
+            {
+                throw new Exception("Project could not be created.");
+            }
+
+            var user = await _userService.GetByUsernameAsync(username);
+            if (user == null || user.Role.Name != "TeamLead")
+            {
+                return; 
+            }
+
+            var teams = await _teamRepository.GetTeamsByTeamLeadAsync(username, 10, 1);
+            var team = teams.FirstOrDefault(); 
+
+            if (team == null)
+            {
+                return;
+            }
+
+            await _teamRepository.AssignProjectToTeamAsync(savedProject.Id, team.Id);
+        }
+
+
         public async Task<List<TeamDto>> GetAvailableTeamsAsync(int projectId)
         {
             return await _repository.GetAvailableTeamsAsync(projectId);
+        }
+
+        public async Task<IEnumerable<ProjectDto>> GetProjectsForTeamLeadAsync(string teamLeadUsername, int pageSize,
+            int pageNumber)
+        {
+            return await _projectRepository.GetProjectsForTeamLeadAsync(teamLeadUsername, pageSize, pageNumber);
         }
     }
 }

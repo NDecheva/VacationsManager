@@ -15,6 +15,32 @@ namespace VacationsManager.Data.Repos
     {
         public TeamRepository(VacationsManagerDbContext context, IMapper mapper) : base(context, mapper) { }
 
+        public async Task<IEnumerable<TeamDto>> GetTeamsByTeamLeadAsync(string teamLeadUsername, int pageSize, int pageNumber)
+        {
+            var teams = await _dbSet
+                .Include(t => t.TeamLeader)  
+                .Include(t => t.Project)      
+                .Where(t => t.TeamLeader.Username == teamLeadUsername) 
+                .OrderBy(t => t.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return MapToEnumerableOfModel(teams);
+        }
+
+        public async Task AssignProjectToTeamAsync(int projectId, int teamId)
+        {
+            var team = await _dbSet.FirstOrDefaultAsync(t => t.Id == teamId);
+
+            if (team != null)
+            {
+                team.ProjectId = projectId;
+                await _context.SaveChangesAsync(); 
+            }
+        }
+
+
         // Метод за създаване на Team и актуализиране на потребителя (Team Leader)
         //public async Task CreateAndAssignTeamLeaderAsync(TeamDto teamDto)
         //{

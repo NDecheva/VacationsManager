@@ -13,7 +13,6 @@ namespace VacationsManagerMVC.ViewModels
         public string Name { get; set; }
 
         [DisplayName("Project")]
-        [Required(ErrorMessage = "Project is required.")]
         public int? ProjectId { get; set; }  
 
         public IEnumerable<SelectListItem> Projects { get; set; } 

@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using VacationsManager.Data.Entities;
 using VacationsManager.Shared.Dtos;
 using VacationsManager.Shared.Repos.Contracts;
 using VacationsManager.Shared.Services.Contracts;
@@ -23,12 +26,46 @@ namespace VacationsManagerMVC.Controllers
             _projectService = projectService;
         }
 
-        [HttpGet]
-        [Route("Project/List")]
-        public async Task<IActionResult> List()
+
+        [HttpPost]
+        public override async Task<IActionResult> Create(ProjectEditVM editVM)
         {
-            return await base.List();
+            if (!ModelState.IsValid)
+            {
+                return View(editVM);
+            }
+
+            var projectDto = _mapper.Map<ProjectDto>(editVM);
+            var currentUser = User.Identity.Name; 
+
+            await _service.CreateProjectAsync(projectDto, currentUser); 
+
+            return RedirectToAction(nameof(List));
         }
+
+        [HttpGet]
+        public override async Task<IActionResult> List(int pageSize = DefaultPageSize, int pageNumber = DefaultPageNumber)
+        {
+            var currentUserId = User.Identity.Name;
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value; 
+
+            if (string.IsNullOrEmpty(userRole))
+            {
+                return Unauthorized("User not found.");
+            }
+
+            if (userRole != "TeamLead")
+            {
+                return await base.List(pageSize, pageNumber);
+            }
+
+            var projects = await _projectService.GetProjectsForTeamLeadAsync(currentUserId, pageSize, pageNumber);
+            var mappedProjects = _mapper.Map<IEnumerable<ProjectDetailsVM>>(projects);
+
+            return View(nameof(List), mappedProjects);
+        }
+
+
 
         [HttpGet]
         [Route("Project/Search")]

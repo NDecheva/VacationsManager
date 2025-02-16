@@ -269,7 +269,7 @@ namespace VacationsManagerMVC.Controllers
                 // Одобряване на заявката
                 await _vacationRequestService.ApproveRequestAsync(id);
 
-                return RedirectToAction(nameof(List));
+                return Json(new { success = true, message = "Vacation request approved successfully.", requestId = id });
             }
             catch (Exception ex)
             {

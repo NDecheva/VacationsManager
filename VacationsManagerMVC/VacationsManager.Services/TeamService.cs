@@ -62,6 +62,11 @@ namespace VacationsManager.Services
             await _userRepository.SaveAsync(user); 
         }
 
+        public async Task<IEnumerable<TeamDto>> GetTeamsByTeamLeadAsync(string teamLeadUsername, int pageSize, int pageNumber)
+        {
+            return await _repository.GetTeamsByTeamLeadAsync(teamLeadUsername, pageSize, pageNumber);
+        }
+
         //public async Task CreateAndAssignTeamLeaderAsync(TeamDto teamDto)
         //{
         //    await _repository.CreateAndAssignTeamLeaderAsync(teamDto);

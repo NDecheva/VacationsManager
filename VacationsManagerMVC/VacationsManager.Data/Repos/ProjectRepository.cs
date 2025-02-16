@@ -37,5 +37,20 @@ namespace VacationsManager.Data.Repos
 
             return _mapper.Map<List<TeamDto>>(availableTeams);
         }
+
+        public async Task<IEnumerable<ProjectDto>> GetProjectsForTeamLeadAsync(string teamLeadUsername, int pageSize, int pageNumber)
+        {
+            var projects = await _dbSet
+                .Include(p => p.Teams)
+                .ThenInclude(t => t.TeamLeader)
+                .Where(p => p.Teams.Any(t => t.TeamLeader.Username == teamLeadUsername))
+                .OrderBy(p => p.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return MapToEnumerableOfModel(projects);
+        }
+
     }
 }
