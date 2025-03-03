@@ -1,28 +1,23 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using static VacationsManager.Data.Repos.VacationRequestRepository;
-using VacationsManager.Shared.Attributes;
-using YourNamespace.Data.Repos;
 using VacationsManager.Data.Entities;
+using VacationsManager.Shared.Attributes;
 using VacationsManager.Shared.Dtos;
-using VacationsManager.Shared.Repos.Contracts;
 using VacationsManager.Shared.Enums;
-using AutoMapper.QueryableExtensions;
+using VacationsManager.Shared.Repos.Contracts;
+using YourNamespace.Data.Repos;
 
 namespace VacationsManager.Data.Repos
 {
     [AutoBind]
-    public class VacationRequestRepository : BaseRepository<VacationRequest, VacationRequestDto>,
-        IVacationRequestRepository
+    public class VacationRequestRepository : BaseRepository<VacationRequest, VacationRequestDto>, IVacationRequestRepository
     {
-        public VacationRequestRepository(VacationsManagerDbContext context, IMapper mapper) : base(context, mapper)
-        {
-        }
+        public VacationRequestRepository(VacationsManagerDbContext context, IMapper mapper) : base(context, mapper) { }
 
         public async Task<IEnumerable<VacationRequestDto>> GetRequestsByUserRoleAsync(UserDto currentUser, RoleType role)
         {
@@ -36,7 +31,6 @@ namespace VacationsManager.Data.Repos
                 case RoleType.Developer:
                     requestsQuery = requestsQuery.Where(r => r.RequesterId == currentUser.Id);
                     break;
-
                 case RoleType.TeamLead:
                     var teamLeaderTeamId = await _context.Set<Team>()
                         .Where(t => t.TeamLeaderId == currentUser.Id)
@@ -45,25 +39,19 @@ namespace VacationsManager.Data.Repos
 
                     if (teamLeaderTeamId != 0)
                     {
-                        var teamMembersIds = await _context.Set<User>()
-                            .Where(u => u.TeamId == teamLeaderTeamId)
-                            .Select(u => u.Id)
-                            .ToListAsync();
-
-                        requestsQuery = requestsQuery.Where(r => teamMembersIds.Contains(r.RequesterId) || r.RequesterId == currentUser.Id);
+                        requestsQuery = requestsQuery.Where(r =>
+                            _context.Set<User>().Where(u => u.TeamId == teamLeaderTeamId)
+                                .Select(u => u.Id).Contains(r.RequesterId) || r.RequesterId == currentUser.Id);
                     }
                     else
                     {
                         requestsQuery = requestsQuery.Where(r => r.RequesterId == currentUser.Id);
                     }
                     break;
-
                 case RoleType.CEO:
-                    // CEO вижда всички заявки
-                    break;
-
+                    break; // CEO вижда всички заявки
                 default:
-                    return new List<VacationRequestDto>(); // В случай на грешка, връщаме празен списък
+                    return new List<VacationRequestDto>();
             }
 
             return await requestsQuery
@@ -72,16 +60,10 @@ namespace VacationsManager.Data.Repos
                 .ToListAsync();
         }
 
-
-
         public async Task<IEnumerable<VacationRequestDto>> GetRequestsByDateAsync(UserDto currentUser, RoleType role, DateTime startDate)
         {
             var allRequests = await GetRequestsByUserRoleAsync(currentUser, role);
-
-            return allRequests
-                .Where(r => r.StartDate >= startDate)
-                .ToList();
+            return allRequests.Where(r => r.StartDate >= startDate).ToList();
         }
     }
 }
-
