@@ -21,16 +21,14 @@ namespace VacationsManager.Data.Repos
 
         public async Task<IEnumerable<VacationRequestDto>> GetRequestsByUserRoleAsync(UserDto currentUser, RoleType role)
         {
-            var requestsQuery = _context.Set<VacationRequest>()
-                .AsNoTracking()
-                .Include(r => r.Requester)
-                .AsQueryable();
+            IQueryable<VacationRequest> requestsQuery = _context.Set<VacationRequest>().AsNoTracking();
 
             switch (role)
             {
                 case RoleType.Developer:
                     requestsQuery = requestsQuery.Where(r => r.RequesterId == currentUser.Id);
                     break;
+
                 case RoleType.TeamLead:
                     var teamLeaderTeamId = await _context.Set<Team>()
                         .Where(t => t.TeamLeaderId == currentUser.Id)
@@ -39,26 +37,33 @@ namespace VacationsManager.Data.Repos
 
                     if (teamLeaderTeamId != 0)
                     {
-                        requestsQuery = requestsQuery.Where(r =>
-                            _context.Set<User>().Where(u => u.TeamId == teamLeaderTeamId)
-                                .Select(u => u.Id).Contains(r.RequesterId) || r.RequesterId == currentUser.Id);
+                        var teamMemberIds = await _context.Set<User>()
+                            .Where(u => u.TeamId == teamLeaderTeamId)
+                            .Select(u => u.Id)
+                            .ToListAsync();
+
+                        requestsQuery = requestsQuery.Where(r => teamMemberIds.Contains(r.RequesterId) || r.RequesterId == currentUser.Id);
                     }
                     else
                     {
                         requestsQuery = requestsQuery.Where(r => r.RequesterId == currentUser.Id);
                     }
                     break;
+
                 case RoleType.CEO:
-                    break; // CEO вижда всички заявки
+                    // CEO вижда всички заявки, няма нужда от допълнителна филтрация
+                    break;
+
                 default:
-                    return new List<VacationRequestDto>();
+                    return Enumerable.Empty<VacationRequestDto>();
             }
 
+            // Връщане на всички полета в DTO-то
             return await requestsQuery
                 .ProjectTo<VacationRequestDto>(_mapper.ConfigurationProvider)
-                .AsSplitQuery()
                 .ToListAsync();
         }
+
 
         public async Task<IEnumerable<VacationRequestDto>> GetRequestsByDateAsync(UserDto currentUser, RoleType role, DateTime startDate)
         {
