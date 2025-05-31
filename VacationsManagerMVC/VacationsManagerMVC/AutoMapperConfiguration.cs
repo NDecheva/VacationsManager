@@ -16,15 +16,24 @@ namespace VacationsManagerMVC
             CreateMap<ProjectDto, ProjectEditVM>().ReverseMap();
             CreateMap<ProjectDto, ProjectDetailsVM>().ReverseMap();
 
-            CreateMap<Role, RoleDto>().ReverseMap();
+            CreateMap<Role, RoleDto>()
+                .PreserveReferences()
+                .MaxDepth(2)
+                .ReverseMap();
             CreateMap<RoleDto, RoleEditVM>().ReverseMap();
             CreateMap<RoleDto, RoleDetailsVM>().ReverseMap();
 
-            CreateMap<Team, TeamDto>().ReverseMap();
+            CreateMap<Team, TeamDto>()
+                .PreserveReferences()
+                .MaxDepth(2)
+                .ReverseMap();
             CreateMap<TeamDto, TeamEditVM>().ReverseMap();
             CreateMap<TeamDto, TeamDetailsVM>().ReverseMap();
 
-            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UserDto>()
+                .PreserveReferences()
+                .MaxDepth(3)
+                .ReverseMap();
             CreateMap<UserDto, UserEditVM>().ReverseMap();
             CreateMap<UserDto, UserDetailsVM>().ReverseMap();
 

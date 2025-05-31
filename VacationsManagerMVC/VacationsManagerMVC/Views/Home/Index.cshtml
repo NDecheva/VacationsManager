@@ -19,7 +19,10 @@
         <div class="text-center mb-5">
             <h1 class="display-4 fw-bold text-primary"><i class="bi bi-briefcase-fill"></i> Welcome to Vacation Manager</h1>
             <p class="lead">Streamline your organization’s leave management with our intuitive platform.</p>
-            <a href="@Url.Action("Login", "Auth")" class="btn btn-lg btn-primary shadow-sm">
+            <a href="@(User.Identity.IsAuthenticated 
+                         ? Url.Action("List", "VacationRequest") 
+                         : Url.Action("Login", "Auth"))" 
+               class="btn btn-lg btn-primary shadow-sm">
                 <i class="bi bi-arrow-right-circle"></i> Get Started
             </a>
         </div>

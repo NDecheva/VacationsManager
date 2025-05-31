@@ -16,12 +16,17 @@ namespace VacationManager.Tests.Services
     {
         private readonly Mock<IProjectRepository> _projectRepositoryMock = new Mock<IProjectRepository>();
         private readonly Mock<ITeamService> _teamServiceMock = new Mock<ITeamService>();
-        private readonly Mock<ITeamRepository> _teamRepositoryMock = new Mock<ITeamRepository>();  // Add this line
+        private readonly Mock<ITeamRepository> _teamRepositoryMock = new Mock<ITeamRepository>();  
+        private readonly Mock<IUserService> _userServiceMock = new Mock<IUserService>();
         private readonly IProjectService _service;
 
         public ProjectServiceTests()
         {
-            _service = new ProjectService(_projectRepositoryMock.Object, _teamServiceMock.Object, _teamRepositoryMock.Object);
+            _service = new ProjectService(
+                _projectRepositoryMock.Object,
+                _teamServiceMock.Object,
+                _userServiceMock.Object,         
+                _teamRepositoryMock.Object);
         }
 
         [Test]

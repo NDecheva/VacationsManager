@@ -24,61 +24,64 @@
                 </button>
 
                 <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-                    <!-- 🔹 Навигационни линкове -->
-                    <ul class="navbar-nav gap-3">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="bi bi-house-door"></i> Home
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
-                                <i class="bi bi-shield-lock"></i> Privacy
-                            </a>
-                        </li>
+                        <!-- 🔹 Навигационни линкове -->
+                        <ul class="navbar-nav gap-3">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="bi bi-house-door"></i> Home
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                    <i class="bi bi-shield-lock"></i> Privacy
+                                </a>
+                            </li>
 
-                        @if (Context.User.IsInRole("CEO"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="List">
-                                    <i class="bi bi-person-badge"></i> Users
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Role" asp-action="List">
-                                    <i class="bi bi-people-fill"></i> Roles
-                                </a>
-                            </li>
-                        }
+                        </ul>
 
-                        @if (Context.User.IsInRole("CEO") || Context.User.IsInRole("TeamLead"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Project" asp-action="List">
-                                    <i class="bi bi-kanban"></i> Projects
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Team" asp-action="List">
-                                    <i class="bi bi-people"></i> Teams
-                                </a>
-                            </li>
-                        }
+                    <ul class="navbar-nav ms-5 gap-3">
+                            @if (Context.User.IsInRole("CEO"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="User" asp-action="List">
+                                        <i class="bi bi-person-badge"></i> Users
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Role" asp-action="List">
+                                        <i class="bi bi-people-fill"></i> Roles
+                                    </a>
+                                </li>
+                            }
 
-                        @if (Context.User.IsInRole("CEO") || Context.User.IsInRole("Developer") || Context.User.IsInRole("TeamLead"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="VacationRequest" asp-action="List">
-                                    <i class="bi bi-calendar"></i> Vacation Requests
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a id="notificationLink" class="nav-link" asp-area="" asp-controller="Notification" asp-action="List">
-                                    <i class="bi bi-bell"></i> Notifications
-                                </a>
-                            </li>
-                        }
-                    </ul>
+                            @if (Context.User.IsInRole("CEO") || Context.User.IsInRole("TeamLead"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Project" asp-action="List">
+                                        <i class="bi bi-kanban"></i> Projects
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Team" asp-action="List">
+                                        <i class="bi bi-people"></i> Teams
+                                    </a>
+                                </li>
+                            }
+
+                            @if (Context.User.IsInRole("CEO") || Context.User.IsInRole("Developer") || Context.User.IsInRole("TeamLead"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="VacationRequest" asp-action="List">
+                                        <i class="bi bi-calendar"></i> Vacation Requests
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Notification" asp-action="List">
+                                        <i class="bi bi-bell"></i> Notifications
+                                    </a>
+                                </li>
+                            }
+                        </ul>
 
                     <!-- 🔹 Десни бутони (тъмна тема + logout) -->
                     <div class="d-flex align-items-center gap-3 ms-auto">

@@ -21,47 +21,50 @@ namespace VacationsManager.Data.Repos
 
         public async Task<IEnumerable<VacationRequestDto>> GetRequestsByUserRoleAsync(UserDto currentUser, RoleType role)
         {
-            IQueryable<VacationRequest> requestsQuery = _context.Set<VacationRequest>().AsNoTracking();
+            IQueryable<VacationRequest> query = _dbSet
+                .AsNoTracking()
+                .Include(r => r.Requester)
+                .ThenInclude(u => u.Role)
+                .Include(r => r.Requester)
+                .ThenInclude(u => u.Team);
 
             switch (role)
             {
                 case RoleType.Developer:
-                    requestsQuery = requestsQuery.Where(r => r.RequesterId == currentUser.Id);
+                    query = query.Where(r => r.RequesterId == currentUser.Id);
                     break;
 
                 case RoleType.TeamLead:
-                    var teamLeaderTeamId = await _context.Set<Team>()
+                    int? teamId = await _context.Set<Team>()
                         .Where(t => t.TeamLeaderId == currentUser.Id)
-                        .Select(t => t.Id)
+                        .Select(t => (int?)t.Id)
                         .FirstOrDefaultAsync();
 
-                    if (teamLeaderTeamId != 0)
+                    if (teamId.HasValue)
                     {
-                        var teamMemberIds = await _context.Set<User>()
-                            .Where(u => u.TeamId == teamLeaderTeamId)
+                        var userIds = await _context.Set<User>()
+                            .Where(u => u.TeamId == teamId.Value)
                             .Select(u => u.Id)
                             .ToListAsync();
 
-                        requestsQuery = requestsQuery.Where(r => teamMemberIds.Contains(r.RequesterId) || r.RequesterId == currentUser.Id);
+                        query = query.Where(r => userIds.Contains(r.RequesterId) || r.RequesterId == currentUser.Id);
                     }
                     else
                     {
-                        requestsQuery = requestsQuery.Where(r => r.RequesterId == currentUser.Id);
+                        query = query.Where(r => r.RequesterId == currentUser.Id);
                     }
                     break;
 
                 case RoleType.CEO:
-                    // CEO вижда всички заявки, няма нужда от допълнителна филтрация
+                    // без филтри
                     break;
 
                 default:
                     return Enumerable.Empty<VacationRequestDto>();
             }
 
-            // Връщане на всички полета в DTO-то
-            return await requestsQuery
-                .ProjectTo<VacationRequestDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+            var entities = await query.ToListAsync();
+            return MapToEnumerableOfModel(entities);
         }
 
 
