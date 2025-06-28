@@ -1,9 +1,20 @@
-﻿/* ✅ Основни стилове */
+﻿/* ✅ Prevent flash of unstyled content */
+html[data-theme='dark'] {
+    background-color: #212529;
+    color: white;
+}
+
+/* ✅ Основни стилове */
 html, body {
     height: 100%;
     margin: 0;
     display: flex;
     flex-direction: column;
+}
+
+/* ✅ Prevent flash of unstyled content during page load */
+html.dark-mode {
+    background-color: #212529;
 }
 
 /* ✅ Основно съдържание (избутва футъра надолу) */
@@ -93,9 +104,25 @@ footer {
         background-color: #343a40 !important;
     }
 
-    .dark-mode .footer {
+    .dark-mode footer {
         background-color: #343a40 !important;
-        color: white !important;
+        border-top-color: #495057 !important;
+    }
+    
+    .dark-mode footer .text-secondary {
+        color: #adb5bd !important;
+    }
+    
+    .dark-mode footer a {
+        color: #8bb9fe !important;
+    }
+    
+    .dark-mode footer a:hover {
+        color: #a8c7fa !important;
+    }
+    
+    .dark-mode footer p {
+        color: #e9ecef !important;
     }
 
     .dark-mode .btn-outline-primary {
@@ -107,26 +134,271 @@ footer {
             background-color: white !important;
             color: black !important;
         }
+        
+    /* Оправени заглавия в тъмен режим */
+    .dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6,
+    .dark-mode .h1, .dark-mode .h2, .dark-mode .h3, .dark-mode .h4, .dark-mode .h5, .dark-mode .h6,
+    .dark-mode .display-1, .dark-mode .display-2, .dark-mode .display-3, 
+    .dark-mode .display-4, .dark-mode .display-5, .dark-mode .display-6 {
+        color: white !important;
+    }
+    
+    /* Оправени текстови класове в тъмен режим */
+    .dark-mode .text-primary, .dark-mode .text-secondary, 
+    .dark-mode .text-dark, .dark-mode .card-title {
+        color: white !important;
+    }
+    
+    /* Оправени параграфи в тъмен режим */
+    .dark-mode p, .dark-mode .card-text, .dark-mode .lead {
+        color: #e9ecef !important;
+    }
+    
+    /* Оправени нотификации в тъмен режим */
+    .dark-mode .notification-item {
+        background-color: #343a40 !important;
+        color: white !important;
+    }
+    
+    .dark-mode .notification-item.unread {
+        background-color: #2c3034 !important;
+        border-left: 5px solid #0d6efd !important;
+    }
+    
+    .dark-mode .notification-meta {
+        color: #adb5bd !important;
+    }
+    
+    .dark-mode .list-group-item {
+        background-color: #343a40 !important;
+        border-color: #495057 !important;
+    }
+    
+    .dark-mode .card {
+        background-color: #343a40 !important;
+        border-color: #454d55 !important;
+    }
+    
+    .dark-mode .text-muted {
+        color: #adb5bd !important;
+    }
+    
+    /* ✨ Подобрени таблици в тъмен режим */
+    .dark-mode .table {
+        color: #e9ecef !important;
+        border-color: #495057 !important;
+    }
+    
+    .dark-mode .table thead th {
+        background-color: #2c3034 !important;
+        color: #fff !important;
+        border-bottom: 2px solid #0d6efd !important;
+    }
+    
+    .dark-mode .table tbody td {
+        border-color: #495057 !important;
+    }
+    
+    .dark-mode .table-hover tbody tr:hover {
+        color: white !important;
+        background-color: rgba(13, 110, 253, 0.15) !important;
+    }
+    
+    .dark-mode .table-container {
+        background-color: #343a40 !important;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .dark-mode .table-responsive {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    /* ✨ Подобрени бутони в таблици в тъмен режим */
+    .dark-mode .btn-group .btn {
+        border-color: #495057 !important;
+    }
+    
+    .dark-mode .btn-outline-info {
+        color: #6edff6 !important;
+        border-color: #6edff6 !important;
+    }
+    
+    .dark-mode .btn-outline-info:hover {
+        background-color: #0dcaf0 !important;
+        color: #212529 !important;
+    }
+    
+    .dark-mode .btn-outline-warning {
+        color: #ffda6a !important;
+        border-color: #ffda6a !important;
+    }
+    
+    .dark-mode .btn-outline-warning:hover {
+        background-color: #ffc107 !important;
+        color: #212529 !important;
+    }
+    
+    .dark-mode .btn-outline-danger {
+        color: #ea868f !important;
+        border-color: #ea868f !important;
+    }
+    
+    .dark-mode .btn-outline-danger:hover {
+        background-color: #dc3545 !important;
+        color: #fff !important;
+    }
+    
+    .dark-mode .btn-success {
+        background-color: #198754 !important;
+        border-color: #146c43 !important;
+    }
+    
+    .dark-mode .btn-success:hover {
+        background-color: #157347 !important;
+        border-color: #146c43 !important;
+    }
+    
+    /* Оправени форми в тъмен режим */
+    .dark-mode .form-control {
+        background-color: #2c3034 !important;
+        border-color: #495057 !important;
+        color: white !important;
+    }
+    
+    .dark-mode .form-control:focus {
+        background-color: #2c3034 !important;
+        color: white !important;
+        border-color: #0d6efd !important;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+    }
+    
+    /* Стилове за placeholder текстове в тъмен режим */
+    .dark-mode .form-control::placeholder,
+    .dark-mode input::placeholder,
+    .dark-mode textarea::placeholder,
+    .dark-mode select::placeholder {
+        color: #adb5bd !important;
+        opacity: 0.7 !important;
+    }
+    
+    .dark-mode .form-label {
+        color: #e9ecef !important;
+    }
+    
+    /* Оправени бутони в тъмен режим */
+    .dark-mode .btn-outline-secondary {
+        color: #e9ecef !important;
+        border-color: #e9ecef !important;
+    }
+    
+    .dark-mode .btn-outline-secondary:hover {
+        background-color: #e9ecef !important;
+        color: #343a40 !important;
+    }
+    
+    /* Оправени алерти в тъмен режим */
+    .dark-mode .alert-warning {
+        background-color: #664d03 !important;
+        color: #ffda6a !important;
+        border-color: #876800 !important;
+    }
+    
+    /* Оправени значки в тъмен режим */
+    .dark-mode .badge.bg-secondary {
+        background-color: #6c757d !important;
+        color: white !important;
+    }
+    
+    .dark-mode .badge.bg-warning.text-dark {
+        color: white !important;
+    }
+    
+    /* Оправени списъци в тъмен режим */
+    .dark-mode .vacation-list {
+        background-color: #2c3034 !important;
+        border-color: #495057 !important;
+    }
+    
+    /* Стилове за списъци в тъмен режим */
+    .dark-mode ul li,
+    .dark-mode ol li,
+    .dark-mode dl dt,
+    .dark-mode dl dd {
+        color: #e9ecef !important;
+    }
+
+    .dark-mode .list-group-item {
+        color: #e9ecef !important;
+    }
+
+    .dark-mode ul.user-list li {
+        background-color: #2c3034 !important;
+        color: #e9ecef !important;
+        border-color: #495057 !important;
+    }
+    
+    /* Оправени линкове в тъмен режим */
+    .dark-mode a:not(.btn) {
+        color: #8bb9fe !important;
+    }
+    
+    .dark-mode a:not(.btn):hover {
+        color: #a8c7fa !important;
+        text-decoration: underline;
+    }
+    
+    /* Оправена пагинация в тъмен режим */
+    .dark-mode .pagination .page-link {
+        background-color: #343a40 !important;
+        border-color: #495057 !important;
+        color: #e9ecef !important;
+    }
+    
+    .dark-mode .pagination .page-item.active .page-link {
+        background-color: #0d6efd !important;
+        border-color: #0d6efd !important;
+        color: white !important;
+    }
+    
+    /* Оправени контейнери за търсене в тъмен режим */
+    .dark-mode .search-container {
+        background-color: #2c3034 !important;
+        border-color: #495057 !important;
+    }
+    
+    /* Оправени модални прозорци в тъмен режим */
+    .dark-mode .modal-content {
+        background-color: #343a40 !important;
+        border-color: #495057 !important;
+    }
+    
+    .dark-mode .modal-header, .dark-mode .modal-footer {
+        border-color: #495057 !important;
+    }
+    
+    .dark-mode .close {
+        color: white !important;
+    }
 
 /* ✅ Навигация за мобилни устройства */
 @media (max-width: 992px) {
     .navbar-nav {
         flex-direction: column;
-        text-align: center;
-        width: 100%;
+        align-items: flex-start;
+        gap: 5px;
     }
 
         .navbar-nav .nav-item {
-            margin-bottom: 10px;
+            width: 100%;
         }
 
         .navbar-nav .nav-link {
-            font-size: 1rem;
             width: 100%;
-            text-align: center;
         }
 
     .dark-mode-toggle {
+        margin-top: 10px;
         width: 100%;
         text-align: center;
     }
@@ -134,15 +406,15 @@ footer {
 
 /* ✅ По-добри стилове за формуляри */
 .form-control, .form-check-input {
-    transition: all 0.3s ease-in-out;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
     .form-control:focus, .form-check-input:focus {
-        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
     }
 
 /* ✅ Стилове за грешки */
 .red-text {
-    color: red !important;
-    font-weight: bold;
+    color: red;
 }

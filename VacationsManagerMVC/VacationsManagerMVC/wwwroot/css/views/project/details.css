@@ -1,0 +1,27 @@
+/* Custom styles */
+.card-custom {
+    background: #212529;
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+.btn-custom {
+    transition: all 0.3s ease-in-out;
+}
+.btn-custom:hover {
+    transform: scale(1.05);
+}
+.list-group-item {
+    background: #f8f9fa;
+    border-left: 5px solid #007bff;
+    border-radius: 8px;
+}
+.btn-danger:hover {
+    background-color: #dc3545;
+    transform: scale(1.05);
+}
+.btn-primary:hover {
+    background-color: #007bff;
+    transform: scale(1.05);
+} 

@@ -151,7 +151,5 @@ namespace VacationsManagerMVC.Controllers
             return View(projectVM);
         }
 
-
-
     }
 }

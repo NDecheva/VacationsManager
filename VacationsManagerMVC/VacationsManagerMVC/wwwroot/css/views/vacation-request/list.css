@@ -1,0 +1,15 @@
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.toast-container {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    z-index: 1050;
+} 

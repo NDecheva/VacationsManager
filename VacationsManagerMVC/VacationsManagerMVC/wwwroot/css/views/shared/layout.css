@@ -1,0 +1,6 @@
+/* Dark mode styles */
+html[data-theme='dark'],
+html[data-theme='dark'] body {
+    background-color: #212529 !important;
+    color: white !important;
+} 

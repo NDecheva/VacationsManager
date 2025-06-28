@@ -10,57 +10,7 @@
     <!-- Bootstrap Lux Theme & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
-
-    <style>
-        .notification-container {
-            max-width: 900px;
-        }
-
-        .notification-item {
-            transition: all 0.3s ease-in-out;
-            border-left: 5px solid transparent;
-        }
-
-            .notification-item.unread {
-                background-color: #f8f9fa;
-                border-left: 5px solid #007bff;
-            }
-
-            .notification-item:hover {
-                transform: scale(1.02);
-                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            }
-
-        .notification-meta {
-            font-size: 0.9rem;
-            color: #6c757d;
-        }
-
-        .btn-mark-read {
-            transition: all 0.3s ease;
-        }
-
-            .btn-mark-read:hover {
-                transform: scale(1.05);
-            }
-
-        /* 🌟 Toast Styling */
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1050;
-        }
-
-        .custom-toast {
-            background: rgba(0, 123, 255, 0.9);
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 0.5s ease-in-out, fadeOut 0.5s ease-in-out 2.5s;
-        }
-
-    </style>
+    <link rel="stylesheet" href="~/css/views/notification/list.css" asp-append-version="true" />
 </head>
 <body>
     <div class="container mt-5">

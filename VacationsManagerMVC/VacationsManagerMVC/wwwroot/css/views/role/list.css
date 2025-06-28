@@ -1,0 +1,35 @@
+.role-container {
+    max-width: 1000px;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.btn-action {
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-action:hover {
+    transform: scale(1.05);
+}
+
+.user-list {
+    list-style: none;
+    padding: 0;
+}
+
+.user-list li {
+    margin: 5px 0;
+    padding: 5px 10px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.role-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} 

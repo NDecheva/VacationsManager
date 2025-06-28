@@ -22,7 +22,6 @@ namespace VacationsManager.Services
 
         public async Task SendNotificationAsync(int recipientId, string message)
         {
-            // Създайте обект Notification и го мапнете към NotificationDto
             var notification = new NotificationDto
             {
                 RecipientId = recipientId,
@@ -33,10 +32,8 @@ namespace VacationsManager.Services
 
             var notificationDto = _mapper.Map<NotificationDto>(notification);
 
-            // Запишете мапнатия DTO в базата данни
             await _repository.SaveAsync(notificationDto);
         }
-
 
         public async Task MarkAsReadAsync(int notificationId)
         {

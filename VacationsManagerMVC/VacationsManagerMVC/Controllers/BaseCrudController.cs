@@ -124,7 +124,7 @@ namespace VacationsManagerMVC.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    editVM = await PrePopulateVMAsync(editVM); // Попълни отново стойностите
+                    editVM = await PrePopulateVMAsync(editVM); 
                     return View(editVM);
                 }
 

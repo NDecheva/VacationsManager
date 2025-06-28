@@ -42,7 +42,6 @@ namespace VacationsManager.Services
             await _teamRepository.SaveAsync(team);
         }
 
-
         public async Task RemoveTeamFromProjectAsync(int projectId, int teamId)
         {
             var team = await _teamRepository.GetByIdAsync(teamId);
@@ -85,7 +84,6 @@ namespace VacationsManager.Services
 
             await _teamRepository.AssignProjectToTeamAsync(savedProject.Id, team.Id);
         }
-
 
         public async Task<List<TeamDto>> GetAvailableTeamsAsync(int projectId)
         {

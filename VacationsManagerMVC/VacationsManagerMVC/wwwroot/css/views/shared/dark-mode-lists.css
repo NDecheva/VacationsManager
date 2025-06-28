@@ -1,0 +1,99 @@
+/* Стилове за списъци в тъмен режим */
+
+/* Основни стилове за списъци */
+.dark-mode ul,
+.dark-mode ol {
+    color: #e9ecef !important;
+}
+
+.dark-mode ul li,
+.dark-mode ol li {
+    color: #e9ecef !important;
+}
+
+/* Стилове за списъци с маркери */
+.dark-mode ul.list-unstyled li {
+    color: #e9ecef !important;
+}
+
+/* Стилове за списъчни групи */
+.dark-mode .list-group {
+    background-color: transparent !important;
+}
+
+.dark-mode .list-group-item {
+    background-color: #343a40 !important;
+    border-color: #495057 !important;
+    color: #e9ecef !important;
+}
+
+.dark-mode .list-group-item:hover {
+    background-color: #2c3034 !important;
+}
+
+.dark-mode .list-group-item.active {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: white !important;
+}
+
+/* Стилове за специални списъци */
+.dark-mode .user-list {
+    list-style: none;
+    padding: 0;
+}
+
+.dark-mode .user-list li {
+    margin: 5px 0;
+    padding: 5px 10px;
+    background-color: #2c3034 !important;
+    border-radius: 5px;
+    display: inline-block;
+    color: #e9ecef !important;
+    border: 1px solid #495057 !important;
+}
+
+/* Стилове за списъци с икони */
+.dark-mode ul li i,
+.dark-mode ol li i {
+    color: #8bb9fe !important;
+    margin-right: 5px;
+}
+
+/* Стилове за вложени списъци */
+.dark-mode ul ul li,
+.dark-mode ol ol li,
+.dark-mode ul ol li,
+.dark-mode ol ul li {
+    color: #e9ecef !important;
+}
+
+/* Стилове за vacation-list */
+.dark-mode .vacation-list {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #495057 !important;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #2c3034 !important;
+}
+
+.dark-mode .vacation-list ul {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.dark-mode .vacation-list li {
+    color: #e9ecef !important;
+}
+
+/* Стилове за дефиниционни списъци */
+.dark-mode dl dt {
+    color: white !important;
+    font-weight: bold;
+}
+
+.dark-mode dl dd {
+    color: #e9ecef !important;
+    margin-bottom: 10px;
+} 

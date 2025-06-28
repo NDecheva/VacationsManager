@@ -1,0 +1,27 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.privacy-container {
+    max-width: 1200px;
+    padding: 40px;
+}
+
+.privacy-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    background-color: white;
+}
+
+.privacy-card h3 {
+    color: #0056b3;
+}
+
+.btn-back {
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-back:hover {
+    transform: scale(1.05);
+} 

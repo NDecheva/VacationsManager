@@ -2,8 +2,15 @@
 using Azure.Core;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using VacationsManager.Data.Entities;
 using VacationsManager.Shared.Dtos;
 using VacationsManager.Shared.Enums;
@@ -18,12 +25,18 @@ namespace VacationsManagerMVC.Controllers
     {
         private readonly IVacationRequestService _vacationRequestService;
         private readonly IUserService _userService;
+        private readonly ILogger<VacationRequestController> _logger;
 
-        public VacationRequestController(IVacationRequestService vacationRequestService, IMapper mapper, IUserService userService)
+        public VacationRequestController(
+            IVacationRequestService vacationRequestService, 
+            IMapper mapper, 
+            IUserService userService,
+            ILogger<VacationRequestController> logger)
             : base(vacationRequestService, mapper)
         {
             _vacationRequestService = vacationRequestService;
             _userService = userService;
+            _logger = logger;
         }
 
         protected override async Task<VacationRequestEditVM> PrePopulateVMAsync(VacationRequestEditVM editVM)
@@ -52,7 +65,6 @@ namespace VacationsManagerMVC.Controllers
             return editVM;
         }
 
-
         [HttpGet]
         public override async Task<IActionResult> List(int pageSize = DefaultPageSize, int pageNumber = DefaultPageNumber)
         {
@@ -62,33 +74,22 @@ namespace VacationsManagerMVC.Controllers
                 var currentUser = await _userService.GetByUsernameAsync(currentUserId);
                 if (currentUser == null) return Unauthorized("User not found.");
 
-                // 🔹 Конвертираме RoleDto към RoleType
                 RoleType role = (RoleType)currentUser.Role.Id;
 
-                var vacationRequests = await _vacationRequestService.GetRequestsByUserRoleAsync(currentUser, role);
+                var result = await _vacationRequestService.GetPaginatedRequestsAsync(currentUser, role, pageSize, pageNumber);
+                var mappedModels = _mapper.Map<IEnumerable<VacationRequestDetailsVM>>(result.PaginatedRequests);
 
-                var totalRecords = vacationRequests.Count();
-                var paginatedRequests = vacationRequests
-                    .OrderBy(r => r.Id)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToList();
-
-                var mappedModels = _mapper.Map<IEnumerable<VacationRequestDetailsVM>>(paginatedRequests);
-
-                ViewBag.TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+                ViewBag.TotalPages = result.TotalPages;
                 ViewBag.CurrentPage = pageNumber;
 
                 return View(nameof(List), mappedModels);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                _logger.LogError(ex, "Error loading vacation request list");
                 return BadRequest("Error loading data.");
             }
         }
-
-
 
         [HttpGet]
         [Route("VacationRequest/FilterByDate")]
@@ -107,25 +108,19 @@ namespace VacationsManagerMVC.Controllers
                 var currentUser = await _userService.GetByUsernameAsync(currentUserId);
                 if (currentUser == null) return Unauthorized("User not found.");
 
-                // 🔹 Конвертираме RoleDto към RoleType
                 RoleType role = (RoleType)currentUser.Role.Id;
 
                 var vacationRequests = await _vacationRequestService.GetRequestsByDateAsync(currentUser, role, startDate.Value);
-
                 var vacationRequestVMs = _mapper.Map<IEnumerable<VacationRequestDetailsVM>>(vacationRequests);
 
                 return View("List", vacationRequestVMs);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                _logger.LogError(ex, "Error filtering vacation requests by date");
                 return BadRequest("Error filtering data.");
             }
         }
-
-
-
-
 
         [HttpPost]
         public async Task<IActionResult> CreateWithAttachment(VacationRequestEditVM editVM, IFormFile attachmentFile)
@@ -137,30 +132,24 @@ namespace VacationsManagerMVC.Controllers
                 return View("Create", editVM);
             }
 
-            if (editVM.VacationType == VacationType.SickLeave && attachmentFile == null)
+            var isValid = await _vacationRequestService.ValidateVacationTypeRequiresAttachmentAsync(editVM.VacationType, attachmentFile);
+            if (!isValid)
             {
-                Console.WriteLine("Attachment is required for SickLeave.");
                 ModelState.AddModelError("Attachment", "Sick leave requires an attachment.");
                 editVM = await PrePopulateVMAsync(editVM);
                 return View("Create", editVM);
             }
 
-            if (attachmentFile != null && attachmentFile.Length > 0)
+            if (attachmentFile != null)
             {
-                var filePath = Path.Combine("wwwroot/uploads", attachmentFile.FileName);
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await attachmentFile.CopyToAsync(stream);
-                }
-                editVM.Attachment = attachmentFile.FileName;
+                editVM.Attachment = await _vacationRequestService.SaveAttachmentAsync(attachmentFile);
             }
 
             var vacationRequestDto = _mapper.Map<VacationRequestDto>(editVM);
-
             await _service.SaveAsync(vacationRequestDto);
+            
             return RedirectToAction(nameof(List));
         }
-
 
         [HttpPost("VacationRequest/Edit/{id}")]
         public async Task<IActionResult> Edit(int id, VacationRequestEditVM editVM, IFormFile AttachmentFile)
@@ -180,26 +169,9 @@ namespace VacationsManagerMVC.Controllers
             {
                 editVM.RequesterId = existingRequest.RequesterId;
 
-                if (AttachmentFile != null && AttachmentFile.Length > 0)
+                if (AttachmentFile != null)
                 {
-                    var uploadsPath = Path.Combine("wwwroot/uploads");
-                    Directory.CreateDirectory(uploadsPath);
-
-                    var filePath = Path.Combine(uploadsPath, AttachmentFile.FileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await AttachmentFile.CopyToAsync(stream);
-                    }
-
-                    if (!string.IsNullOrEmpty(existingRequest.Attachment))
-                    {
-                        var oldFilePath = Path.Combine(uploadsPath, existingRequest.Attachment);
-                        if (System.IO.File.Exists(oldFilePath))
-                        {
-                            System.IO.File.Delete(oldFilePath);
-                        }
-                    }
-
+                    await _vacationRequestService.UpdateAttachmentAsync(id, AttachmentFile, existingRequest.Attachment);
                     editVM.Attachment = AttachmentFile.FileName;
                 }
                 else
@@ -214,15 +186,12 @@ namespace VacationsManagerMVC.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                _logger.LogError(ex, "Error updating vacation request");
                 ModelState.AddModelError("", "An error occurred while updating the vacation request.");
                 editVM = await PrePopulateVMAsync(editVM);
                 return View(editVM);
             }
         }
-
-
-
 
         [HttpGet]
         public IActionResult DownloadAttachment(string fileName)
@@ -234,11 +203,10 @@ namespace VacationsManagerMVC.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                _logger.LogError(ex, "Error downloading attachment");
                 return NotFound(ex.Message);
             }
         }
-
 
         [HttpPost]
         [Authorize(Roles = "TeamLead,CEO")]
@@ -246,38 +214,25 @@ namespace VacationsManagerMVC.Controllers
         {
             try
             {
-                // Вземете заявката по ID
-                var request = await _vacationRequestService.GetByIdIfExistsAsync(id);
-                if (request == null)
-                {
-                    return NotFound("Vacation request not found.");
-                }
+                var currentUserId = User.Identity.Name;
+                var currentUser = await _userService.GetByUsernameAsync(currentUserId);
+                if (currentUser == null) return Unauthorized("User not found.");
 
-                // Проверете дали потребителят е TeamLead и заявката е подадена от TeamLead
-                var requester = await _userService.GetByIdIfExistsAsync(request.RequesterId);
-                if (requester == null)
-                {
-                    return NotFound("Requester not found.");
-                }
-
-                // Сравнете свойството Name или друго поле от RoleDto със стринг
-                if (requester.Role?.Name == "TeamLead" && !User.IsInRole("CEO"))
+                var canApprove = await _vacationRequestService.CanUserApproveRequestAsync(currentUser, id);
+                if (!canApprove)
                 {
                     return Forbid("Only a CEO can approve requests submitted by a TeamLead.");
                 }
 
-                // Одобряване на заявката
                 await _vacationRequestService.ApproveRequestAsync(id);
 
                 return Json(new { success = true, message = "Vacation request approved successfully.", requestId = id });
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                _logger.LogError(ex, "Error approving vacation request");
                 return BadRequest(ex.Message);
             }
         }
-
-
     }
 }

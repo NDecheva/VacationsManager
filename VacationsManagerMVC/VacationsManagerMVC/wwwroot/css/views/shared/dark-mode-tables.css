@@ -1,0 +1,155 @@
+/* Стилове за таблици в тъмен режим */
+
+/* Основни стилове на таблици */
+.dark-mode .table {
+    color: #e9ecef !important;
+    border-color: #495057 !important;
+    background-color: #343a40 !important;
+}
+
+/* Стилове за заглавия на таблици */
+.dark-mode .table-dark,
+.dark-mode .table thead th {
+    background-color: #212529 !important;
+    color: #fff !important;
+    border-bottom: 2px solid #0d6efd !important;
+}
+
+/* Стилове за редове в таблици */
+.dark-mode .table tbody tr {
+    border-color: #495057 !important;
+}
+
+.dark-mode .table tbody td {
+    border-color: #495057 !important;
+}
+
+/* Hover ефект на редовете */
+.dark-mode .table-hover tbody tr:hover {
+    color: white !important;
+    background-color: rgba(13, 110, 253, 0.15) !important;
+    cursor: pointer;
+}
+
+/* Контейнер на таблицата */
+.dark-mode .table-container {
+    background-color: #343a40 !important;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3) !important;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/* Responsive таблица */
+.dark-mode .table-responsive {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Стилове за редове със специален статус */
+.dark-mode .table .bg-success,
+.dark-mode .table .table-success {
+    background-color: rgba(25, 135, 84, 0.2) !important;
+    color: #75b798 !important;
+}
+
+.dark-mode .table .bg-warning,
+.dark-mode .table .table-warning {
+    background-color: rgba(255, 193, 7, 0.2) !important;
+    color: #ffda6a !important;
+}
+
+.dark-mode .table .bg-danger,
+.dark-mode .table .table-danger {
+    background-color: rgba(220, 53, 69, 0.2) !important;
+    color: #ea868f !important;
+}
+
+/* Стилове за пагинация */
+.dark-mode .pagination {
+    margin-top: 20px;
+}
+
+.dark-mode .pagination .page-link {
+    background-color: #343a40 !important;
+    border-color: #495057 !important;
+    color: #e9ecef !important;
+}
+
+.dark-mode .pagination .page-item.active .page-link {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: white !important;
+}
+
+.dark-mode .pagination .page-item.disabled .page-link {
+    background-color: #2c3034 !important;
+    border-color: #495057 !important;
+    color: #6c757d !important;
+}
+
+/* Стилове за значки в таблици */
+.dark-mode .table .badge {
+    padding: 0.35em 0.65em;
+    font-size: 0.85em;
+}
+
+.dark-mode .table .badge.bg-success {
+    background-color: #198754 !important;
+    color: white !important;
+}
+
+.dark-mode .table .badge.bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+}
+
+.dark-mode .table .badge.bg-danger {
+    background-color: #dc3545 !important;
+    color: white !important;
+}
+
+.dark-mode .table .badge.bg-info {
+    background-color: #0dcaf0 !important;
+    color: #212529 !important;
+}
+
+.dark-mode .table .badge.bg-secondary {
+    background-color: #6c757d !important;
+    color: white !important;
+}
+
+.dark-mode .table .badge.rounded-pill {
+    border-radius: 50rem !important;
+}
+
+/* Стилове за таблици с алтерниращи редове */
+.dark-mode .table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark-mode .table-striped > tbody > tr:nth-of-type(odd):hover {
+    background-color: rgba(13, 110, 253, 0.15) !important;
+}
+
+/* Стилове за таблици с бордери */
+.dark-mode .table-bordered {
+    border-color: #495057 !important;
+}
+
+.dark-mode .table-bordered th,
+.dark-mode .table-bordered td {
+    border-color: #495057 !important;
+}
+
+/* Стилове за малки таблици */
+.dark-mode .table-sm th,
+.dark-mode .table-sm td {
+    padding: 0.3rem !important;
+}
+
+/* Стилове за празни таблици */
+.dark-mode .table-empty {
+    text-align: center;
+    padding: 2rem;
+    color: #adb5bd !important;
+} 

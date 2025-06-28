@@ -40,12 +40,14 @@ namespace VacationsManagerMVC.Controllers
 
             return editVM;
         }
+        
         //[HttpGet]
         //[Route("Team/List")]
         //public async Task<IActionResult> List()
         //{
         //    return await base.List();
         //}
+
         [HttpGet]
         [Route("Team/Search")]
         public async Task<IActionResult> Search(string searchTerm)
@@ -72,7 +74,6 @@ namespace VacationsManagerMVC.Controllers
             return View("List", teamVMs); 
         }
 
-
         [HttpPost]
         public async Task<IActionResult> AddDeveloper(int teamId, int userId)
         {
@@ -89,7 +90,6 @@ namespace VacationsManagerMVC.Controllers
                 return StatusCode(500, "An error occurred while adding the developer.");
             }
         }
-
 
         [HttpPost]
         public async Task<IActionResult> RemoveDeveloper(int teamId, int userId)
@@ -111,7 +111,6 @@ namespace VacationsManagerMVC.Controllers
                 return StatusCode(500, "An error occurred while removing the developer.");
             }
         }
-
 
         [HttpGet]
         public override async Task<IActionResult> List(int pageSize = DefaultPageSize, int pageNumber = DefaultPageNumber)
@@ -180,8 +179,6 @@ namespace VacationsManagerMVC.Controllers
         //}
 
 
-
-
         [Route("Team/Details")]
         [HttpGet]
         public override async Task<IActionResult> Details(int id)
@@ -199,8 +196,5 @@ namespace VacationsManagerMVC.Controllers
 
             return View(teamVM);
         }
-
-
     }
-
 }

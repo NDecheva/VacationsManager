@@ -16,12 +16,10 @@ namespace VacationsManagerMVC.Controllers
     {
         protected readonly IRoleService _roleService;
 
-
         public RoleController(IMapper mapper, IRoleService roleService)
             : base(roleService, mapper)
         {
             this._roleService = roleService;
-
         }
 
         protected override async Task<RoleEditVM> PrePopulateVMAsync(RoleEditVM editVM)
@@ -38,5 +36,4 @@ namespace VacationsManagerMVC.Controllers
             return editVM;
         }
     }
-
 }
