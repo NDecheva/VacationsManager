@@ -30,7 +30,7 @@ A professional and modern web application for managing employee vacation request
 - 🛠 Approve/decline requests based on role
 - 🧑‍💼 Manage users, teams, and roles
 - 📁 Project and team assignments
-- 🔔 Notifications for leave status updates
+- 🔔 Notifications for approved requests
 - 📄 Attachment support
 - 🛡 Secure authentication and authorization system
 
