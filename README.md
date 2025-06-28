@@ -57,7 +57,7 @@ Unit tests are included for critical service logic using xUnit and Moq.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/VacationsManagerMVC.git
+   git clone https://github.com/NDecheva/VacationsManager.git
    ```
 2. Update connection string in `appsettings.json`
 3. Apply migrations and seed the database
