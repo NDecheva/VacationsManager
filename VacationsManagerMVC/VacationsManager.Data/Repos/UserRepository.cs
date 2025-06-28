@@ -53,17 +53,33 @@ namespace VacationsManager.Data.Repos
                 .ToListAsync();
 
             var teamLeaders = await _dbSet
-                .Where(u => u.RoleId == teamLeaderRoleId &&
-                            !assignedTeamLeaderIds.Contains(u.Id))
-                .Select(u => new UserDto
-                {
-                    Id = u.Id,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName
-                })
+                .Where(u => u.RoleId == teamLeaderRoleId && !assignedTeamLeaderIds.Contains(u.Id))
                 .ToListAsync();
 
-            return teamLeaders;
+            return MapToEnumerableOfModel(teamLeaders);
+
+        }
+
+
+        public async Task<IEnumerable<UserDto>> GetAvailableDevelopersAsync()
+        {
+            var developers = await _context.Set<User>()
+                .Where(user => user.Role != null && user.Role.Name == "Developer" && user.TeamId == null)
+                .ToListAsync();
+
+            return MapToEnumerableOfModel(developers);
+
+        }
+
+
+        public async Task<IEnumerable<UserDto>> GetTeamMembersAsync(int teamId)
+        {
+            var teamMembers = await _context.Set<User>()
+                .Where(u => u.TeamId == teamId && u.Role.Name == RoleType.Developer.ToString())
+                .ToListAsync();
+
+            return MapToEnumerableOfModel(teamMembers);
+
         }
 
     }

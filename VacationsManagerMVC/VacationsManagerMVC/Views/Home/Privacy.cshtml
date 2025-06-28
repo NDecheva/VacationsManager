@@ -1,6 +1,78 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Privacy Policy for Vacation Manager";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Bootstrap Lux Theme -->
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/views/home/privacy.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container-fluid mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-9 privacy-container">
+                <div class="card privacy-card">
+                    <h1 class="text-center text-primary fw-bold mb-4">
+                        <i class="bi bi-shield-lock-fill"></i> @ViewData["Title"]
+                    </h1>
+
+                    <p class="text-muted text-center">
+                        At <strong>Vacation Manager</strong>, we prioritize your privacy. Here’s how we protect and handle your data.
+                    </p>
+
+                    <hr>
+
+                    <h3><i class="bi bi-person-lines-fill"></i> 1. Information We Collect</h3>
+                    <p>We collect the following types of personal data:</p>
+                    <ul>
+                        <li><strong>Personal Identification Information:</strong> Name, email, username, role.</li>
+                        <li><strong>Usage Data:</strong> Interactions with leave management features.</li>
+                        <li><strong>Cookies:</strong> Used to enhance user experience.</li>
+                    </ul>
+
+                    <h3><i class="bi bi-gear-wide-connected"></i> 2. How We Use Your Information</h3>
+                    <ul>
+                        <li>Managing and securing the system.</li>
+                        <li>Authenticating users.</li>
+                        <li>Improving functionalities based on feedback.</li>
+                        <li>Sending important updates.</li>
+                    </ul>
+
+                    <h3><i class="bi bi-share-fill"></i> 3. Sharing of Your Information</h3>
+                    <ul>
+                        <li>We do not share your data, except when required by law or with service providers under confidentiality agreements.</li>
+                    </ul>
+
+                    <h3><i class="bi bi-shield-check"></i> 4. Data Security</h3>
+                    <p>We use industry-standard security measures, but no method is 100% secure.</p>
+
+                    <h3><i class="bi bi-person-check"></i> 5. Your Rights</h3>
+                    <ul>
+                        <li>Access and correct your data.</li>
+                        <li>Request deletion of your personal data.</li>
+                    </ul>
+
+                    <hr>
+
+                    <!-- Back Button -->
+                    <div class="text-center mt-4">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-lg btn-primary btn-back">
+                            <i class="bi bi-arrow-left-circle"></i> Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -28,6 +28,7 @@ namespace VacationsManager.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Configure relationships
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.Recipient)
                 .WithMany()
@@ -38,7 +39,8 @@ namespace VacationsManager.Data
                 .HasMany(p => p.Teams)
                 .WithOne(t => t.Project)
                 .HasForeignKey(t => t.ProjectId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull); 
+
 
             modelBuilder.Entity<Role>()
                 .HasMany(r => r.Users)
@@ -70,6 +72,7 @@ namespace VacationsManager.Data
                 .HasForeignKey(vr => vr.RequesterId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Seed initial data
             foreach (var role in Enum.GetValues(typeof(RoleType)).Cast<RoleType>())
             {
                 modelBuilder.Entity<Role>().HasData(new Role { Id = (int)role, Name = role.ToString(), RoleType = role });
@@ -85,6 +88,5 @@ namespace VacationsManager.Data
                 RoleId = (int)RoleType.CEO
             });
         }
-
     }
 }

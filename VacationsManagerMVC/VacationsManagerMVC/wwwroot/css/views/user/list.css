@@ -1,0 +1,22 @@
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.vacation-list {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+
+.vacation-list ul {
+    padding-left: 20px;
+    margin-bottom: 0;
+} 

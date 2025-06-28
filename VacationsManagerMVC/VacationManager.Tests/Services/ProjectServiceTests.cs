@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,18 @@ namespace VacationManager.Tests.Services
     public class ProjectServiceTests
     {
         private readonly Mock<IProjectRepository> _projectRepositoryMock = new Mock<IProjectRepository>();
+        private readonly Mock<ITeamService> _teamServiceMock = new Mock<ITeamService>();
+        private readonly Mock<ITeamRepository> _teamRepositoryMock = new Mock<ITeamRepository>();  
+        private readonly Mock<IUserService> _userServiceMock = new Mock<IUserService>();
         private readonly IProjectService _service;
 
         public ProjectServiceTests()
         {
-            _service = new ProjectService(_projectRepositoryMock.Object);
+            _service = new ProjectService(
+                _projectRepositoryMock.Object,
+                _teamServiceMock.Object,
+                _userServiceMock.Object,         
+                _teamRepositoryMock.Object);
         }
 
         [Test]

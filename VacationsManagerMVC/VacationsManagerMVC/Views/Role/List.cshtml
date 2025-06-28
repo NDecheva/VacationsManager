@@ -1,0 +1,89 @@
+﻿@using VacationsManagerMVC.Controllers
+@using VacationsManager.Shared.Extensions
+@model IEnumerable<VacationsManagerMVC.ViewModels.RoleDetailsVM>
+
+@{
+    ViewBag.Title = "Role List";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+
+    <!-- Bootstrap Lux Theme -->
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/views/role/list.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="role-container mx-auto">
+            <div class="role-header mb-4">
+                <h2 class="text-primary"><i class="bi bi-people-fill"></i> Role List</h2>
+                <a href="@Url.Action("Create", "Role")" class="btn btn-success btn-lg"><i class="bi bi-plus-circle"></i> Add New Role</a>
+            </div>
+
+            @if (Model.Any())
+            {
+                <table class="table table-hover table-bordered shadow-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col"><i class="bi bi-person-badge-fill"></i> Role Name</th>
+                            <th scope="col"><i class="bi bi-gear-wide-connected"></i> Role Type</th>
+                            <th scope="col"><i class="bi bi-people-fill"></i> Users Assigned</th>
+                            <th scope="col"><i class="bi bi-tools"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var role in Model)
+                        {
+                            <tr>
+                                <td><strong>@role.Name</strong></td>
+                                <td>@role.RoleType</td>
+                                <td>
+                                    @if (role.Users.Any())
+                                    {
+                                        <ul class="user-list">
+                                            @foreach (var user in role.Users)
+                                            {
+                                                <li><i class="bi bi-person-circle"></i> @user.Username</li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No Users Assigned</span>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit", "Role", new { id = role.Id })" class="btn btn-warning btn-sm btn-action">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                    <a href="@Url.Action("Details", "Role", new { id = role.Id })" class="btn btn-info btn-sm btn-action">
+                                        <i class="bi bi-eye-fill"></i> Details
+                                    </a>
+                                    <a href="@Url.Action("Delete", "Role", new { id = role.Id })" class="btn btn-danger btn-sm btn-action">
+                                        <i class="bi bi-trash-fill"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-warning text-center">
+                    <i class="bi bi-exclamation-circle-fill"></i> No roles available.
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

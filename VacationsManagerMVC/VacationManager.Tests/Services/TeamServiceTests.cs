@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using VacationsManager.Services;
 using VacationsManager.Shared.Dtos;
 using VacationsManager.Shared.Repos.Contracts;
@@ -12,11 +13,14 @@ namespace VacationManager.Tests.Services
     public class TeamServiceTests
     {
         private readonly Mock<ITeamRepository> _teamRepositoryMock = new Mock<ITeamRepository>();
+        private readonly Mock<IUserService> _userServiceMock = new Mock<IUserService>();
+        private readonly Mock<IUserRepository> _userRepositoryMock = new Mock<IUserRepository>(); // Добавяне на мок за IUserRepository
         private readonly ITeamService _service;
 
         public TeamServiceTests()
         {
-            _service = new TeamService(_teamRepositoryMock.Object);
+            // Предаване на мокнатия IUserRepository
+            _service = new TeamService(_teamRepositoryMock.Object, _userServiceMock.Object, _userRepositoryMock.Object);
         }
 
         [Test]

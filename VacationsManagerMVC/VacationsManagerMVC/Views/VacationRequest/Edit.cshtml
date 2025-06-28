@@ -1,0 +1,107 @@
+﻿@using VacationsManagerMVC.Controllers
+@using VacationsManager.Shared.Extensions
+@model VacationsManagerMVC.ViewModels.VacationRequestEditVM
+
+@{
+    ViewBag.Title = "Edit Vacation Request";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-warning text-white">
+                        <h2>Edit Vacation Request</h2>
+                    </div>
+                    <div class="card-body">
+                        @using (Html.BeginForm("Edit", "VacationRequest", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.StartDate, new { @class = "form-label" })
+                                @Html.TextBoxFor(model => model.StartDate, new
+                                {
+                                    @class = "form-control",
+                                    @value = Model.StartDate,
+                                })
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.EndDate, new { @class = "form-label" })
+                                @Html.TextBoxFor(model => model.EndDate, new
+                                {
+                                    @class = "form-control",
+                                    @value = Model.EndDate,
+                                })
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                            </div>
+
+
+                            <!-- Half Day Request -->
+                            <div class="mb-3 form-check">
+                                @Html.CheckBoxFor(model => model.IsHalfDay, new { @class = "form-check-input" })
+                                @Html.LabelFor(model => model.IsHalfDay, new { @class = "form-check-label" })
+                                @Html.ValidationMessageFor(model => model.IsHalfDay, "", new { @class = "text-danger" })
+                            </div>
+
+                            <!-- Approved -->
+                            <div class="mb-3 form-check">
+                                @if (User.IsInRole("CEO"))
+                                {
+                                    @Html.CheckBoxFor(model => model.IsApproved, new { @class = "form-check-input" })
+                                    @Html.LabelFor(model => model.IsApproved, new { @class = "form-check-label" })
+                                }
+                                else
+                                {
+                                    <input type="checkbox" class="form-check-input" @(Model.IsApproved ? "checked" : "") disabled />
+                                    <label class="form-check-label">Approved</label>
+                                }
+                                @Html.ValidationMessageFor(model => model.IsApproved, "", new { @class = "text-danger" })
+                            </div>
+
+
+                            <!-- Hidden Requester -->
+                            @Html.HiddenFor(model => model.RequesterId)
+                            @Html.ValidationMessageFor(model => model.RequesterId, "", new { @class = "text-danger" })
+
+
+                            <!-- Attachment -->
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.Attachment, new { @class = "form-label" })
+                                <input type="file" name="AttachmentFile" class="form-control" />
+                                <small class="text-muted">Current file: @Model.Attachment</small>
+                                @Html.ValidationMessageFor(model => model.Attachment, "", new { @class = "text-danger" })
+                            </div>
+
+                            <!-- Vacation Type -->
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.VacationType, new { @class = "form-label" })
+                                @Html.DropDownListFor(model => model.VacationType, Model.VacationTypes, "Select Vacation Type", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.VacationType, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-warning">Update</button>
+                                <a href="@Url.Action("List", "VacationRequest")" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

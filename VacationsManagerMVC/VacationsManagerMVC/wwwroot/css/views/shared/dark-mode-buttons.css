@@ -1,0 +1,278 @@
+/* Стилове за бутони в тъмен режим */
+
+/* Общи стилове за бутони */
+.dark-mode .btn {
+    transition: all 0.3s ease-in-out;
+}
+
+.dark-mode .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .btn:active {
+    transform: scale(0.98);
+}
+
+/* Стилове за бутони в групи */
+.dark-mode .btn-group .btn {
+    border-color: #495057 !important;
+}
+
+/* Стилове за outline бутони */
+.dark-mode .btn-outline-primary {
+    color: #8bb9fe !important;
+    border-color: #8bb9fe !important;
+}
+
+.dark-mode .btn-outline-primary:hover {
+    background-color: #0d6efd !important;
+    color: white !important;
+    border-color: #0d6efd !important;
+}
+
+.dark-mode .btn-outline-secondary {
+    color: #e9ecef !important;
+    border-color: #e9ecef !important;
+}
+
+.dark-mode .btn-outline-secondary:hover {
+    background-color: #6c757d !important;
+    color: white !important;
+    border-color: #6c757d !important;
+}
+
+.dark-mode .btn-outline-info {
+    color: #6edff6 !important;
+    border-color: #6edff6 !important;
+}
+
+.dark-mode .btn-outline-info:hover {
+    background-color: #0dcaf0 !important;
+    color: #212529 !important;
+    border-color: #0dcaf0 !important;
+}
+
+.dark-mode .btn-outline-warning {
+    color: #ffda6a !important;
+    border-color: #ffda6a !important;
+}
+
+.dark-mode .btn-outline-warning:hover {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+    border-color: #ffc107 !important;
+}
+
+.dark-mode .btn-outline-danger {
+    color: #ea868f !important;
+    border-color: #ea868f !important;
+}
+
+.dark-mode .btn-outline-danger:hover {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border-color: #dc3545 !important;
+}
+
+.dark-mode .btn-outline-light {
+    color: white !important;
+    border-color: white !important;
+}
+
+.dark-mode .btn-outline-light:hover {
+    background-color: white !important;
+    color: #212529 !important;
+    border-color: white !important;
+}
+
+.dark-mode .btn-outline-dark {
+    color: #adb5bd !important;
+    border-color: #adb5bd !important;
+}
+
+.dark-mode .btn-outline-dark:hover {
+    background-color: #343a40 !important;
+    color: white !important;
+    border-color: #343a40 !important;
+}
+
+/* Стилове за solid бутони */
+.dark-mode .btn-primary {
+    background-color: #0d6efd !important;
+    border-color: #0a58ca !important;
+    color: white !important;
+}
+
+.dark-mode .btn-primary:hover {
+    background-color: #0a58ca !important;
+    border-color: #0a53be !important;
+}
+
+.dark-mode .btn-secondary {
+    background-color: #6c757d !important;
+    border-color: #5c636a !important;
+    color: white !important;
+}
+
+.dark-mode .btn-secondary:hover {
+    background-color: #5c636a !important;
+    border-color: #565e64 !important;
+}
+
+.dark-mode .btn-success {
+    background-color: #198754 !important;
+    border-color: #146c43 !important;
+    color: white !important;
+}
+
+.dark-mode .btn-success:hover {
+    background-color: #157347 !important;
+    border-color: #146c43 !important;
+}
+
+.dark-mode .btn-info {
+    background-color: #0dcaf0 !important;
+    border-color: #0aa2c0 !important;
+    color: #212529 !important;
+}
+
+.dark-mode .btn-info:hover {
+    background-color: #31d2f2 !important;
+    border-color: #25cff2 !important;
+}
+
+.dark-mode .btn-warning {
+    background-color: #ffc107 !important;
+    border-color: #d39e00 !important;
+    color: #212529 !important;
+}
+
+.dark-mode .btn-warning:hover {
+    background-color: #ffca2c !important;
+    border-color: #ffc720 !important;
+}
+
+.dark-mode .btn-danger {
+    background-color: #dc3545 !important;
+    border-color: #b02a37 !important;
+    color: white !important;
+}
+
+.dark-mode .btn-danger:hover {
+    background-color: #bb2d3b !important;
+    border-color: #b02a37 !important;
+}
+
+.dark-mode .btn-light {
+    background-color: #f8f9fa !important;
+    border-color: #f9fafb !important;
+    color: #212529 !important;
+}
+
+.dark-mode .btn-light:hover {
+    background-color: #e9ecef !important;
+    border-color: #dee2e6 !important;
+}
+
+.dark-mode .btn-dark {
+    background-color: #212529 !important;
+    border-color: #1a1e21 !important;
+    color: white !important;
+}
+
+.dark-mode .btn-dark:hover {
+    background-color: #1a1e21 !important;
+    border-color: #141619 !important;
+}
+
+/* Стилове за бутони с различни размери */
+.dark-mode .btn-sm {
+    font-size: 0.875rem !important;
+    padding: 0.25rem 0.5rem !important;
+}
+
+.dark-mode .btn-lg {
+    font-size: 1.25rem !important;
+    padding: 0.5rem 1rem !important;
+}
+
+/* Стилове за бутони с икони */
+.dark-mode .btn i {
+    margin-right: 5px;
+}
+
+/* Стилове за бутони в таблици */
+.dark-mode .table .btn {
+    margin: 0.15rem;
+}
+
+.dark-mode .table .btn-group .btn {
+    margin: 0;
+}
+
+/* Стилове за бутони с ефект на сянка */
+.dark-mode .btn.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.25) !important;
+}
+
+.dark-mode .btn.shadow-sm:hover {
+    box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Стилове за бутони с ъгли */
+.dark-mode .btn.rounded-pill {
+    border-radius: 50rem !important;
+}
+
+.dark-mode .btn.rounded-0 {
+    border-radius: 0 !important;
+}
+
+/* Стилове за бутони с блокиращ дисплей */
+.dark-mode .btn-block {
+    display: block;
+    width: 100%;
+}
+
+/* Стилове за бутони с икони без текст */
+.dark-mode .btn-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.dark-mode .btn-icon i {
+    margin-right: 0;
+}
+
+.dark-mode .btn-icon.btn-sm {
+    width: 2rem;
+    height: 2rem;
+}
+
+.dark-mode .btn-icon.btn-lg {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Стилове за бутони с ефект на пулсиране */
+.dark-mode .btn-pulse {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+    }
+} 

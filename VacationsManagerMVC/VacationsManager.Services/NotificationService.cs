@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using VacationsManager.Shared.Attributes;
 using VacationsManager.Shared.Dtos;
@@ -13,6 +13,43 @@ namespace VacationsManager.Services
     [AutoBind]
     public class NotificationService : BaseCrudService<NotificationDto, INotificationRepository>, INotificationService
     {
-        public NotificationService(INotificationRepository repository) : base(repository) { }
+        private readonly IMapper _mapper;
+
+        public NotificationService(INotificationRepository repository, IMapper mapper) : base(repository)
+        {
+            _mapper = mapper;
+        }
+
+        public async Task SendNotificationAsync(int recipientId, string message)
+        {
+            var notification = new NotificationDto
+            {
+                RecipientId = recipientId,
+                Message = message,
+                DateSent = DateTime.Now,
+                IsRead = false
+            };
+
+            var notificationDto = _mapper.Map<NotificationDto>(notification);
+
+            await _repository.SaveAsync(notificationDto);
+        }
+
+        public async Task MarkAsReadAsync(int notificationId)
+        {
+            var notification = await _repository.GetByIdAsync(notificationId);
+            if (notification == null)
+            {
+                throw new Exception("Notification not found.");
+            }
+
+            notification.IsRead = true;
+            await _repository.SaveAsync(notification);
+        }
+
+        public async Task<IEnumerable<NotificationDto>> GetUnreadNotificationsAsync(int userId)
+        {
+            return await _repository.GetUnreadNotificationsAsync(userId);
+        }
     }
 }

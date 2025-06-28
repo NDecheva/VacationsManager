@@ -1,0 +1,103 @@
+﻿@model IEnumerable<VacationsManagerMVC.ViewModels.NotificationDetailsVM>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+
+    <!-- Bootstrap Lux Theme & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/views/notification/list.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="notification-container mx-auto">
+            <h2 class="text-center text-primary mb-4"><i class="bi bi-bell-fill"></i> Notifications</h2>
+
+            @if (!Model.Any())
+            {
+                <div class="alert alert-warning text-center">
+                    <i class="bi bi-info-circle-fill"></i> No notifications to show.
+                </div>
+            }
+            else
+            {
+                <div class="list-group">
+                    @foreach (var notification in Model)
+                    {
+                        <div class="list-group-item notification-item d-flex justify-content-between align-items-center @(notification.IsRead ? "" : "unread")" id="notification-@notification.Id">
+                            <div>
+                                <h5 class="mb-1"><i class="bi bi-envelope@(notification.IsRead ? "-open" : "")-fill"></i> @notification.Message</h5>
+                                <p class="notification-meta mb-0">
+                                    <i class="bi bi-clock"></i> <small>@notification.DateSent.ToString("yyyy-MM-dd HH:mm")</small>
+                                </p>
+                            </div>
+                            @if (!notification.IsRead)
+                            {
+                                <button class="btn btn-sm btn-outline-primary mark-as-read-btn"
+                                        data-id="@notification.Id">
+                                    <i class="bi bi-check-circle-fill"></i> Mark as Read
+                                </button>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- 🌟 Toast Container for Pop-ups -->
+    <div class="toast-container"></div>
+
+    <!-- Bootstrap JS & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".mark-as-read-btn").click(function (event) {
+                event.preventDefault();
+                var button = $(this);
+                var notificationId = button.data("id");
+                var notificationItem = $("#notification-" + notificationId);
+
+                $.ajax({
+                    url: "/Notification/MarkNotificationAsRead",
+                    type: "POST",
+                    data: { notificationId: notificationId },
+                    success: function (response) {
+                        // ✅ Премахване на нотификацията с анимация
+                        notificationItem.fadeOut(300, function () { $(this).remove(); });
+
+                        // ✅ Показване на Bootstrap Toast Pop-up
+                        showToast(response);
+                    },
+                    error: function (xhr) {
+                        showToast("❌ " + xhr.responseText, "danger");
+                    }
+                });
+            });
+
+            // 🔥 Функция за Bootstrap Toast pop-up
+            function showToast(message, type = "success") {
+                var toastHTML = `
+                    <div class="toast custom-toast text-bg-${type} border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">${message}</div>
+                            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>`;
+
+                $(".toast-container").append(toastHTML);
+                
+                setTimeout(function () {
+                    $(".custom-toast").fadeOut(500, function () { $(this).remove(); });
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

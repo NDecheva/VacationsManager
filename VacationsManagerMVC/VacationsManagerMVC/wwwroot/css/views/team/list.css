@@ -1,0 +1,43 @@
+.table-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-custom {
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.btn-custom:hover {
+    transform: scale(1.05);
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.icon {
+    margin-right: 5px;
+}
+
+.search-container {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.search-container .input-group {
+    max-width: 500px;
+    margin: auto;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} 

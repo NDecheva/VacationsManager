@@ -70,7 +70,7 @@ namespace VacationsManager.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: true),
                     TeamLeaderId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -83,7 +83,7 @@ namespace VacationsManager.Data.Migrations
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -129,7 +129,7 @@ namespace VacationsManager.Data.Migrations
                     IsHalfDay = table.Column<bool>(type: "bit", nullable: false),
                     IsApproved = table.Column<bool>(type: "bit", nullable: false),
                     RequesterId = table.Column<int>(type: "int", nullable: false),
-                    Attachment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Attachment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VacationType = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -150,16 +150,16 @@ namespace VacationsManager.Data.Migrations
                 columns: new[] { "Id", "CreatedAt", "Name", "RoleType", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4942), "CEO", 1, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4944) },
-                    { 2, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4999), "Developer", 2, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(4999) },
-                    { 3, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5015), "TeamLead", 3, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5016) },
-                    { 4, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5031), "Unassigned", 4, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5032) }
+                    { 1, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5162), "CEO", 1, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5164) },
+                    { 2, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5205), "Developer", 2, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5206) },
+                    { 3, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5215), "TeamLead", 3, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5216) },
+                    { 4, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5225), "Unassigned", 4, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5225) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedAt", "FirstName", "LastName", "Password", "RoleId", "TeamId", "UpdatedAt", "Username" },
-                values: new object[] { 1, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5106), "Admin", "User", "pTDoIwVg8mxcdTjKNblSgFzO4H3GvZKY+jVZ+M0VtFU20mkeRPahTVdNtPBze0MX", 1, null, new DateTime(2024, 11, 22, 19, 32, 23, 301, DateTimeKind.Utc).AddTicks(5107), "admin" });
+                values: new object[] { 1, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5313), "Admin", "User", "8iC7E27P8GljkrAOLItA3DE8Dv41+M01LkcGmhU4yfOo6R7Q17np6yJ4g81THBFg", 1, null, new DateTime(2025, 1, 14, 9, 42, 40, 67, DateTimeKind.Utc).AddTicks(5313), "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_RecipientId",

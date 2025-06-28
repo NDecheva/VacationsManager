@@ -13,5 +13,8 @@ namespace VacationsManager.Shared.Repos.Contracts
         Task<bool> CanUserLoginAsync(string username, string password);
         Task<UserDto> GetByUsernameAsync(string username);
         Task<IEnumerable<UserDto>> GetFreeTeamLeadersAsync();
+        Task<IEnumerable<UserDto>> GetTeamMembersAsync(int teamId);
+        Task<IEnumerable<UserDto>> GetAvailableDevelopersAsync();
+
     }
 }

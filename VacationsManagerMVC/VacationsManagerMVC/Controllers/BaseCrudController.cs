@@ -40,20 +40,27 @@ namespace VacationsManagerMVC.Controllers
             {
                 return Task.FromResult(editVM);
             }
+            
             [HttpGet]
-
-            public virtual async Task<IActionResult> List(
-                int pageSize = DefaultPageSize,
-                int pageNumber = DefaultPageNumber)
+            public virtual async Task<IActionResult> List(int pageSize = DefaultPageSize, int pageNumber = DefaultPageNumber)
             {
                 if (pageSize <= 0 || pageSize > MaxPageSize || pageNumber <= 0)
                 {
                     return BadRequest(Constants.InvalidPagination);
                 }
-                var models = await this._service.GetWithPaginationAsync(pageSize, pageNumber);
+
+                var models = await _service.GetWithPaginationAsync(pageSize, pageNumber);
+                var totalRecords = await _service.GetAllAsync();
+                var totalPages = (int)Math.Ceiling((double)totalRecords.Count() / pageSize);
+
                 var mappedModels = _mapper.Map<IEnumerable<TDetailsVM>>(models);
+
+                ViewBag.TotalPages = totalPages;
+                ViewBag.CurrentPage = pageNumber;
+
                 return View(nameof(List), mappedModels);
             }
+
 
             [HttpGet]
             public virtual async Task<IActionResult> Details(int id)
@@ -78,15 +85,22 @@ namespace VacationsManagerMVC.Controllers
             [HttpPost]
             public virtual async Task<IActionResult> Create(TEditVM editVM)
             {
-                var errors = await Validate(editVM);
-
-                if (errors != null)
+                if (!ModelState.IsValid)
                 {
+                    editVM = await PrePopulateVMAsync(editVM); 
                     return View(editVM);
                 }
 
-                var model = this._mapper.Map<TModel>(editVM);
-                await this._service.SaveAsync(model);
+                var errors = await Validate(editVM);
+                if (errors != null)
+                {
+                    ModelState.AddModelError("", errors);
+                    editVM = await PrePopulateVMAsync(editVM);
+                    return View(editVM);
+                }
+
+                var model = _mapper.Map<TModel>(editVM);
+                await _service.SaveAsync(model);
                 return await List();
             }
             [HttpGet]
@@ -108,19 +122,30 @@ namespace VacationsManagerMVC.Controllers
             [HttpPost]
             public virtual async Task<IActionResult> Edit(int id, TEditVM editVM)
             {
+                if (!ModelState.IsValid)
+                {
+                    editVM = await PrePopulateVMAsync(editVM); 
+                    return View(editVM);
+                }
+
                 var errors = await Validate(editVM);
                 if (errors != null)
                 {
+                    ModelState.AddModelError("", errors);
+                    editVM = await PrePopulateVMAsync(editVM);
                     return View(editVM);
                 }
-                if (!await this._service.ExistsByIdAsync(id))
+
+                if (!await _service.ExistsByIdAsync(id))
                 {
                     return BadRequest(Constants.InvalidId);
                 }
+
                 var mappedModel = _mapper.Map<TModel>(editVM);
-                await this._service.SaveAsync(mappedModel);
+                await _service.SaveAsync(mappedModel);
                 return await List();
             }
+
             [HttpGet]
             public virtual async Task<IActionResult> Delete(int? id)
             {

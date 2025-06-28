@@ -1,0 +1,28 @@
+﻿.delete-warning {
+    background: #ffebee;
+    border: 1px solid #f44336;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #b71c1c;
+}
+
+.form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-hover:hover {
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.list-group-item {
+    font-size: 1.1rem;
+}
+
+.text-danger strong {
+    color: #d32f2f;
+}

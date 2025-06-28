@@ -31,11 +31,13 @@ namespace VacationsManagerMVC.Controllers
             this.rolesService = rolesService;
             this.mapper = mapper;
         }
+
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Login([FromForm] LoginVM model)
         {
@@ -52,13 +54,15 @@ namespace VacationsManagerMVC.Controllers
             await LoginUser(model.Username);
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+
         private async Task LoginUser(string username)
         {
             var user = await this.usersService.GetByUsernameAsync(username);
             var claims = new[]
             {
-        new Claim(ClaimTypes.Name, user.Username),
-        new Claim(ClaimTypes.Role, user.Role.Name),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), 
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, user.Role.Name),
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -69,7 +73,6 @@ namespace VacationsManagerMVC.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 principle);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Logout()

@@ -9,7 +9,7 @@ namespace VacationsManagerMVC.ViewModels
 
         [DisplayName("Created At")]
         [DataType(DataType.DateTime)]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         [DisplayName("Last Updated")]
         [DataType(DataType.DateTime)]

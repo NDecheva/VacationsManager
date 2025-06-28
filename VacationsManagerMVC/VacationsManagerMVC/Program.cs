@@ -1,6 +1,7 @@
 using EntityFrameworkCore.UseRowNumberForPaging;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using VacationsManager.Data;
 using VacationsManager.Data.Repos;
 using VacationsManager.Services;
@@ -13,6 +14,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Configure logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+builder.Logging.AddEventSourceLogger();
 
 // Configure AutoMapper
 builder.Services.AddAutoMapper(m => m.AddProfile(new AutoMapperConfiguration()));
@@ -29,9 +36,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddDbContext<VacationsManagerDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-            sqlOptions => sqlOptions.UseRowNumberForPaging())
-        .EnableSensitiveDataLogging() 
-        .LogTo(Console.WriteLine, LogLevel.Information); 
+        sqlOptions => sqlOptions.UseRowNumberForPaging());
 });
 
 

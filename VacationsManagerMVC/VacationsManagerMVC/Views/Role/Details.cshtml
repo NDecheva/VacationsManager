@@ -1,0 +1,52 @@
+﻿@using VacationsManagerMVC.Controllers
+@model VacationsManagerMVC.ViewModels.RoleDetailsVM
+
+@{
+    ViewBag.Title = "Role Details";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center mb-4">Role Details</h2>
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5>@Model.Name</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Role Type:</strong> @Model.RoleType</p>
+                        <p><strong>Users Assigned:</strong></p>
+                        @if (Model.Users.Any())
+                        {
+                            <ul class="list-group">
+                                @foreach (var user in Model.Users)
+                                {
+                                    <li class="list-group-item">@user.Username</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-muted">No Users Assigned</p>
+                        }
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a href="@Url.Action("List", "Role")" class="btn btn-secondary">Back to Role List</a>
+                    <a href="@Url.Action("Edit", "Role", new { id = Model.Id })" class="btn btn-warning">Edit Role</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

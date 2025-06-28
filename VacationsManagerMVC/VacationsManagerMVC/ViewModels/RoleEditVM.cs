@@ -16,7 +16,12 @@ namespace VacationsManagerMVC.ViewModels
         [Required(ErrorMessage = "Role type is required.")]
         public RoleType RoleType { get; set; } 
 
-        public IEnumerable<SelectListItem> RoleTypeOptions { get; set; } 
-        
+        public IEnumerable<SelectListItem> RoleTypeOptions { get; set; }
+
+        public RoleEditVM()
+        {
+            RoleTypeOptions = new List<SelectListItem>();
+        }
+
     }
 }

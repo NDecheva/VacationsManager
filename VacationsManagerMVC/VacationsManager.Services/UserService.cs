@@ -45,5 +45,15 @@ namespace VacationsManager.Services
             return AllTeamLeaders;
         }
 
+        public async Task<IEnumerable<UserDto>> GetTeamMembersAsync(int teamId)
+        {
+            return await _repository.GetTeamMembersAsync(teamId);
+        }
+
+        public async Task<IEnumerable<UserDto>> GetAvailableDevelopersAsync()
+        {
+            return await _repository.GetAvailableDevelopersAsync();
+        }
+
     }
 }

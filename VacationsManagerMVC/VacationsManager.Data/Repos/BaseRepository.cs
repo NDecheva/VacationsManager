@@ -82,6 +82,16 @@ namespace YourNamespace.Data.Repos
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
 
+            if (model.Id != 0)
+            {
+                model.UpdatedAt = DateTime.UtcNow;
+            }
+            else
+            {
+                model.CreatedAt = DateTime.UtcNow;
+                model.UpdatedAt = DateTime.UtcNow;
+            }
+
             try
             {
                 var entity = await _dbSet.FindAsync(model.Id); 
