@@ -27,7 +27,7 @@ A professional and modern web application for managing employee vacation request
 ## 🔧 Core Features
 
 - ✍️ Submit and manage vacation requests (half-day, full-day, sick leave, etc.)
-- 🛠 Approve/decline requests based on role
+- 🛠 Approve/delete requests based on role
 - 🧑‍💼 Manage users, teams, and roles
 - 📁 Project and team assignments
 - 🔔 Notifications for approved requests
